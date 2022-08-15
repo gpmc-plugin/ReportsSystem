@@ -34,7 +34,13 @@ public class ReportContinueCommand implements CommandExecutor {
                 }
                 switch (reportState){
                     case 0:
+                        try{
                         report.setShortDescription(ReportCreator.ReportShortDescription.values()[Integer.parseInt(args[0])]);
+                        }
+                        catch(Exception e){
+                            sender.sendMessage("Coś poszło nie tak");
+                            return false;
+                        }
                         playerCreationStatus.setState(playerCreationStatus.getState()+1);
                         playerCreationStatus.getPlayer().openInventory(Bukkit.createInventory(null, InventoryType.CHEST));
                         playerCreationStatus.getPlayer().closeInventory();
