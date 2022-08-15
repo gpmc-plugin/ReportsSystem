@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -30,7 +31,7 @@ public class EventListener implements Listener {
     public EventListener(ReportsSystem plugin){
         this.plugin=plugin;
     }
-    @EventHandler(priority = EventPriority.LOWEST,ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onChatMessage(AsyncChatEvent e){
         Integer messageID=plugin.getDatabaseManager().getNextMessageID();
         plugin.getDatabaseManager().incrementNextMessageID();
@@ -46,11 +47,12 @@ public class EventListener implements Listener {
         messageComponent = messageComponent.hoverEvent(HoverEvent.showText(Component.text("Aby zgłosić tą wiadomość kliknij ją", NamedTextColor.YELLOW, TextDecoration.BOLD)));
         e.message(messageComponent);
     }
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = false)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
     }
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(PlayerQuitEvent e){
         plugin.getStorageManager().removeUser(e.getPlayer().getUniqueId().toString());
     }
@@ -69,4 +71,6 @@ public class EventListener implements Listener {
             }
         }
     }
+
+
 }
