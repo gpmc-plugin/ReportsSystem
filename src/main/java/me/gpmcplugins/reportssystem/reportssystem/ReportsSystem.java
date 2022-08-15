@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.reportssystem;
 
 import me.gpmcplugins.reportssystem.Commands.ReportCommand;
+import me.gpmcplugins.reportssystem.Commands.ReportReviewCommand;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
@@ -16,6 +17,7 @@ public final class ReportsSystem extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
 
         getCommand("report").setExecutor(new ReportCommand(this));
+        getCommand("report-review").setExecutor(new ReportReviewCommand(this));
     }
 
     @Override
