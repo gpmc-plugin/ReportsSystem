@@ -14,7 +14,7 @@ commands:
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   reportcontinue:
     description: report continue.
-    usage: /report
+    usage: /reportcontinue
     permission: reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   report-review:

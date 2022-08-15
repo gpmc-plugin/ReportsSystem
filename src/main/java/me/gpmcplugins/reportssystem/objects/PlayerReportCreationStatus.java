@@ -1,6 +1,12 @@
 package me.gpmcplugins.reportssystem.objects;
 
+import me.gpmcplugins.reportssystem.Statics.ReportTranslater;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -36,5 +42,56 @@ public class PlayerReportCreationStatus {
 
     public Integer getState() {
         return state;
+    }
+    public void sendSavedMessage(){
+        player.sendMessage(Component.text("Zapisano!", NamedTextColor.GREEN));
+    }
+    public void sendReportCreated(){
+        player.sendMessage(Component.text("Wysłano report!", NamedTextColor.GREEN));
+    }
+    public void sendReportDeleted(){
+        player.sendMessage(Component.text("Usunięto report!", NamedTextColor.GREEN));
+    }
+    public void sendDescriptionMessage(){
+        Component message = Component.text("Aby dodać opis do swojego zgłoszenia napisz wiadomość na czacie. Aby to pominąć ")
+                .append(
+                        Component.text("kliknij tutaj!")
+                        .style(Style.style(TextDecoration.UNDERLINED))
+                        .clickEvent(ClickEvent.runCommand("/reportcontinue"))
+                );
+        player.sendMessage(message);
+    }
+    public void sendSummary(ReportCreator report){
+        Component firstline = Component.text("Oto podsumowanie twojego zgłoszenia: ",NamedTextColor.GREEN);
+        String secoundLine = "Reportujesz ";
+        switch (report.getType()){
+            case User:
+                Player reported = plugin.getServer().getPlayer(UUID.fromString(report.getReportedElementID()));
+                secoundLine+="użytkownika "+reported.getName();
+                break;
+            case Message:
+                ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.valueOf(report.getReportedElementID()));
+                secoundLine+="wiadomość użytkownika "+ reportMessage.player.getName()+" o treści: "+reportMessage.message;
+                break;
+
+        }
+        String thirdLine = "Z powodu: "+ ReportTranslater.fromReportShortDescription(report.getReportShortDescription())+"\n"+report.getDescription();
+        player.sendMessage(firstline);
+        player.sendMessage(Component.text(secoundLine,NamedTextColor.GREEN));
+        player.sendMessage(Component.text(thirdLine,NamedTextColor.GREEN));
+        Component delete = Component.text("[Usuń zgłoszenie]",NamedTextColor.RED)
+                .clickEvent(ClickEvent.runCommand("/reportcontinue delete"));
+        Component save = Component.text("  [Wyślij zgłoszenie]",NamedTextColor.GREEN)
+                .clickEvent(ClickEvent.runCommand("/reportcontinue"));
+        player.sendMessage(Component.empty().append(delete).append(save));
+    }
+    public void createReport(ReportCreator report){
+        report.createReport();
+        this.sendReportCreated();
+        this.clearReport();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

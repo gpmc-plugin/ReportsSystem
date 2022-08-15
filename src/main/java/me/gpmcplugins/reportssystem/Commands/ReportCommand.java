@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Commands;
 
+import me.gpmcplugins.reportssystem.GUI.BookReportTypeInterface;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
@@ -43,33 +44,39 @@ public final class ReportCommand implements CommandExecutor {
             default:
                 return false;
         }
+        String reportedId = args[1];
         switch (reportType) {
             case Death:
                 sendNotImplemented(p);
                 return false;
             case Message:
                 int nextMsgId = plugin.getDatabaseManager().getNextMessageID();
-                if (Integer.parseInt(args[1]) >= nextMsgId)
+                if (Integer.parseInt(reportedId) >= nextMsgId)
                 {
                     p.sendMessage("Message ID is incorrect");
                     return false;
                 }
+                ((Player) sender).openBook(BookReportTypeInterface.messageReportInterface());
                 break;
             case User:
-                String reportedUser = args[1];
-                if (plugin.getServer().getPlayer(reportedUser) == null){
+
+                Player reportedPlayer = plugin.getServer().getPlayer(reportedId);
+                if (reportedPlayer == null){
                     TextComponent txt = Component.text("Player with name ")
                             .color(NamedTextColor.RED)
-                            .append(Component.text(reportedUser, NamedTextColor.RED, TextDecoration.BOLD))
+                            .append(Component.text(reportedId, NamedTextColor.RED, TextDecoration.BOLD))
                             .append(Component.text(" does not exist"));
                     p.sendMessage(txt);
                     return true;
                 }
+                else
+                    reportedId=reportedPlayer.getUniqueId().toString();
+                ((Player) sender).openBook(BookReportTypeInterface.userReportInterface());
                 break;
         }
         Integer reportID = plugin.getStorageManager().getReportInProgressID();
         plugin.getStorageManager().incrementReportsID();
-        ReportCreator cos = plugin.getStorageManager().createReportTemplate(reportID,reportType,args[1],((Player) sender).getUniqueId().toString());
+        ReportCreator cos = plugin.getStorageManager().createReportTemplate(reportID,reportType,reportedId,((Player) sender).getUniqueId().toString());
         if(cos == null)
             return false;
         return true;

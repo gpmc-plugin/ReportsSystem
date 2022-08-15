@@ -18,8 +18,8 @@ public class StorageManager {
     public ReportCreator createReportTemplate(Integer id,ReportCreator.ReportType reportType, String reportedElementID, String reportingPlayer){
         PlayerReportCreationStatus player = getUser(reportingPlayer);
         if(player.getReportID()!=null)
-            return null;
-        ReportCreator reportCreator = new ReportCreator(reportType,reportingPlayer,reportedElementID);
+            player.clearReport();
+        ReportCreator reportCreator = new ReportCreator(reportType,reportingPlayer,reportedElementID,plugin);
         reportsInProgress.put(id,reportCreator);
         player.setReportID(id);
         return  reportCreator;

@@ -1,9 +1,12 @@
 package me.gpmcplugins.reportssystem.Managers;
 
+import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.UUID;
 
 public class DatabaseManager {
     Connection conn;
@@ -43,6 +46,11 @@ public class DatabaseManager {
         ResultSet rs = stmt.executeQuery(sql);
         rs.next();
         nextMessageID = rs.getInt("count(*)");
+        sql = "Select count(*) from reports";
+        rs = stmt.executeQuery(sql);
+        rs.next();
+        nextReportID = rs.getInt("count(*)");
+
         } catch (SQLException e) {
             throwError(e.getMessage());
         }
@@ -57,7 +65,20 @@ public class DatabaseManager {
                 "\t\"message\"\tTEXT,\n" +
                 "\t\"timestamp\"\tNUMERIC\n" +
                 ");";
+
         stmt.execute(sql);
+        sql="CREATE TABLE IF NOT EXISTS \"reports\" (\n" +
+                "\t\"id\"\tINTEGER,\n" +
+                "\t\"reporting_player\"\tTEXT,\n" +
+                "\t\"type\"\tTEXT,\n" +
+                "\t\"short_description\"\tTEXT,\n" +
+                "\t\"description\"\tTEXT,\n" +
+                "\t\"timestamp\"\tTEXT,\n" +
+                "\t\"admin\"\tTEXT,\n" +
+                "\t\"reported_id\"\tTEXT\n" +
+                ");";
+        stmt.execute(sql);
+
     }
 
     public int getNextMessageID() {
@@ -66,7 +87,15 @@ public class DatabaseManager {
     public void incrementNextMessageID(){
         nextMessageID++;
     }
-    public void logMessage(int ID, String Sender,String Recipients, String message) throws SQLException {
+
+    public int getNextReportID() {
+        return nextReportID;
+    }
+    public void incrementNextReportID(){
+        nextReportID++;
+    }
+
+    public void logMessage(int ID, String Sender, String Recipients, String message) throws SQLException {
         Long timestamp = new Date().getTime();
         String sql = "INSERT INTO \"main\".\"message_log\"(\"id\",\"sender\",\"recipients\",\"message\",\"timestamp\") VALUES (?,?,?,?,?);";
         PreparedStatement prstm= conn.prepareStatement(sql);
@@ -76,5 +105,38 @@ public class DatabaseManager {
         prstm.setString(4,message);
         prstm.setLong(5,timestamp);
         prstm.execute();
+    }
+    public void createReport(String Sender,String type,String shortDescription,String description,String reportedID) throws SQLException {
+        Long timestamp = new Date().getTime();
+        String sql = "INSERT INTO \"main\".\"reports\"(\"id\",\"reporting_player\",\"type\",\"short_description\",\"description\",\"timestamp\",\"admin\",\"reported_id\") VALUES (?,?,?,?,?,?,NULL,?);\n";
+        Integer reportID = getNextReportID();
+        incrementNextReportID();
+        PreparedStatement prstm= conn.prepareStatement(sql);
+        prstm.setInt(1,reportID);
+        prstm.setString(2,Sender);
+        prstm.setString(3,type);
+        prstm.setString(4,shortDescription);
+        prstm.setString(5,description);
+        prstm.setLong(6,timestamp);
+        prstm.setString(7,reportedID);
+        prstm.execute();
+    }
+    public ReportMessage getMessage(Integer id){
+
+        try {
+            String sql = "Select * from message_log where id=?";
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,id);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                Player sender = plugin.getServer().getPlayer(UUID.fromString(rs.getString("sender")));
+                return new ReportMessage(sender,rs.getString("message"));
+            }
+        } catch (SQLException e) {
+            throwError(e.getMessage());
+        }
+
+        return null;
     }
 }

@@ -1,12 +1,18 @@
 package me.gpmcplugins.reportssystem.objects;
 
+import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+
+import java.sql.SQLException;
+
 public class ReportCreator {
     private ReportType type;
     private String ReportingPlayer;
     private String ReportedElementID;
-    private String Description;
+    private String Description="Nie podano dokładnego powodu";
     private ReportShortDescription reportShortDescription;
-    public ReportCreator(ReportType type,String reportingPlayer,String reportedElementID){
+    private ReportsSystem plugin;
+    public ReportCreator(ReportType type, String reportingPlayer, String reportedElementID, ReportsSystem plugin){
+        this.plugin=plugin;
         this.type=type;
         this.ReportingPlayer=reportingPlayer;
         this.ReportedElementID=reportedElementID;
@@ -38,6 +44,16 @@ public class ReportCreator {
     public String getReportedElementID() {
         return ReportedElementID;
     }
+    public PlayerReportCreationStatus getPlayer(){
+        return plugin.getStorageManager().getUser(this.ReportingPlayer);
+    }
+    public void createReport(){
+        try {
+            plugin.getDatabaseManager().createReport(getReportingPlayer(),getType().toString(),getReportShortDescription().toString(),getDescription(),getReportedElementID());
+        } catch (SQLException e) {
+            plugin.getDatabaseManager().throwError(e.getMessage());
+        }
+    }
 
     public enum ReportType{
         User,
@@ -52,6 +68,7 @@ public class ReportCreator {
         Message_Bad_Words,
         Message_Scam,
         Message_Hate_Speach,
-        Message_Offensive
+        Message_Offensive,
+        Other
     }
 }
