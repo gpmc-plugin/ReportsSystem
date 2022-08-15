@@ -16,8 +16,12 @@ public class StorageManager {
         this.plugin=plugin;
     }
     public ReportCreator createReportTemplate(Integer id,ReportCreator.ReportType reportType, String reportedElementID, String reportingPlayer){
+        PlayerReportCreationStatus player = getUser(reportingPlayer);
+        if(player.getReportID()!=null)
+            return null;
         ReportCreator reportCreator = new ReportCreator(reportType,reportingPlayer,reportedElementID);
         reportsInProgress.put(id,reportCreator);
+        player.setReportID(id);
         return  reportCreator;
     }
     public ReportCreator getReport(Integer id){

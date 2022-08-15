@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Commands;
 
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -57,6 +58,11 @@ public final class ReportCommand implements CommandExecutor {
                 }
                 break;
         }
+        Integer reportID = plugin.getStorageManager().getReportInProgressID();
+        plugin.getStorageManager().incrementReportsID();
+        ReportCreator cos = plugin.getStorageManager().createReportTemplate(reportID,reportType,args[1],((Player) sender).getUniqueId().toString());
+        if(cos == null)
+            return false;
         return true;
     }
     public void sendNotImplemented(Player p)

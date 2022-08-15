@@ -49,10 +49,18 @@ public class ReportContinueCommand implements CommandExecutor {
                             case "7":
                                 report.setShortDescription(ReportCreator.ReportShortDescription.Message_Offensive);
                                 break;
+                            default:
+                                sender.sendMessage("Zły typ'");
+                                return false;
 
                         }
+                        sender.sendMessage("Działa");
+                        return true;
                 }
+
             }
+            else
+                sender.sendMessage("Nie tworzysz żadnego reportu");
         }
         else
             sender.sendMessage("Musisz być graczem żeby użyć tej komendy");

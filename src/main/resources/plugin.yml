@@ -17,7 +17,15 @@ commands:
     usage: /report
     permission: reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
+  report-review:
+    description: Pozwala przeglądać reporty
+    usage: /report-review
+    permission: reportsystem.reportreview
+    permission-message: Nev nie lubi naszych pluginów i to zablokował.
 permissions:
   reportsystem.report:
     default: true
     description: Daje użytkownikowi dostęp do /report
+  reportsystem.reportreview:
+    default: op
+    description: Daje użytkownikowi dostęp do /report-review

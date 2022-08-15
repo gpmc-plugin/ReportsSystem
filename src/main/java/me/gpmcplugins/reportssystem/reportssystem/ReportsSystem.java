@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.reportssystem;
 
 import me.gpmcplugins.reportssystem.Commands.ReportCommand;
+import me.gpmcplugins.reportssystem.Commands.ReportContinueCommand;
 import me.gpmcplugins.reportssystem.Commands.ReportReviewCommand;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
@@ -18,6 +19,7 @@ public final class ReportsSystem extends JavaPlugin {
 
         getCommand("report").setExecutor(new ReportCommand(this));
         getCommand("report-review").setExecutor(new ReportReviewCommand(this));
+        getCommand("reportcontinue").setExecutor(new ReportContinueCommand(this));
     }
 
     @Override
