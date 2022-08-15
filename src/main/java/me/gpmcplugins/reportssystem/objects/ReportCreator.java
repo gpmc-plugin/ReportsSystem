@@ -51,8 +51,7 @@ public class ReportCreator {
         User_Scam,
         Message_Bad_Words,
         Message_Scam,
-        Message_Racist,
-        Message_offensive,
-        Message_offensive_to_ptg
+        Message_Hate_Speach,
+        Message_Offensive
     }
 }

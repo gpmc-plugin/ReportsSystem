@@ -20,6 +20,9 @@ public class StorageManager {
         reportsInProgress.put(id,reportCreator);
         return  reportCreator;
     }
+    public ReportCreator getReport(Integer id){
+        return reportsInProgress.getOrDefault(id,null);
+    }
     public int getReportInProgressID() {
         return reportInProgressID;
     }
@@ -32,5 +35,8 @@ public class StorageManager {
     }
     public void removeUser(String uuid){
         playerReportCreationStatuses.remove(uuid);
+    }
+    public PlayerReportCreationStatus getUser(String uuid){
+        return playerReportCreationStatuses.getOrDefault(uuid,null);
     }
 }
