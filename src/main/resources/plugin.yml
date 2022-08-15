@@ -4,3 +4,7 @@ main: me.gpmcplugins.reportssystem.reportssystem.ReportsSystem
 api-version: 1.18
 authors: [ Pythontest, Idont ]
 description: Provides easy report system
+commands:
+  report:
+    description: Reportuje użytkownika wskazanego w komendzie.
+    usage: /report
