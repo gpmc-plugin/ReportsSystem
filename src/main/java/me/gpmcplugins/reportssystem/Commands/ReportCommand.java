@@ -27,19 +27,36 @@ public final class ReportCommand implements CommandExecutor {
         {
             case "death":
                 reportType = ReportType.Death;
-                sendNotImplemented(p);
                 break;
             case "message":
                 reportType = ReportType.Message;
-                sendNotImplemented(p);
                 break;
             case "user":
                 reportType = ReportType.User;
+                break;
+            default:
+                return false;
+        }
+        switch (reportType) {
+            case Death:
                 sendNotImplemented(p);
+                return false;
+            case Message:
+                int nextMsgId = plugin.getDatabaseManager().getNextMessageID();
+                if (Integer.parseInt(args[1]) >= nextMsgId)
+                {
+                    p.sendMessage("Message ID is incorrect");
+                    return false;
+                }
+                break;
+            case User:
+                String reportedUser = args[1];
+                if (plugin.getServer().getPlayer(reportedUser) == null){
+                    p.sendMessage("Player with name %s does not exist", reportedUser);
+                    return false;
+                }
                 break;
         }
-
-
         return true;
     }
     public void sendNotImplemented(Player p)
