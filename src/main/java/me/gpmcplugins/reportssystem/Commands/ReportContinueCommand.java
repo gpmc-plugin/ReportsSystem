@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
 public class ReportContinueCommand implements CommandExecutor {
@@ -33,8 +34,14 @@ public class ReportContinueCommand implements CommandExecutor {
                 }
                 switch (reportState){
                     case 0:
+                        try{
                         report.setShortDescription(ReportCreator.ReportShortDescription.values()[Integer.parseInt(args[0])]);
-                        playerCreationStatus.setState(reportState+1);
+                        }
+                        catch(Exception e){
+                            sender.sendMessage("Coś poszło nie tak");
+                            return false;
+                        }
+                        playerCreationStatus.setState(playerCreationStatus.getState()+1);
                         playerCreationStatus.getPlayer().openInventory(Bukkit.createInventory(null, InventoryType.CHEST));
                         playerCreationStatus.getPlayer().closeInventory();
                         playerCreationStatus.sendSavedMessage();
