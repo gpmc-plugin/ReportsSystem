@@ -2,7 +2,7 @@ name: ReportsSystem
 version: '${project.version}'
 main: me.gpmcplugins.reportssystem.reportssystem.ReportsSystem
 api-version: 1.18
-authors: [ Pythontest, Idont, Szylaz ]
+authors: [ Pythontest, Idont, Ssz256 ]
 description: Provides easy report system
 
 
