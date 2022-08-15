@@ -15,7 +15,7 @@ public final class ReportsSystem extends JavaPlugin {
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
 
-        getCommand("report").setExecutor(new ReportCommand());
+        getCommand("report").setExecutor(new ReportCommand(this));
     }
 
     @Override
