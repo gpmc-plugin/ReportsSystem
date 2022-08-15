@@ -2,10 +2,15 @@ package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import net.kyori.adventure.text.format.TextColor;
 import me.gpmcplugins.reportssystem.objects.ReportCreator.ReportType;
 
 // a class for report command
@@ -53,8 +58,12 @@ public final class ReportCommand implements CommandExecutor {
             case User:
                 String reportedUser = args[1];
                 if (plugin.getServer().getPlayer(reportedUser) == null){
-                    p.sendMessage(String.format("Player with name %s does not exist", reportedUser));
-                    return false;
+                    TextComponent txt = Component.text("Player with name ")
+                            .color(NamedTextColor.RED)
+                            .append(Component.text(reportedUser, NamedTextColor.RED, TextDecoration.BOLD))
+                            .append(Component.text(" does not exist"));
+                    p.sendMessage(txt);
+                    return true;
                 }
                 break;
         }
