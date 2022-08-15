@@ -53,7 +53,7 @@ public final class ReportCommand implements CommandExecutor {
             case User:
                 String reportedUser = args[1];
                 if (plugin.getServer().getPlayer(reportedUser) == null){
-                    p.sendMessage("Player with name %s does not exist", reportedUser);
+                    p.sendMessage(String.format("Player with name %s does not exist", reportedUser));
                     return false;
                 }
                 break;
