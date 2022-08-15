@@ -13,6 +13,7 @@ public class DatabaseManager {
     ReportsSystem plugin;
     int nextReportID;
     int nextMessageID;
+    int nextDeathID;
     public DatabaseManager(ReportsSystem plugin){
         this.plugin=plugin;
         this.connect();
@@ -38,7 +39,7 @@ public class DatabaseManager {
             }
         }
 
-    };
+    }
     public void loadData()  {
         try {
         Statement stmt = conn.createStatement();
@@ -86,6 +87,14 @@ public class DatabaseManager {
     }
     public void incrementNextMessageID(){
         nextMessageID++;
+    }
+
+    public int getNextDeathID() {
+        return nextMessageID;
+    }
+    public void incrementNextDeathID(){
+        nextMessageID = 1;
+        //nextMessageID++;
     }
 
     public int getNextReportID() {

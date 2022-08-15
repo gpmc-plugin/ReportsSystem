@@ -47,8 +47,14 @@ public final class ReportCommand implements CommandExecutor {
         String reportedId = args[1];
         switch (reportType) {
             case Death:
-                sendNotImplemented(p);
-                return false;
+                int nextDeathId = plugin.getDatabaseManager().getNextDeathID();
+                if (Integer.parseInt(reportedId) >= nextDeathId)
+                {
+                    p.sendMessage("Death ID is incorrect");
+                    return false;
+                }
+                ((Player) sender).openBook(BookReportTypeInterface.deathReportInterface());
+                break;
             case Message:
                 int nextMsgId = plugin.getDatabaseManager().getNextMessageID();
                 if (Integer.parseInt(reportedId) >= nextMsgId)
