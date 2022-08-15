@@ -1,18 +1,23 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.BookReportTypeInterface;
+import me.gpmcplugins.reportssystem.GUI.ChestGUI;
+import me.gpmcplugins.reportssystem.GUI.ChestReportTypeInterface;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import net.kyori.adventure.text.format.TextColor;
 import me.gpmcplugins.reportssystem.objects.ReportCreator.ReportType;
+import org.bukkit.inventory.ItemStack;
 
 // a class for report command
 public final class ReportCommand implements CommandExecutor {
@@ -53,7 +58,8 @@ public final class ReportCommand implements CommandExecutor {
                     p.sendMessage("Death ID is incorrect");
                     return false;
                 }
-                ((Player) sender).openBook(BookReportTypeInterface.deathReportInterface());
+                //((Player) sender).openBook(BookReportTypeInterface.deathReportInterface());
+                ChestReportTypeInterface.deathReportInterface((Player) sender);
                 break;
             case Message:
                 int nextMsgId = plugin.getDatabaseManager().getNextMessageID();
@@ -62,7 +68,8 @@ public final class ReportCommand implements CommandExecutor {
                     p.sendMessage("Message ID is incorrect");
                     return false;
                 }
-                ((Player) sender).openBook(BookReportTypeInterface.messageReportInterface());
+                //((Player) sender).openBook(BookReportTypeInterface.messageReportInterface());
+                ChestReportTypeInterface.messageReportInterface((Player) sender);
                 break;
             case User:
 
@@ -77,7 +84,8 @@ public final class ReportCommand implements CommandExecutor {
                 }
                 else
                     reportedId=reportedPlayer.getUniqueId().toString();
-                ((Player) sender).openBook(BookReportTypeInterface.userReportInterface());
+                //((Player) sender).openBook(BookReportTypeInterface.userReportInterface());
+                ChestReportTypeInterface.userReportInterface((Player) sender);
                 break;
         }
         Integer reportID = plugin.getStorageManager().getReportInProgressID();
