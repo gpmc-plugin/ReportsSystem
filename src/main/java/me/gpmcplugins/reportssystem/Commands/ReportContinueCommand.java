@@ -9,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
 public class ReportContinueCommand implements CommandExecutor {
@@ -34,40 +33,14 @@ public class ReportContinueCommand implements CommandExecutor {
                 }
                 switch (reportState){
                     case 0:
-                        switch (args[0]) {
-                            case "0":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Death_Bug);
-                                break;
-                            case "1":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Death_Other_Player);
-                                break;
-                            case "2":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.User_Cheating);
-                                break;
-                            case "3":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.User_Scam);
-                                break;
-                            case "4":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Message_Bad_Words);
-                                break;
-                            case "5":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Message_Scam);
-                                break;
-                            case "6":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Message_Hate_Speach);
-                                break;
-                            case "7":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Message_Offensive);
-                                break;
-                            case "8":
-                                report.setShortDescription(ReportCreator.ReportShortDescription.Other);
-                                break;
-                            default:
-                                sender.sendMessage("Zły typ'");
-                                return false;
-
+                        try{
+                        report.setShortDescription(ReportCreator.ReportShortDescription.values()[Integer.parseInt(args[0])]);
                         }
-                        playerCreationStatus.setState(playerCreationStatus.getState()+1);
+                        catch(Exception e){
+                            sender.sendMessage("Coś poszło nie tak");
+                            return false;
+                        }
+                        playerCreationStatus.setState(reportState+1);
                         playerCreationStatus.getPlayer().openInventory(Bukkit.createInventory(null, InventoryType.CHEST));
                         playerCreationStatus.getPlayer().closeInventory();
                         playerCreationStatus.sendSavedMessage();
