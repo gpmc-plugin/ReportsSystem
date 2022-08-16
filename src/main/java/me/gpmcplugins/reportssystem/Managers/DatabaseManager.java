@@ -243,7 +243,7 @@ public class DatabaseManager {
             return null;
     }
     public ReportObject getReport(Integer id) throws SQLException {
-        String sql = "Select * from reports order by timestamp Where id=?";
+        String sql = "Select * from reports Where id=? order by timestamp ;";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,id);
         ResultSet rs = pstmt.executeQuery();
