@@ -109,20 +109,4 @@ public class EventListener implements Listener {
             .clickEvent(ClickEvent.runCommand("/report death "+deathID));
         player.sendMessage(messageTextComponent);
     }
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = false)
-    public void chestApi(InventoryClickEvent e){
-        ItemStack item = e.getCurrentItem();
-        if(e.getWhoClicked() instanceof Player){
-            NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
-            Player player = (Player) e.getWhoClicked();
-            ItemMeta itemmeta = item.getItemMeta();
-            if(itemmeta==null)
-                return;
-            String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
-            if(command!=null){
-                e.setCancelled(true);
-                player.performCommand(command);
-            }
-        }
-    }
 }
