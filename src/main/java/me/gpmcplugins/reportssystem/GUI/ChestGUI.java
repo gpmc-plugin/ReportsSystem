@@ -2,6 +2,7 @@ package me.gpmcplugins.reportssystem.GUI;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -45,7 +46,7 @@ public class ChestGUI implements Listener {
 
     public ChestGUI setTitle(String title)
     {
-        this.title = Component.text(title);
+        this.title = (TextComponent) MiniMessage.miniMessage().deserialize(title);
         return this;
     }
 
@@ -142,10 +143,10 @@ public class ChestGUI implements Listener {
         p.openInventory(this.createInventory());
     }
 
-    public static int getPosByXY(int x, int y)
+    /*public static int getPosByXY(int x, int y)
     {
         return x*9+y;
-    }
+    }*/
 
     public static ItemStack setItemStackName(Component displayName, ItemStack itemStack)
     {

@@ -1,9 +1,11 @@
 package me.gpmcplugins.reportssystem.Commands;
 
+import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class ReportReviewCommand implements CommandExecutor {
 
@@ -15,16 +17,21 @@ public class ReportReviewCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
+        Player p = (Player) sender;
         if (args.length == 0)
         {
-            sendNotImplemented(sender);
+            p.sendMessage("length err");
+            ReportReviewInterface.MainReviewMenu(p);
+            return true;
         }
         switch (args[0])
         {
             case "claimnewreportgui":
-                sendNotImplemented(sender);
+                p.sendMessage("claimnewreportgui");
+                ReportReviewInterface.ClaimNewReportMenu(p);
                 break;
             case "continueclaimedreportgui":
+                p.sendMessage("continueclaimedreportgui");
                 sendNotImplemented(sender);
                 break;
             case "claim":
