@@ -1,10 +1,12 @@
 package me.gpmcplugins.reportssystem.Managers;
 
+import me.gpmcplugins.reportssystem.objects.ReportDeath;
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.entity.Player;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -224,5 +226,15 @@ public class DatabaseManager {
     }
     public Connection getConn(){
         return this.conn;
+    }
+    public ReportDeath getDeath(Integer deathID) throws SQLException {
+        String sql = "Select * from deaths where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,deathID);
+        ResultSet rs = pstmt.executeQuery();
+        if(rs.next())
+            return new ReportDeath(deathID,rs.getString("noob"),rs.getString("message_translate"),rs.getLong("timestamp"),plugin);
+        else
+            return null;
     }
 }
