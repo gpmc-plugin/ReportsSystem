@@ -232,15 +232,22 @@ public class DatabaseManager {
     public Connection getConn(){
         return this.conn;
     }
-    public ReportDeath getDeath(Integer deathID) throws SQLException {
+    public ReportDeath getDeath(Integer deathID)  {
         String sql = "Select * from deaths where id=?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1,deathID);
-        ResultSet rs = pstmt.executeQuery();
-        if(rs.next())
-            return new ReportDeath(deathID,rs.getString("noob"),rs.getString("message_translate"),rs.getLong("timestamp"),plugin);
-        else
-            return null;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,deathID);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next())
+                return new ReportDeath(deathID,rs.getString("noob"),rs.getString("message_translate"),rs.getLong("timestamp"),plugin);
+            else
+                return null;
+        } catch (SQLException e) {
+            throwError(e.getMessage());
+        }
+        return null;
+
     }
     public ReportObject getReport(Integer id) throws SQLException {
         String sql = "Select * from reports Where id=? order by timestamp ;";

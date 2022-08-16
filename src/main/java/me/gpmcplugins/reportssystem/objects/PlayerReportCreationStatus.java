@@ -65,6 +65,7 @@ public class PlayerReportCreationStatus {
     public void sendSummary(ReportCreator report){
         Component firstline = Component.text("Oto podsumowanie twojego zgłoszenia: ",NamedTextColor.GREEN);
         String secoundLine = "Reportujesz ";
+        Component secoundlineadd = Component.empty();
         switch (report.getType()){
             case User:
                 Player reported = plugin.getServer().getPlayer(UUID.fromString(report.getReportedElementID()));
@@ -74,11 +75,15 @@ public class PlayerReportCreationStatus {
                 ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.valueOf(report.getReportedElementID()));
                 secoundLine+="wiadomość użytkownika "+ reportMessage.player.getName()+" o treści: "+reportMessage.message;
                 break;
+            case Death:
+                ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.getReportedElementID()));
+                secoundLine+="swoją śmierć z powodu:\n";
+                secoundlineadd = Component.translatable(death.message_translate,player.displayName());
 
         }
         String thirdLine = "Z powodu: "+ ReportTranslater.fromReportShortDescription(report.getReportShortDescription())+"\n"+report.getDescription();
         player.sendMessage(firstline);
-        player.sendMessage(Component.text(secoundLine,NamedTextColor.GREEN));
+        player.sendMessage(Component.text(secoundLine,NamedTextColor.GREEN).append(secoundlineadd));
         player.sendMessage(Component.text(thirdLine,NamedTextColor.GREEN));
         Component delete = Component.text("[Usuń zgłoszenie]",NamedTextColor.RED)
                 .clickEvent(ClickEvent.runCommand("/reportcontinue delete"));
