@@ -30,7 +30,9 @@ public class ViewInventoryListeners  implements Listener {
     public void viewInventoryCloseEvent(InventoryCloseEvent e){
         if(e.getPlayer() instanceof Player){
             PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(e.getPlayer().getUniqueId().toString());
-            playerStatus.setState(null);
+            if(playerStatus==null)
+                return;
+            playerStatus.setLookingDeathId(null);
         }
     }
 }
