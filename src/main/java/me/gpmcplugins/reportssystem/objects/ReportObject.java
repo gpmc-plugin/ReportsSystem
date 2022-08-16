@@ -60,6 +60,7 @@ public class ReportObject {
             PreparedStatement prstm = conn.prepareStatement(sql);
             prstm.setString(1,reportStatus.toString());
             prstm.setInt(2,this.id);
+
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
         }

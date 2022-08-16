@@ -5,6 +5,7 @@ import me.gpmcplugins.reportssystem.Commands.ReportContinueCommand;
 import me.gpmcplugins.reportssystem.Commands.ReportReviewCommand;
 import me.gpmcplugins.reportssystem.Listeners.ChestGUIListener;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
+import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public final class ReportsSystem extends JavaPlugin {
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         ChestGUIListener.setup(this);
+        this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
 
         getCommand("report").setExecutor(new ReportCommand(this));
         getCommand("report-review").setExecutor(new ReportReviewCommand(this));
