@@ -222,4 +222,7 @@ public class DatabaseManager {
         }
         return reports;
     }
+    public Connection getConn(){
+        return this.conn;
+    }
 }
