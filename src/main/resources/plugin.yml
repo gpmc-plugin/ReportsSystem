@@ -38,3 +38,6 @@ permissions:
   reportsystem.reportreview:
     default: op
     description: Daje użytkownikowi dostęp do /report-review
+  reportsystem.help:
+    default: true
+    description: Daje dostęp do /report-help

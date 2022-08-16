@@ -1,14 +1,18 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.Inventory;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class ViewInventoryListeners  implements Listener {
@@ -22,7 +26,37 @@ public class ViewInventoryListeners  implements Listener {
         PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(e.getWhoClicked().getUniqueId().toString());
         if(playerStatus.getLookingDeathId()!=null){
             Player player = (Player) e.getWhoClicked();
-            e.setCancelled(false);
+            ReportObject report=null;
+            try {
+                report = plugin.getDatabaseManager().getReport(playerStatus.getLookingDeathId());
+                e.setCancelled(report.reportStatus!= ReportObject.ReportStatus.Accepted);
+            } catch (SQLException ex) {
+                plugin.getDatabaseManager().throwError(ex.getMessage());
+            }
+            if(e.getAction()!= InventoryAction.MOVE_TO_OTHER_INVENTORY)
+                e.setCancelled(true);
+            if(!e.isCancelled()){
+                if(e.getClickedInventory().getType()!=InventoryType.PLAYER){
+                    Integer slot = e.getSlot();
+
+                    try {
+                        plugin.getConfig().load("item.yml");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (InvalidConfigurationException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    plugin.getConfig().set(report.reportedID+"."+slot,null);
+                    try {
+                        plugin.getConfig().save("item.yml");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else
+                    e.setCancelled(true);
+            }
+
         }
         }
     }

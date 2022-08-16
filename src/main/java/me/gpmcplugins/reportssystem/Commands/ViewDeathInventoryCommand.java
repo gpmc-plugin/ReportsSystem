@@ -1,7 +1,9 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ViewInventoryGui;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportDeath;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,11 +24,16 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
             if(sender instanceof Player){
                 Player player = (Player) sender;
                 try {
-                    ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(args[0]));
-                    if(death==null){
-                        sender.sendMessage("podane id śmierci nie istnieje");
+                    ReportObject report = plugin.getDatabaseManager().getReport(Integer.valueOf(args[0]));
+                    if(report==null){
+                        sender.sendMessage("Report nie istnieje");
                         return true;
                     }
+                    if(report.type!= ReportCreator.ReportType.Death){
+                        sender.sendMessage("Report nie istnieje");
+                        return true;
+                    }
+                    ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.reportedID));
                     if(death.noob.getUniqueId().toString().equals(player.getUniqueId().toString())){
                         new ViewInventoryGui(plugin,Integer.parseInt(args[0])).openInventory(player);
                     }

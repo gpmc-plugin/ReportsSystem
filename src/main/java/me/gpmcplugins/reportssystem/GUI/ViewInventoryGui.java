@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.GUI;
 
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ViewInventoryGui {
     Integer deathID;
@@ -19,8 +21,15 @@ public class ViewInventoryGui {
         this.deathID = deathID;
     }
     public void openInventory(Player player){
-        Inventory inventory = Bukkit.createInventory(null,45, Component.text("Read only"));
+        Inventory inventory = Bukkit.createInventory(null,54, Component.text("Aby wziąść itemy użyj shift"));
         Integer i=0;
+        ReportObject report;
+        try {
+            report = plugin.getDatabaseManager().getReport(this.deathID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        deathID= Integer.valueOf(report.reportedID);
         PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(player.getUniqueId().toString());
         try {
             plugin.getConfig().load("item.yml");
@@ -29,15 +38,13 @@ public class ViewInventoryGui {
         } catch (InvalidConfigurationException e) {
             throw new RuntimeException(e);
         }
-        while(plugin.getConfig().getItemStack(deathID+"."+i)!=null){
+        while(i<54){
             ItemStack itemStack = plugin.getConfig().getItemStack(deathID+"."+i);
-            if(itemStack==null)
-                break;
             inventory.setItem(i,itemStack);
             i++;
         }
         player.openInventory(inventory);
-        playerStatus.setLookingDeathId(this.deathID);
+        playerStatus.setLookingDeathId(report.id);
 
     }
 }
