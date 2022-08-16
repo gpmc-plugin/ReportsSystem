@@ -75,6 +75,19 @@ public class ReportObject {
         }
 
     }
+    public void setAdmin(String uid){
+        this.admin=plugin.getServer().getPlayer(UUID.fromString(uid));
+        Connection conn = plugin.getDatabaseManager().getConn();
+        String sql = "UPDATE \"main\".\"reports\" SET \"admin\"=? WHERE \"id\"=?";
+        try {
+            PreparedStatement prstm = conn.prepareStatement(sql);
+            prstm.setString(1,uid);
+            prstm.setInt(2,this.id);
+
+        } catch (SQLException e) {
+            plugin.getDatabaseManager().throwError(e.getMessage());
+        }
+    }
     public enum ReportStatus{
         In_Progress,
         Accepted,
