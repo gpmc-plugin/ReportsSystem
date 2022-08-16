@@ -17,6 +17,7 @@ public class PlayerReportCreationStatus {
     private ReportsSystem plugin;
     private Integer reportID = null;
     private Integer state=0;
+    private Integer lookingDeathId=null;
     public PlayerReportCreationStatus(String uuid, ReportsSystem plugin){
         this.plugin=plugin;
         this.uuid=uuid;
@@ -96,5 +97,13 @@ public class PlayerReportCreationStatus {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Integer getLookingDeathId() {
+        return lookingDeathId;
+    }
+
+    public void setLookingDeathId(Integer lookingDeathId) {
+        this.lookingDeathId = lookingDeathId;
     }
 }
