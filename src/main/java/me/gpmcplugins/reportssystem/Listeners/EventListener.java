@@ -104,6 +104,8 @@ public class EventListener implements Listener {
             NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
             Player player = (Player) e.getWhoClicked();
             ItemMeta itemmeta = item.getItemMeta();
+            if(itemmeta==null)
+                return;
             String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
             if(command!=null){
                 e.setCancelled(true);
