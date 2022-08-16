@@ -18,7 +18,7 @@ public class ReportObject {
     public ReportCreator.ReportShortDescription shortDescription;
     public String reportedID;
     public String description;
-    public Player admin;
+    public Player admin=null;
     public Date timestamp;
     public ReportObject(Integer id, String reportingUser, String type, String shortDescription, String reportedID,String description, String admin, Long timestamp, ReportsSystem plugin){
         this.plugin = plugin;
@@ -27,7 +27,8 @@ public class ReportObject {
         this.shortDescription = ReportCreator.ReportShortDescription.valueOf(shortDescription);
         this.reportedID = reportedID;
         this.description=description;
-        this.admin = plugin.getServer().getPlayer(UUID.fromString(admin));
+        if(admin!=null)
+            this.admin = plugin.getServer().getPlayer(UUID.fromString(admin));
         this.timestamp = new Date(timestamp);
 
     }
