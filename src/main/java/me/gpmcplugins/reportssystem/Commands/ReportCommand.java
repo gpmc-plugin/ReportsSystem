@@ -1,7 +1,5 @@
 package me.gpmcplugins.reportssystem.Commands;
 
-import me.gpmcplugins.reportssystem.GUI.BookReportTypeInterface;
-import me.gpmcplugins.reportssystem.GUI.ChestGUI;
 import me.gpmcplugins.reportssystem.GUI.ChestReportTypeInterface;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -9,18 +7,18 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import net.kyori.adventure.text.format.TextColor;
 import me.gpmcplugins.reportssystem.objects.ReportCreator.ReportType;
-import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 // a class for report command
-public final class ReportCommand implements CommandExecutor {
+public final class ReportCommand implements TabExecutor {
     private ReportsSystem plugin;
     public ReportCommand(ReportsSystem plugin){
         this.plugin=plugin;
@@ -35,7 +33,7 @@ public final class ReportCommand implements CommandExecutor {
         Player p = (Player) sender;
         ReportType reportType;
 
-        switch(args[0])
+        switch (args[0].toLowerCase())
         {
             case "death":
                 reportType = ReportType.Death;
@@ -90,13 +88,19 @@ public final class ReportCommand implements CommandExecutor {
         }
         Integer reportID = plugin.getStorageManager().getReportInProgressID();
         plugin.getStorageManager().incrementReportsID();
-        ReportCreator cos = plugin.getStorageManager().createReportTemplate(reportID,reportType,reportedId,((Player) sender).getUniqueId().toString());
-        if(cos == null)
-            return false;
-        return true;
+        ReportCreator report = plugin.getStorageManager().createReportTemplate(reportID,reportType,reportedId,((Player) sender).getUniqueId().toString());
+        return report != null;
     }
-    public void sendNotImplemented(Player p)
-    {
-        p.sendMessage("Not implemented");
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        if (args.length == 0)
+        {
+            List<String> enumArgs = new ArrayList<>();
+            for (ReportType value : ReportType.values()) {
+                enumArgs.add(value.name());
+            }
+            return enumArgs;
+        }
+        return null;
     }
 }
