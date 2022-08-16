@@ -27,7 +27,7 @@ public final class ReportsSystem extends JavaPlugin {
         getCommand("report").setExecutor(new ReportCommand(this));
         getCommand("report-review").setExecutor(new ReportReviewCommand(this));
         getCommand("reportcontinue").setExecutor(new ReportContinueCommand(this));
-        getCommand("help").setExecutor(new HelpCommand(this));
+        getCommand("report-help").setExecutor(new HelpCommand(this));
         ReportReviewInterface.setup(this);
         getCommand("viewDeathInventory").setExecutor(new ViewDeathInventoryCommand(this));
        

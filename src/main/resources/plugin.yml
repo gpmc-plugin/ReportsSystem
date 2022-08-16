@@ -26,9 +26,9 @@ commands:
     description: Pozwala zobaczyć swoje inventory po śmierci
     usage: /viewDeathInventory
     permission: reportsystem.report
-  help:
+  report-help:
     description: Wyświetla pomoc
-    usage: /help
+    usage: /report-help
     permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował
 permissions:
