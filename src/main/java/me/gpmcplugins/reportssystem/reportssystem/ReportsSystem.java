@@ -4,6 +4,8 @@ import me.gpmcplugins.reportssystem.Commands.HelpCommand;
 import me.gpmcplugins.reportssystem.Commands.ReportCommand;
 import me.gpmcplugins.reportssystem.Commands.ReportContinueCommand;
 import me.gpmcplugins.reportssystem.Commands.ReportReviewCommand;
+import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
+import me.gpmcplugins.reportssystem.Commands.ViewDeathInventoryCommand;
 import me.gpmcplugins.reportssystem.Listeners.ChestGUIListener;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
 import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
@@ -26,6 +28,9 @@ public final class ReportsSystem extends JavaPlugin {
         getCommand("report-review").setExecutor(new ReportReviewCommand(this));
         getCommand("reportcontinue").setExecutor(new ReportContinueCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
+        ReportReviewInterface.setup(this);
+        getCommand("viewDeathInventory").setExecutor(new ViewDeathInventoryCommand(this));
+       
     }
 
     @Override

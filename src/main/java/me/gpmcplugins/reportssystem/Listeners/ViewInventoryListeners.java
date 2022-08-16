@@ -22,7 +22,7 @@ public class ViewInventoryListeners  implements Listener {
         PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(e.getWhoClicked().getUniqueId().toString());
         if(playerStatus.getLookingDeathId()!=null){
             Player player = (Player) e.getWhoClicked();
-            e.setCancelled(!player.hasPermission("reportsystem.reportreview"));
+            e.setCancelled(false);
         }
         }
     }

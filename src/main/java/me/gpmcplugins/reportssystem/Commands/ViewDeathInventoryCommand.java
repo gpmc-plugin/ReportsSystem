@@ -27,14 +27,16 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
                         sender.sendMessage("podane id śmierci nie istnieje");
                         return true;
                     }
-                    if(death.noob.getUniqueId().toString()==player.getUniqueId().toString()){
+                    if(death.noob.getUniqueId().toString().equals(player.getUniqueId().toString())){
                         new ViewInventoryGui(plugin,Integer.parseInt(args[0])).openInventory(player);
                     }
                     else
                         sender.sendMessage("to nie ty wtedy umarłeś");
+                    return true;
                 } catch (SQLException e) {
                     plugin.getDatabaseManager().throwError(e.getMessage());
                 }
+                return false;
             }
         }
         else
