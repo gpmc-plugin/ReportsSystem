@@ -1,44 +1,29 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
-import me.gpmcplugins.reportssystem.Statics.Adapters;
+import me.gpmcplugins.reportssystem.GUI.ViewInventoryGui;
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.event.HoverEventSource;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.translation.GlobalTranslator;
-import net.kyori.adventure.translation.TranslationRegistry;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Unmodifiable;
 
-import java.awt.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 
 
 public class EventListener implements Listener {
@@ -101,6 +86,16 @@ public class EventListener implements Listener {
             player.sendMessage("Coś poszło nie tak nie możesz zgłosić swojej śmierci");
             return;
         }
+        List<ItemStack> drops = e.getDrops();
+        for (int i = 0; i < drops.size(); i++) {
+            player.sendMessage("seted");
+            plugin.getConfig().set(deathID+"."+i,drops.get(i));
+        }
+        try {
+            plugin.getConfig().save("item.yml");
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
         TextComponent messageTextComponent = Component.empty()
             .content("[Kliknij tutaj aby zglosic ze smierc jest niesluzna]")
             .color(NamedTextColor.AQUA)
@@ -108,5 +103,6 @@ public class EventListener implements Listener {
                     NamedTextColor.YELLOW, TextDecoration.ITALIC)))
             .clickEvent(ClickEvent.runCommand("/report death "+deathID));
         player.sendMessage(messageTextComponent);
+
     }
 }

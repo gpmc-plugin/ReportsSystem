@@ -24,6 +24,8 @@ public class ChestGUIListener implements Listener {
         if(e.getWhoClicked() instanceof Player){
             NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
             Player player = (Player) e.getWhoClicked();
+            if(item==null)
+                return;
             ItemMeta itemmeta = item.getItemMeta();
             if(itemmeta==null)
                 return;

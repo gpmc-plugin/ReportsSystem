@@ -24,6 +24,7 @@ public class ReportReviewCommand implements CommandExecutor {
             ReportReviewInterface.MainReviewMenu(p);
             return true;
         }
+        p.sendMessage(args[0]);
         switch (args[0])
         {
             case "claimnewreportgui":
