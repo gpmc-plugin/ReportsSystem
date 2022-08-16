@@ -22,6 +22,11 @@ commands:
     usage: /report-review
     permission: reportsystem.reportreview
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
+  help:
+    description: Wyświetla pomoc
+    usage: /help
+    permission: reportsystem.help
+    permission-message: Nev nie lubi naszych pluginów i to zablokował
 permissions:
   reportsystem.report:
     default: true
