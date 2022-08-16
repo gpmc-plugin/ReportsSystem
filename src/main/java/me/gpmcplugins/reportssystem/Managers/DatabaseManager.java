@@ -1,11 +1,14 @@
 package me.gpmcplugins.reportssystem.Managers;
 
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class DatabaseManager {
@@ -51,7 +54,10 @@ public class DatabaseManager {
         rs = stmt.executeQuery(sql);
         rs.next();
         nextReportID = rs.getInt("count(*)");
-
+        sql = "Select count(*) from deaths";
+        rs = stmt.executeQuery(sql);
+        rs.next();
+        nextDeathID=rs.getInt("count(*)");
         } catch (SQLException e) {
             throwError(e.getMessage());
         }
@@ -79,7 +85,14 @@ public class DatabaseManager {
                 "\t\"reported_id\"\tTEXT\n" +
                 ");";
         stmt.execute(sql);
-        sql="";
+        sql="CREATE TABLE IF NOT EXISTS\"deaths\" (\n" +
+                "\t\"id\"\tINTEGER,\n" +
+                "\t\"noob\"\tTEXT,\n" +
+                "\t\"message_translate\"\tTEXT,\n" +
+                "\t\"timestamp\"\tINTEGER,\n" +
+                "\t\"message_key\"\tINTEGER\n" +
+                ");";
+        stmt.execute(sql);
 
     }
 
@@ -91,10 +104,10 @@ public class DatabaseManager {
     }
 
     public int getNextDeathID() {
-        return nextMessageID;
+        return nextDeathID;
     }
     public void incrementNextDeathID(){
-        nextMessageID++;
+        nextDeathID++;
     }
 
     public int getNextReportID() {
@@ -115,7 +128,7 @@ public class DatabaseManager {
         prstm.setLong(5,timestamp);
         prstm.execute();
     }
-    public void createReport(String Sender,String type,String shortDescription,String description,String reportedID) throws SQLException {
+    public Integer createReport(String Sender,String type,String shortDescription,String description,String reportedID) throws SQLException {
         Long timestamp = new Date().getTime();
         String sql = "INSERT INTO \"main\".\"reports\"(\"id\",\"reporting_player\",\"type\",\"short_description\",\"description\",\"timestamp\",\"admin\",\"reported_id\") VALUES (?,?,?,?,?,?,NULL,?);\n";
         Integer reportID = getNextReportID();
@@ -129,6 +142,7 @@ public class DatabaseManager {
         prstm.setLong(6,timestamp);
         prstm.setString(7,reportedID);
         prstm.execute();
+        return reportID;
     }
     public ReportMessage getMessage(Integer id){
 
@@ -147,5 +161,37 @@ public class DatabaseManager {
         }
 
         return null;
+    }
+    public void logDeath(Integer id,String whoDied,String deathMessageTranslate) throws SQLException {
+        String sql = "INSERT INTO \"main\".\"deaths\"(\"id\",\"noob\",\"message_translate\",\"timestamp\",\"message_key\") VALUES (?,?,?,?,NULL);";
+        Long timestamp = new Date().getTime();
+        PreparedStatement prstm = conn.prepareStatement(sql);
+        prstm.setInt(1,id);
+        prstm.setString(2,whoDied);
+        prstm.setString(3,deathMessageTranslate);
+        prstm.setLong(4,timestamp);
+        prstm.execute();
+    }
+    public List<ReportObject> getLastReports(Integer limit, Integer site) throws SQLException {
+        Integer reportsAfter = limit*site;
+        String sql = "Select * from reports order by timestamp DESC Limit ?,?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,reportsAfter);
+        pstmt.setInt(2,limit);
+        ResultSet rs = pstmt.executeQuery();
+        List<ReportObject> reports = new ArrayList<>();
+        while (rs.next()){
+            Integer reportid = rs.getInt("id");
+            String reportingPlayer=rs.getString("reporting_player");
+            String type = rs.getString("type");
+            String shortDescription=rs.getString("short_description");
+            String description = rs.getString("description");
+            Long timestamp = rs.getLong("timestamp");
+            String admin = rs.getString("admin");
+            String reportedId = rs.getString("reported_id");
+            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin));
+
+        }
+        return reports;
     }
 }

@@ -47,12 +47,13 @@ public class ReportCreator {
     public PlayerReportCreationStatus getPlayer(){
         return plugin.getStorageManager().getUser(this.ReportingPlayer);
     }
-    public void createReport(){
+    public Integer createReport(){
         try {
-            plugin.getDatabaseManager().createReport(getReportingPlayer(),getType().toString(),getReportShortDescription().toString(),getDescription(),getReportedElementID());
+             return plugin.getDatabaseManager().createReport(getReportingPlayer(),getType().toString(),getReportShortDescription().toString(),getDescription(),getReportedElementID());
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
         }
+        return null;
     }
 
     public enum ReportType{

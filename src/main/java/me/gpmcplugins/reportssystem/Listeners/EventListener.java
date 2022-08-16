@@ -9,6 +9,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.event.HoverEventSource;
@@ -16,6 +17,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.translation.GlobalTranslator;
+import net.kyori.adventure.translation.TranslationRegistry;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,6 +38,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 
 
 public class EventListener implements Listener {
@@ -87,8 +91,16 @@ public class EventListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e)
     {
         Integer deathID=plugin.getDatabaseManager().getNextDeathID();
-        plugin.getDatabaseManager().incrementNextDeathID();
         Player player = e.getPlayer();
+        plugin.getDatabaseManager().incrementNextDeathID();
+        TranslatableComponent deathMessage = (TranslatableComponent) e.deathMessage();
+        try {
+            plugin.getDatabaseManager().logDeath(deathID,player.getUniqueId().toString(),deathMessage.key());
+        } catch (SQLException ex) {
+            plugin.getDatabaseManager().throwError(ex.getMessage());
+            player.sendMessage("Coś poszło nie tak nie możesz zgłosić swojej śmierci");
+            return;
+        }
         TextComponent messageTextComponent = Component.empty()
             .content("[Kliknij tutaj aby zglosic ze smierc jest niesluzna]")
             .color(NamedTextColor.AQUA)

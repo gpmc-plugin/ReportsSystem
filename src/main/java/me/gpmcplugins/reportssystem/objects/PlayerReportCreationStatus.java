@@ -46,8 +46,8 @@ public class PlayerReportCreationStatus {
     public void sendSavedMessage(){
         player.sendMessage(Component.text("Zapisano!", NamedTextColor.GREEN));
     }
-    public void sendReportCreated(){
-        player.sendMessage(Component.text("Wysłano report!", NamedTextColor.GREEN));
+    public void sendReportCreated(Integer id){
+        player.sendMessage(Component.text("Wysłano report!\n Otrzymał on id: "+id, NamedTextColor.GREEN));
     }
     public void sendReportDeleted(){
         player.sendMessage(Component.text("Usunięto report!", NamedTextColor.GREEN));
@@ -86,8 +86,11 @@ public class PlayerReportCreationStatus {
         player.sendMessage(Component.empty().append(delete).append(save));
     }
     public void createReport(ReportCreator report){
-        report.createReport();
-        this.sendReportCreated();
+        Integer reportid = report.createReport();
+        if(reportid!=null)
+            this.sendReportCreated(reportid);
+        else
+            player.sendMessage(Component.text("Coś poszło nie tak spróbuj ponownie",NamedTextColor.DARK_RED));
         this.clearReport();
     }
 
