@@ -15,6 +15,10 @@ public class ReportReviewCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
+        if (args.length == 0)
+        {
+            sendNotImplemented(sender);
+        }
         switch (args[0])
         {
             case "claimnewreportgui":
@@ -48,9 +52,6 @@ public class ReportReviewCommand implements CommandExecutor {
                 }
                 Integer denyId = Integer.parseInt(args[1]);
                 sendNotImplemented(sender);
-                sendNotImplemented(sender);
-                break;
-            default:
                 sendNotImplemented(sender);
                 break;
         }
