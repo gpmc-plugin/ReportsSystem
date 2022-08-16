@@ -79,6 +79,7 @@ public class DatabaseManager {
                 "\t\"reported_id\"\tTEXT\n" +
                 ");";
         stmt.execute(sql);
+        sql="";
 
     }
 
@@ -93,8 +94,7 @@ public class DatabaseManager {
         return nextMessageID;
     }
     public void incrementNextDeathID(){
-        nextMessageID = 1;
-        //nextMessageID++;
+        nextMessageID++;
     }
 
     public int getNextReportID() {

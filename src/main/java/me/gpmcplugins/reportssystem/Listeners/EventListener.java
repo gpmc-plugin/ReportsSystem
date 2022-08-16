@@ -16,6 +16,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,6 +26,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
@@ -82,8 +86,7 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent e)
     {
-        //Integer deathID=plugin.getDatabaseManager().getNextDeathID();
-        Integer deathID = 0;
+        Integer deathID=plugin.getDatabaseManager().getNextDeathID();
         plugin.getDatabaseManager().incrementNextDeathID();
         Player player = e.getPlayer();
         TextComponent messageTextComponent = Component.empty()
@@ -93,5 +96,19 @@ public class EventListener implements Listener {
                     NamedTextColor.YELLOW, TextDecoration.ITALIC)))
             .clickEvent(ClickEvent.runCommand("/report death "+deathID));
         player.sendMessage(messageTextComponent);
+    }
+    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = false)
+    public void chestApi(InventoryClickEvent e){
+        ItemStack item = e.getCurrentItem();
+        if(e.getWhoClicked() instanceof Player){
+            NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
+            Player player = (Player) e.getWhoClicked();
+            ItemMeta itemmeta = item.getItemMeta();
+            String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
+            if(command!=null){
+                e.setCancelled(true);
+                player.performCommand(command);
+            }
+        }
     }
 }
