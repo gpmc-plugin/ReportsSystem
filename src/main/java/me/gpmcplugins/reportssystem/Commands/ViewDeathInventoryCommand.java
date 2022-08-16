@@ -13,7 +13,9 @@ import java.sql.SQLException;
 
 public class ViewDeathInventoryCommand implements CommandExecutor {
     private ReportsSystem plugin;
-    public ViewDeathInventoryCommand(Repo)
+    public ViewDeathInventoryCommand(ReportsSystem plugin){
+        this.plugin=plugin;
+    }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(args.length>0){
