@@ -21,6 +21,7 @@ public class ReportObject {
     public Player admin=null;
     public Date timestamp;
     public ReportObject(Integer id, String reportingUser, String type, String shortDescription, String reportedID,String description, String admin, Long timestamp, ReportsSystem plugin){
+        this.id=id;
         this.plugin = plugin;
         this.reportingUser = plugin.getServer().getPlayer(UUID.fromString(reportingUser));
         this.type = ReportCreator.ReportType.valueOf(type);
