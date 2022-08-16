@@ -20,4 +20,8 @@ public class IconItemstack {
     public static ItemStack offendingIconItemStack = ChestGUI.setItemStackName(Component.text("OBRAZANIE INNYCH UZYTKOWNIKOW", itemColor, TextDecoration.BOLD), new ItemStack(Material.WITHER_ROSE));
     public static ItemStack claimNewReportIconItemStack = ChestGUI.setItemStackName(Component.text("PRZEJMIJ NOWY REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.REDSTONE_TORCH));
     public static ItemStack continueReportIconItemStack = ChestGUI.setItemStackName(Component.text("KONTYNUUJ PRZEJETY REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.CHEST));
+    public static ItemStack deathReportIconItemStack = ChestGUI.setItemStackName(Component.text("REPORT SMIERCI", itemColor, TextDecoration.BOLD), new ItemStack(Material.WITHER_SKELETON_SKULL));
+    public static ItemStack messageReportIconItemStack = ChestGUI.setItemStackName(Component.text("REPORT WIADOMOSCI", itemColor, TextDecoration.BOLD), new ItemStack(Material.SPRUCE_SIGN));
+    public static ItemStack userReportIconItemStack = ChestGUI.setItemStackName(Component.text("REPORT GRACZA", itemColor, TextDecoration.BOLD), new ItemStack(Material.PLAYER_HEAD));
+
 }

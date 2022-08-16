@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.GUI;
 
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
@@ -32,7 +33,7 @@ public class ReportReviewInterface {
     }
 
     public static void ClaimNewReportMenu(Player p) {
-        p.sendMessage("szylazcmd");
+        p.sendMessage("aaaszylazcmdaaa");
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>");
         List<ReportObject> reportObjectList;
         try {
@@ -41,8 +42,26 @@ public class ReportReviewInterface {
             throw new RuntimeException(e);
         }
         for (int i = 0; i < reportObjectList.size(); i++) {
-            gui.setItem(10+i*9, ChestGUI.setItemStackName(Component.text(reportObjectList.get(i).id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK)), "/say " + reportObjectList.get(i).id);
+            ReportObject reportObject = reportObjectList.get(i);
+            int position = 10+i*9;
+            gui.setItem(position, ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK)), "/say " + reportObjectList.get(i).id);
+            gui.setItem(position+1, GetItemReportByType(reportObject.type));
         }
         gui.showGUI(p);
     }
+
+    public static ItemStack GetItemReportByType(ReportCreator.ReportType reportType)
+    {
+        switch (reportType)
+        {
+            case User:
+                return userReportIconItemStack;
+            case Message:
+                return  messageReportIconItemStack;
+            case Death:
+                return  deathReportIconItemStack;
+        }
+        return null;
+    }
+
 }

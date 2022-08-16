@@ -84,8 +84,7 @@ public class DatabaseManager {
                 "\t\"description\"\tTEXT,\n" +
                 "\t\"timestamp\"\tTEXT,\n" +
                 "\t\"admin\"\tTEXT,\n" +
-                "\t\"reported_id\"\tTEXT,\n" +
-                "\"status\"\tTEXT"+
+                "\t\"reported_id\"\tTEXT\n" +
                 ");";
         stmt.execute(sql);
         sql="CREATE TABLE IF NOT EXISTS\"deaths\" (\n" +
@@ -185,7 +184,7 @@ public class DatabaseManager {
     }
     public List<ReportObject> getLastReports(Integer limit, Integer site, boolean open) throws SQLException {
         Integer reportsAfter = limit*site;
-        String sql = "Select * from reports where status is "+(open?"NULL":"NOT NULL")+" order by timestamp DESC Limit ?,?";
+        String sql = "Select * from reports where status is "+(open?"NULL":"NOT NULL")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,reportsAfter);
         pstmt.setInt(2,limit);
