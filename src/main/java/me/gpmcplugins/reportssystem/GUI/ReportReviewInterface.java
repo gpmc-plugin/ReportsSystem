@@ -33,10 +33,10 @@ public class ReportReviewInterface {
 
     public static void ClaimNewReportMenu(Player p) {
         p.sendMessage("szylazcmd");
-        ChestGUI gui = new ChestGUI(27).setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>");
+        ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>");
         List<ReportObject> reportObjectList;
         try {
-            reportObjectList = plugin.getDatabaseManager().getLastReports(4, 0);
+            reportObjectList = plugin.getDatabaseManager().getLastReports(4, 0,true);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

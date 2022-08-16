@@ -84,7 +84,8 @@ public class DatabaseManager {
                 "\t\"description\"\tTEXT,\n" +
                 "\t\"timestamp\"\tTEXT,\n" +
                 "\t\"admin\"\tTEXT,\n" +
-                "\t\"reported_id\"\tTEXT\n" +
+                "\t\"reported_id\"\tTEXT,\n" +
+                "\"status\"\tTEXT"+
                 ");";
         stmt.execute(sql);
         sql="CREATE TABLE IF NOT EXISTS\"deaths\" (\n" +
@@ -95,11 +96,14 @@ public class DatabaseManager {
                 "\t\"message_key\"\tINTEGER\n" +
                 ");";
         stmt.execute(sql);
-        sql="CREATE TABLE IF NOT EXISTS\"reports_status\" (\n" +
-                "\t\"id\"\tINTEGER,\n" +
-                "\t\"status\"\tINTEGER\n" +
-                ");";
-        stmt.execute(sql);
+        try{
+            sql="Alter table reports add column status TEXT";
+            stmt.execute(sql);
+        }
+        catch(Exception e){
+
+        }
+
 
     }
 
@@ -179,9 +183,9 @@ public class DatabaseManager {
         prstm.setLong(4,timestamp);
         prstm.execute();
     }
-    public List<ReportObject> getLastReports(Integer limit, Integer site) throws SQLException {
+    public List<ReportObject> getLastReports(Integer limit, Integer site, boolean open) throws SQLException {
         Integer reportsAfter = limit*site;
-        String sql = "Select * from reports order by timestamp DESC Limit ?,?";
+        String sql = "Select * from reports where status is "+(open?"NULL":"NOT NULL")+" order by timestamp DESC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,reportsAfter);
         pstmt.setInt(2,limit);
@@ -196,12 +200,13 @@ public class DatabaseManager {
             Long timestamp = rs.getLong("timestamp");
             String admin = rs.getString("admin");
             String reportedId = rs.getString("reported_id");
-            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin));
+            String status = rs.getString("status");
+            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin,status));
 
         }
         return reports;
     }
-    public List<ReportObject> getUserReport(String adminId,Integer limit, Integer site) throws SQLException {
+    public List<ReportObject> getUserReport(String adminId,Integer limit, Integer site, boolean open) throws SQLException {
         Integer reportsAfter = limit*site;
         String sql = "Select * from reports order by timestamp Where admin=? Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -219,7 +224,8 @@ public class DatabaseManager {
             Long timestamp = rs.getLong("timestamp");
             String admin = rs.getString("admin");
             String reportedId = rs.getString("reported_id");
-            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin));
+            String status = rs.getString("status");
+            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin,status));
 
         }
         return reports;
@@ -236,5 +242,26 @@ public class DatabaseManager {
             return new ReportDeath(deathID,rs.getString("noob"),rs.getString("message_translate"),rs.getLong("timestamp"),plugin);
         else
             return null;
+    }
+    public ReportObject getReport(Integer id) throws SQLException {
+        String sql = "Select * from reports order by timestamp Where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,id);
+        ResultSet rs = pstmt.executeQuery();
+        List<ReportObject> reports = new ArrayList<>();
+        if (rs.next()){
+            Integer reportid = rs.getInt("id");
+            String reportingPlayer=rs.getString("reporting_player");
+            String type = rs.getString("type");
+            String shortDescription=rs.getString("short_description");
+            String description = rs.getString("description");
+            Long timestamp = rs.getLong("timestamp");
+            String admin = rs.getString("admin");
+            String reportedId = rs.getString("reported_id");
+            String status = rs.getString("status");
+            return new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin,status);
+
+        }
+        return null;
     }
 }

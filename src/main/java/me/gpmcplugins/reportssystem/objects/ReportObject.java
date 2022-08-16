@@ -20,7 +20,8 @@ public class ReportObject {
     public String description;
     public Player admin=null;
     public Date timestamp;
-    public ReportObject(Integer id, String reportingUser, String type, String shortDescription, String reportedID,String description, String admin, Long timestamp, ReportsSystem plugin){
+    public ReportStatus reportStatus;
+    public ReportObject(Integer id, String reportingUser, String type, String shortDescription, String reportedID,String description, String admin, Long timestamp, ReportsSystem plugin, String status){
         this.id=id;
         this.plugin = plugin;
         this.reportingUser = plugin.getServer().getPlayer(UUID.fromString(reportingUser));
@@ -31,11 +32,15 @@ public class ReportObject {
         if(admin!=null)
             this.admin = plugin.getServer().getPlayer(UUID.fromString(admin));
         this.timestamp = new Date(timestamp);
+        if(status==null)
+            this.reportStatus=ReportStatus.In_Progress;
+        else
+            this.reportStatus=ReportStatus.valueOf(status);
 
     }
     public ReportStatus getReportStatus(){
         Connection conn = plugin.getDatabaseManager().getConn();
-        String sql = "Select status from reports_status where id=?";
+        String sql = "Select status from reports where id=?";
         try {
             PreparedStatement prstm = conn.prepareStatement(sql);
             prstm.setInt(1,this.id);
@@ -57,9 +62,11 @@ public class ReportObject {
     }
     public void setReportStatus(ReportStatus reportStatus){
         Connection conn = plugin.getDatabaseManager().getConn();
-        String sql = "UPDATE \"main\".\"reports_status\" SET \"status\"=? WHERE \"id\"=?";
+        String sql = "UPDATE \"main\".\"reports\" SET \"status\"=? WHERE \"id\"=?";
         try {
             PreparedStatement prstm = conn.prepareStatement(sql);
+            if(reportStatus==ReportStatus.In_Progress)
+                reportStatus=null;
             prstm.setString(1,reportStatus.toString());
             prstm.setInt(2,this.id);
 
