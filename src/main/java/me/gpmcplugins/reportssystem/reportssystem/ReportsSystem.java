@@ -13,6 +13,8 @@ import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class ReportsSystem extends JavaPlugin {
     DatabaseManager databaseManager = new DatabaseManager(this);
     EventListener eventListener = new EventListener(this);
@@ -23,14 +25,13 @@ public final class ReportsSystem extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         ChestGUIListener.setup(this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
-
-        getCommand("report").setExecutor(new ReportCommand(this));
-        getCommand("report-review").setExecutor(new ReportReviewCommand(this));
-        getCommand("reportcontinue").setExecutor(new ReportContinueCommand(this));
-        getCommand("report-help").setExecutor(new HelpCommand(this));
         ReportReviewInterface.setup(this);
-        getCommand("viewDeathInventory").setExecutor(new ViewDeathInventoryCommand(this));
-       
+
+        Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
+        Objects.requireNonNull(getCommand("report-review")).setExecutor(new ReportReviewCommand(this));
+        Objects.requireNonNull(getCommand("reportcontinue")).setExecutor(new ReportContinueCommand(this));
+        Objects.requireNonNull(getCommand("report-help")).setExecutor(new HelpCommand(this));
+        Objects.requireNonNull(getCommand("viewDeathInventory")).setExecutor(new ViewDeathInventoryCommand(this));
     }
 
     @Override

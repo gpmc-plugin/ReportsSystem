@@ -1,7 +1,6 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
-import me.gpmcplugins.reportssystem.GUI.ViewInventoryGui;
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -27,13 +26,13 @@ import java.util.List;
 
 
 public class EventListener implements Listener {
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public EventListener(ReportsSystem plugin){
         this.plugin=plugin;
     }
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChatMessage(AsyncChatEvent e){
-        Integer messageID=plugin.getDatabaseManager().getNextMessageID();
+        int messageID=plugin.getDatabaseManager().getNextMessageID();
         plugin.getDatabaseManager().incrementNextMessageID();
         String sender = e.getPlayer().getUniqueId().toString();
         String message = ((TextComponent) e.message()).content();
@@ -80,6 +79,7 @@ public class EventListener implements Listener {
         plugin.getDatabaseManager().incrementNextDeathID();
         TranslatableComponent deathMessage = (TranslatableComponent) e.deathMessage();
         try {
+            assert deathMessage != null;
             plugin.getDatabaseManager().logDeath(deathID,player.getUniqueId().toString(),deathMessage.key());
         } catch (SQLException ex) {
             plugin.getDatabaseManager().throwError(ex.getMessage());

@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 
 public class ReportContinueCommand implements CommandExecutor {
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public ReportContinueCommand(ReportsSystem plugin){
         this.plugin=plugin;
     }

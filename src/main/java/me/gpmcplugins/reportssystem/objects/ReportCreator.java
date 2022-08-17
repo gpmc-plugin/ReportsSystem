@@ -5,12 +5,12 @@ import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import java.sql.SQLException;
 
 public class ReportCreator {
-    private ReportType type;
-    private String ReportingPlayer;
-    private String ReportedElementID;
+    private final ReportType type;
+    private final String ReportingPlayer;
+    private final String ReportedElementID;
     private String Description="Nie podano dokładnego powodu";
     private ReportShortDescription reportShortDescription;
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public ReportCreator(ReportType type, String reportingPlayer, String reportedElementID, ReportsSystem plugin){
         this.plugin=plugin;
         this.type=type;

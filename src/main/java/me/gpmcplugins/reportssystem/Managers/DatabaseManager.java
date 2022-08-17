@@ -6,7 +6,6 @@ import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.entity.Player;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,8 +27,7 @@ public class DatabaseManager {
         plugin.getServer().getConsoleSender().sendMessage(error);
     }
     public void connect() {
-        if(!this.plugin.getDataFolder().exists())
-            plugin.getDataFolder().mkdir();
+        assert this.plugin.getDataFolder().exists() || !plugin.getDataFolder().mkdir();
         String dbPath = this.plugin.getDataFolder().getAbsolutePath()+"\\db.db";
         String connString = "jdbc:sqlite:"+dbPath;
         try{
@@ -99,8 +97,7 @@ public class DatabaseManager {
             sql="Alter table reports add column status TEXT";
             stmt.execute(sql);
         }
-        catch(Exception e){
-
+        catch(SQLException ignored){
         }
 
 
@@ -128,7 +125,7 @@ public class DatabaseManager {
     }
 
     public void logMessage(int ID, String Sender, String Recipients, String message) throws SQLException {
-        Long timestamp = new Date().getTime();
+        long timestamp = new Date().getTime();
         String sql = "INSERT INTO \"main\".\"message_log\"(\"id\",\"sender\",\"recipients\",\"message\",\"timestamp\") VALUES (?,?,?,?,?);";
         PreparedStatement prstm= conn.prepareStatement(sql);
         prstm.setInt(1,ID);
@@ -139,9 +136,9 @@ public class DatabaseManager {
         prstm.execute();
     }
     public Integer createReport(String Sender,String type,String shortDescription,String description,String reportedID) throws SQLException {
-        Long timestamp = new Date().getTime();
+        long timestamp = new Date().getTime();
         String sql = "INSERT INTO \"main\".\"reports\"(\"id\",\"reporting_player\",\"type\",\"short_description\",\"description\",\"timestamp\",\"admin\",\"reported_id\") VALUES (?,?,?,?,?,?,NULL,?);\n";
-        Integer reportID = getNextReportID();
+        int reportID = getNextReportID();
         incrementNextReportID();
         PreparedStatement prstm= conn.prepareStatement(sql);
         prstm.setInt(1,reportID);
@@ -158,7 +155,7 @@ public class DatabaseManager {
 
         try {
             String sql = "Select * from message_log where id=?";
-            PreparedStatement pstmt = null;
+            PreparedStatement pstmt;
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,id);
             ResultSet rs = pstmt.executeQuery();
@@ -174,7 +171,7 @@ public class DatabaseManager {
     }
     public void logDeath(Integer id,String whoDied,String deathMessageTranslate) throws SQLException {
         String sql = "INSERT INTO \"main\".\"deaths\"(\"id\",\"noob\",\"message_translate\",\"timestamp\",\"message_key\") VALUES (?,?,?,?,NULL);";
-        Long timestamp = new Date().getTime();
+        long timestamp = new Date().getTime();
         PreparedStatement prstm = conn.prepareStatement(sql);
         prstm.setInt(1,id);
         prstm.setString(2,whoDied);
@@ -183,7 +180,7 @@ public class DatabaseManager {
         prstm.execute();
     }
     public List<ReportObject> getLastReports(Integer limit, Integer site, boolean open) throws SQLException {
-        Integer reportsAfter = limit*site;
+        int reportsAfter = limit*site;
         String sql = "Select * from reports where status is "+(open?"NULL":"NOT NULL")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,reportsAfter);
@@ -205,9 +202,9 @@ public class DatabaseManager {
         }
         return reports;
     }
-    public List<ReportObject> getUserReport(String adminId,Integer limit, Integer site, boolean open) throws SQLException {
-        Integer reportsAfter = limit*site;
-        String sql = "Select * from reports order by timestamp Where admin=? Limit ?,?";
+    public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, boolean open) throws SQLException {
+        int reportsAfter = limit*site;
+        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " order by timestamp ASC Where admin=? Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,adminId);
         pstmt.setInt(2,reportsAfter);
@@ -234,7 +231,7 @@ public class DatabaseManager {
     }
     public ReportDeath getDeath(Integer deathID)  {
         String sql = "Select * from deaths where id=?";
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,deathID);
@@ -254,7 +251,6 @@ public class DatabaseManager {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,id);
         ResultSet rs = pstmt.executeQuery();
-        List<ReportObject> reports = new ArrayList<>();
         if (rs.next()){
             Integer reportid = rs.getInt("id");
             String reportingPlayer=rs.getString("reporting_player");

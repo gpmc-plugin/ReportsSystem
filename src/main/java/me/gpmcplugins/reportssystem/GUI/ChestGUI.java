@@ -4,9 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -14,13 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.bukkit.Bukkit.createInventory;
-
 public class ChestGUI implements Listener {
-    static final NamespacedKey itemIdKey = new NamespacedKey("chestgui", "itemid");
     static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
     static final NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
     static Integer nextGuiId = 0;
@@ -50,39 +42,6 @@ public class ChestGUI implements Listener {
         return this;
     }
 
-    /*public ChestGUI setItem(int position, Integer id, ItemStack itemStack)
-    {
-        if(position >= this.size)
-        {
-            position = this.size;
-        }
-
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.getPersistentDataContainer().set(itemIdKey, PersistentDataType.INTEGER, id);
-        itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, id);
-        itemStack.setItemMeta(itemMeta);
-        this.items[position] = itemStack;
-        //this.items.put(position, itemStack);
-        return this;
-    }
-
-    public ChestGUI setItem(int position, Integer id, ItemStack itemStack, String onClickCommand)
-    {
-        if(position >= this.size)
-        {
-            position = this.size;
-        }
-
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.getPersistentDataContainer().set(itemIdKey, PersistentDataType.INTEGER, id);
-        itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, id);
-        itemMeta.getPersistentDataContainer().set(onClickCommandKey, PersistentDataType.STRING, onClickCommand);
-        itemStack.setItemMeta(itemMeta);
-        this.items[position] = itemStack;
-        //this.items.put(position, itemStack);
-        return this;
-    }*/
-
     public ChestGUI setItem(int position, ItemStack itemStack)
     {
         ItemStack stack = itemStack.clone();
@@ -95,7 +54,6 @@ public class ChestGUI implements Listener {
         itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, guiId);
         stack.setItemMeta(itemMeta);
         this.items[position] = stack;
-        //this.items.put(position, itemStack);
         return this;
     }
 
@@ -112,7 +70,6 @@ public class ChestGUI implements Listener {
         itemMeta.getPersistentDataContainer().set(onClickCommandKey, PersistentDataType.STRING, onClickCommand);
         stack.setItemMeta(itemMeta);
         this.items[position] = stack;
-        //this.items.put(position, itemStack);
         return this;
     }
 
@@ -131,12 +88,6 @@ public class ChestGUI implements Listener {
             else if(backgroundItem != null)
                 inventory.setItem(i, backgroundItem);
         }
-        /*for(Map.Entry<Integer, ItemStack> entry : items.entrySet()) {
-            Integer key = entry.getKey();
-            ItemStack value = entry.getValue();
-
-            inventory.setItem(key, value);
-        }*/
         return inventory;
     }
 
@@ -144,11 +95,6 @@ public class ChestGUI implements Listener {
     {
         p.openInventory(this.createInventory());
     }
-
-    /*public static int getPosByXY(int x, int y)
-    {
-        return x*9+y;
-    }*/
 
     public static ItemStack setItemStackName(Component displayName, ItemStack itemStack)
     {

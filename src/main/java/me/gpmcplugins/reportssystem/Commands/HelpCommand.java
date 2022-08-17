@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class HelpCommand implements CommandExecutor {
 
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public HelpCommand(ReportsSystem plugin){
         this.plugin=plugin;
     }

@@ -7,18 +7,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 
 public class ReportReviewCommand implements CommandExecutor {
 
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public ReportReviewCommand(ReportsSystem plugin){
         this.plugin=plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args)
     {
         Player p = (Player) sender;
         if (args.length == 0)
@@ -42,15 +43,13 @@ public class ReportReviewCommand implements CommandExecutor {
                     return false;
                 }
                 Integer claimId = Integer.parseInt(args[1]);
-                sendNotImplemented(sender);
-                /*
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(claimId);
-                    //todo reportObject.setReportStatus(ReportObject.ReportStatus.In_Progress);
+                    reportObject.setAdmin(p.getUniqueId().toString());
                     p.sendMessage("Successfully claimed report with id " + reportObject.id);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
-                }*/
+                }
                 break;
             case "accept":
                 if (args[1] == null)

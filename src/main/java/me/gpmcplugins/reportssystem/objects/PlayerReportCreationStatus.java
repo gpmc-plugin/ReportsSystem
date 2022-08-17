@@ -12,16 +12,14 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class PlayerReportCreationStatus {
-    private String uuid;
-    private Player player;
-    private ReportsSystem plugin;
+    private final Player player;
+    private final ReportsSystem plugin;
     private Integer reportID = null;
     private Integer state=0;
     private Integer lookingDeathId=null;
     public PlayerReportCreationStatus(String uuid, ReportsSystem plugin){
         this.plugin=plugin;
-        this.uuid=uuid;
-        player = plugin.getServer().getPlayer(UUID.fromString(this.uuid));
+        player = plugin.getServer().getPlayer(UUID.fromString(uuid));
 
     }
     public void clearReport(){
@@ -69,6 +67,7 @@ public class PlayerReportCreationStatus {
         switch (report.getType()){
             case User:
                 Player reported = plugin.getServer().getPlayer(UUID.fromString(report.getReportedElementID()));
+                assert reported != null;
                 secoundLine+="użytkownika "+reported.getName();
                 break;
             case Message:

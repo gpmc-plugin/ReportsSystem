@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.SQLException;
 
 public class ViewDeathInventoryCommand implements CommandExecutor {
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public ViewDeathInventoryCommand(ReportsSystem plugin){
         this.plugin=plugin;
     }

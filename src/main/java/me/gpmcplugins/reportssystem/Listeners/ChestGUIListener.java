@@ -11,14 +11,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 
 public class ChestGUIListener implements Listener {
-    private JavaPlugin plugin;
-    public ChestGUIListener(JavaPlugin plugin){
-        this.plugin=plugin;
+    public ChestGUIListener(){
     }
 
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = false)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void itemClickevent(InventoryClickEvent e){
         ItemStack item = e.getCurrentItem();
         if(e.getWhoClicked() instanceof Player){
@@ -43,10 +43,10 @@ public class ChestGUIListener implements Listener {
         }
     }
 
-    public static ChestGUIListener setup(JavaPlugin plugin)
+    public static void setup(JavaPlugin plugin)
     {
-        ChestGUIListener listener = new ChestGUIListener(plugin);
+        plugin.getLogger().log(Level.INFO, "ChestGUIListener has been set up successfully");
+        ChestGUIListener listener = new ChestGUIListener();
         plugin.getServer().getPluginManager().registerEvents(listener,plugin);
-        return listener;
     }
 }

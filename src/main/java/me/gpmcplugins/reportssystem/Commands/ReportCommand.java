@@ -13,18 +13,17 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import me.gpmcplugins.reportssystem.objects.ReportCreator.ReportType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 // a class for report command
 public final class ReportCommand implements TabExecutor {
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public ReportCommand(ReportsSystem plugin){
         this.plugin=plugin;
     }
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Only players can run this command.");
             return true;
@@ -99,16 +98,11 @@ public final class ReportCommand implements TabExecutor {
         return report != null;
     }
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public @NotNull List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         List<String> enumArgs = new ArrayList<>();
         if (args.length == 1)
         {
             enumArgs.add("User");
-            /*
-            for (ReportType value : ReportType.values()) {
-                enumArgs.add(value.name());
-            }
-            return enumArgs;*/
         }
         return enumArgs;
     }

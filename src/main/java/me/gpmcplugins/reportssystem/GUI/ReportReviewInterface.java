@@ -1,6 +1,5 @@
 package me.gpmcplugins.reportssystem.GUI;
 
-import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -9,7 +8,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -60,7 +59,7 @@ public class ReportReviewInterface {
         gui.showGUI(p);
     }
 
-    public static ItemStack GetItemReportByReportType(ReportCreator.ReportType reportType)
+    public static @NotNull ItemStack GetItemReportByReportType(ReportCreator.ReportType reportType)
     {
         switch (reportType)
         {
@@ -71,19 +70,19 @@ public class ReportReviewInterface {
             case Death:
                 return  deathReportIconItemStack;
         }
-        return null;
+        return otherIconItemStack;
     }
 
-    public static ItemStack GetItemReportByType(ReportCreator.ReportShortDescription shortDescription)
+    public static @NotNull ItemStack GetItemReportByType(ReportCreator.ReportShortDescription shortDescription)
     {
         switch (shortDescription)
         {
             case Other:
+            case Death_Other_Player:
                 return otherIconItemStack;
             case Death_Bug:
                 return bugIconItemStack;
             case User_Scam:
-                return fraudIconItemStack;
             case Message_Scam:
                 return fraudIconItemStack;
             case User_Cheating:
@@ -92,11 +91,9 @@ public class ReportReviewInterface {
                 return swearingIconItemStack;
             case Message_Offensive:
                 return offendingIconItemStack;
-            case Death_Other_Player:
-                return otherIconItemStack;
             case Message_Hate_Speach:
                 return speakingWrongIconItemStack;
         }
-        return null;
+        return otherIconItemStack;
     }
 }

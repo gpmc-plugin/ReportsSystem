@@ -46,11 +46,7 @@ public class ReportObject {
             prstm.setInt(1,this.id);
             ResultSet rs=prstm.executeQuery();
             if(rs.next()){
-                ReportStatus reportStatus = ReportStatus.valueOf(rs.getString("status"));
-                if(reportStatus==null)
-                    return ReportStatus.In_Progress;
-                else
-                    return reportStatus;
+                return ReportStatus.valueOf(rs.getString("status"));
             }
 
             else
@@ -67,6 +63,7 @@ public class ReportObject {
             PreparedStatement prstm = conn.prepareStatement(sql);
             if(reportStatus==ReportStatus.In_Progress)
                 reportStatus=null;
+            assert reportStatus != null;
             prstm.setString(1,reportStatus.toString());
             prstm.setInt(2,this.id);
 
