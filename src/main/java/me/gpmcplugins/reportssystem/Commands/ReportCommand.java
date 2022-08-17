@@ -33,7 +33,7 @@ public final class ReportCommand implements TabExecutor {
         Player p = (Player) sender;
         ReportType reportType;
 
-        if(args.length ==0)
+        if(args.length == 0)
         {
             p.sendMessage("");
         }

@@ -85,31 +85,33 @@ public class ChestGUI implements Listener {
 
     public ChestGUI setItem(int position, ItemStack itemStack)
     {
+        ItemStack stack = itemStack.clone();
         if(position >= this.size)
         {
             position = this.size;
         }
 
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemMeta itemMeta = stack.getItemMeta();
         itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, guiId);
-        itemStack.setItemMeta(itemMeta);
-        this.items[position] = itemStack;
+        stack.setItemMeta(itemMeta);
+        this.items[position] = stack;
         //this.items.put(position, itemStack);
         return this;
     }
 
     public ChestGUI setItem(int position, ItemStack itemStack, String onClickCommand)
     {
+        ItemStack stack = itemStack.clone();
         if(position >= this.size)
         {
             position = this.size;
         }
 
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemMeta itemMeta = stack.getItemMeta();
         itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, guiId);
         itemMeta.getPersistentDataContainer().set(onClickCommandKey, PersistentDataType.STRING, onClickCommand);
-        itemStack.setItemMeta(itemMeta);
-        this.items[position] = itemStack;
+        stack.setItemMeta(itemMeta);
+        this.items[position] = stack;
         //this.items.put(position, itemStack);
         return this;
     }

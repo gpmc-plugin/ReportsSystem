@@ -47,8 +47,10 @@ public class ReportReviewInterface {
             int position = 10+i*9;
             ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
 
+
+
             p.sendMessage(reportObjectList.get(i).id.toString());
-            gui.setItem(position, reportIconItemStack, "say " + reportObjectList.get(i).id);
+            gui.setItem(position, reportIconItemStack);
             gui.setItem(position+1, GetItemReportByReportType(reportObject.type));
             gui.setItem(position+2, GetItemReportByType(reportObject.shortDescription));
             gui.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id);
