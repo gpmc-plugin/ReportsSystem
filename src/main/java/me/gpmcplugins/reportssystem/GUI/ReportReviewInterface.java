@@ -42,7 +42,7 @@ public class ReportReviewInterface {
         }
         if(reportObjectList.size() == 0)
         {
-            gui.setItem(24, noReportsIconItemItemStack);
+            gui.setItem(22, noReportsIconItemItemStack);
         }
         for (int i = 0; i < reportObjectList.size(); i++) {
             ReportObject reportObject = reportObjectList.get(i);
@@ -51,7 +51,6 @@ public class ReportReviewInterface {
 
 
 
-            p.sendMessage(reportObjectList.get(i).id.toString());
             gui.setItem(position, reportIconItemStack)
                 .setItem(position+1, GetItemReportByReportType(reportObject.type))
                 .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
@@ -110,7 +109,7 @@ public class ReportReviewInterface {
         }
         if(reportObjectList.size() == 0)
         {
-            gui.setItem(24, noReportsIconItemItemStack);
+            gui.setItem(22, noReportsIconItemItemStack);
         }
         for (int i = 0; i < reportObjectList.size(); i++) {
             ReportObject reportObject = reportObjectList.get(i);
@@ -119,7 +118,6 @@ public class ReportReviewInterface {
 
 
 
-            p.sendMessage(reportObjectList.get(i).id.toString());
             gui.setItem(position, reportIconItemStack)
                     .setItem(position+1, GetItemReportByReportType(reportObject.type))
                     .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
