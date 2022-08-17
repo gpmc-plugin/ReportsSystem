@@ -1,6 +1,5 @@
 package me.gpmcplugins.reportssystem.Managers;
 
-import jdk.jfr.internal.LogLevel;
 import me.gpmcplugins.reportssystem.objects.ReportDeath;
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class DatabaseManager {
     Connection conn;
@@ -213,7 +211,7 @@ public class DatabaseManager {
     }
     public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, boolean open) throws SQLException {
         int reportsAfter = limit*site;
-        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " order by timestamp ASC Where admin=? Limit ?,?";
+        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " AND admin=? order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,adminId);
         pstmt.setInt(2,reportsAfter);

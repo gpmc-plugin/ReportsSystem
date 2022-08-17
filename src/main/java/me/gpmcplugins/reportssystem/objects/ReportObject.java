@@ -66,6 +66,7 @@ public class ReportObject {
             assert reportStatus != null;
             prstm.setString(1,reportStatus.toString());
             prstm.setInt(2,this.id);
+            prstm.execute();
 
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
@@ -80,6 +81,7 @@ public class ReportObject {
             PreparedStatement prstm = conn.prepareStatement(sql);
             prstm.setString(1,uid);
             prstm.setInt(2,this.id);
+            prstm.execute();
 
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
