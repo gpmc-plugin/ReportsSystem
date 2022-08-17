@@ -23,5 +23,8 @@ public class IconItemstack {
     public static ItemStack deathReportIconItemStack = ChestGUI.setItemStackName(Component.text("REPORT SMIERCI", itemColor, TextDecoration.BOLD), new ItemStack(Material.WITHER_SKELETON_SKULL));
     public static ItemStack messageReportIconItemStack = ChestGUI.setItemStackName(Component.text("REPORT WIADOMOSCI", itemColor, TextDecoration.BOLD), new ItemStack(Material.SPRUCE_SIGN));
     public static ItemStack userReportIconItemStack = ChestGUI.setItemStackName(Component.text("REPORT GRACZA", itemColor, TextDecoration.BOLD), new ItemStack(Material.PLAYER_HEAD));
+    public static ItemStack claimReportIconItemStack = ChestGUI.setItemStackName(Component.text("PRZEJMIJ REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.YELLOW_CONCRETE));
+    public static ItemStack acceptReportIconItemStack = ChestGUI.setItemStackName(Component.text("ZAAKCEPTUJ REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.GREEN_CONCRETE));
+    public static ItemStack denyReportIconItemStack = ChestGUI.setItemStackName(Component.text("ODRZUC REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.RED_CONCRETE));
 
 }
