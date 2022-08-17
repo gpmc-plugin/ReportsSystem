@@ -9,8 +9,8 @@ description: Provides easy report system
 commands:
   report-info:
     description: Pokazuje ważną informację o pluginie
-    usage: UZYWANIE:\n /report-info
-    permission: : reportsystem.help
+    usage: /report-info
+    permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   report:
     description: Reportuje użytkownika wskazanego w komendzie.
@@ -19,7 +19,7 @@ commands:
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   reportcontinue:
     description: report continue.
-    usage: UZYWANIE:\n    to jest komenda dla gui nie powinienes jej wpisywac w chat
+    usage: to jest komenda dla gui nie powinienes jej wpisywac w chat
     permission: reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   report-review:

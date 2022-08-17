@@ -8,7 +8,10 @@ import org.jetbrains.annotations.NotNull;
 public class InfoCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        sender.sendMessage("Autorami tego pluginu są:\nBackend - Pythontest, Frontend - Ssz256, Ten od switchów - Idont");
+        sender.sendMessage("Autorami tego pluginu są:");
+        sender.sendMessage("    Backend - Pythontest");
+        sender.sendMessage("    Frontend - Ssz256");
+        sender.sendMessage("    Ten od switchów - Idont");
         return true;
     }
 }

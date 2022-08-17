@@ -24,18 +24,21 @@ public class ChestGUIListener implements Listener {
         if(e.getWhoClicked() instanceof Player){
             NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
             Player player = (Player) e.getWhoClicked();
+
             if(item==null)
                 return;
             ItemMeta itemmeta = item.getItemMeta();
             if(itemmeta==null)
                 return;
+            NamespacedKey guiid = new NamespacedKey("chestgui", "guiid");
             String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
+            Integer id = itemmeta.getPersistentDataContainer().get(guiid, PersistentDataType.INTEGER);
+            player.getServer().getLogger().log(Level.INFO, "test");
+            player.getServer().getConsoleSender().sendMessage("test");
+            player.sendMessage("test");
             if(command!=null){
-                e.setCancelled(true);
                 player.performCommand(command);
             }
-            NamespacedKey guiid = new NamespacedKey("chestgui", "guiid");
-            Integer id = itemmeta.getPersistentDataContainer().get(guiid, PersistentDataType.INTEGER);
             if(id != null)
             {
                 e.setCancelled(true);

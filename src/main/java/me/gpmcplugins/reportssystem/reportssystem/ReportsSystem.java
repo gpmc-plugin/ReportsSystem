@@ -23,7 +23,7 @@ public final class ReportsSystem extends JavaPlugin {
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
-
+        this.getServer().getConsoleSender().sendMessage("valid");
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
 
