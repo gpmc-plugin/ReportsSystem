@@ -26,9 +26,11 @@ public class ViewInventoryListeners  implements Listener {
         if(playerStatus.getLookingDeathId()!=null){
             //Player player = (Player) e.getWhoClicked();
             ReportObject report=null;
+            Player player = (Player) e.getWhoClicked();
             try {
                 report = plugin.getDatabaseManager().getReport(playerStatus.getLookingDeathId());
-                e.setCancelled(report.reportStatus!= ReportObject.ReportStatus.Accepted);
+                if(!player.hasPermission("reportsystem.reportreview"))
+                    e.setCancelled(report.reportStatus!= ReportObject.ReportStatus.Accepted);
             } catch (SQLException ex) {
                 plugin.getDatabaseManager().throwError(ex.getMessage());
             }
