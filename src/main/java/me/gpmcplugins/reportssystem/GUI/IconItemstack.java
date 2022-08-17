@@ -26,5 +26,6 @@ public class IconItemstack {
     public static ItemStack claimReportIconItemStack = ChestGUI.setItemStackName(Component.text("PRZEJMIJ REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.YELLOW_CONCRETE));
     public static ItemStack acceptReportIconItemStack = ChestGUI.setItemStackName(Component.text("ZAAKCEPTUJ REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.GREEN_CONCRETE));
     public static ItemStack denyReportIconItemStack = ChestGUI.setItemStackName(Component.text("ODRZUC REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.RED_CONCRETE));
-
+    public static ItemStack deafultBackgroundIconItemItemStack =  ChestGUI.setItemStackName(Component.text("", itemColor, TextDecoration.BOLD), new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
+    public static ItemStack noReportsIconItemItemStack =  ChestGUI.setItemStackName(Component.text("NIE MA JUZ OTWARTYCH REPORTOW", itemColor, TextDecoration.BOLD), new ItemStack(Material.REDSTONE_BLOCK));
 }

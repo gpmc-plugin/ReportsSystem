@@ -33,13 +33,16 @@ public class ReportReviewInterface {
     }
 
     public static void ClaimNewReportMenu(Player p) {
-        p.sendMessage("szylazcmd");
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>");
         List<ReportObject> reportObjectList;
         try {
             reportObjectList = plugin.getDatabaseManager().getLastReports(4, 0,true);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        if(reportObjectList.size() == 0)
+        {
+            gui.setItem(24, noReportsIconItemItemStack);
         }
         for (int i = 0; i < reportObjectList.size(); i++) {
             ReportObject reportObject = reportObjectList.get(i);
@@ -49,12 +52,12 @@ public class ReportReviewInterface {
 
 
             p.sendMessage(reportObjectList.get(i).id.toString());
-            gui.setItem(position, reportIconItemStack);
-            gui.setItem(position+1, GetItemReportByReportType(reportObject.type));
-            gui.setItem(position+2, GetItemReportByType(reportObject.shortDescription));
-            gui.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id);
-            gui.setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id);
-            gui.setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
+            gui.setItem(position, reportIconItemStack)
+                .setItem(position+1, GetItemReportByReportType(reportObject.type))
+                .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
+                .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)
+                .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id)
+                .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
         }
         gui.showGUI(p);
     }

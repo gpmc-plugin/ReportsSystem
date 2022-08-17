@@ -20,8 +20,13 @@ public class ChestGUI implements Listener {
     //HashMap<Integer, ItemStack> items = new HashMap<>();
     ItemStack[] items;
     ItemStack backgroundItem;
+    static ItemStack deafultBackgroundItem;
     int size;
     int guiId;
+    public static void setDeafultBackgroundItem(ItemStack itemStack)
+    {
+        deafultBackgroundItem = itemStack;
+    }
     public ChestGUI(int size)
     {
         this.size = size;
@@ -81,12 +86,18 @@ public class ChestGUI implements Listener {
 
     public Inventory createInventory()
     {
+        if(backgroundItem == null && deafultBackgroundItem != null)
+            backgroundItem = deafultBackgroundItem.clone();
+        for (int i = 0; i < this.size; i++) {
+            if(items[i] != null)
+                continue;
+            else if(backgroundItem != null)
+                this.setItem(i, backgroundItem);
+        }
         Inventory inventory = Bukkit.createInventory(null, this.size, title);
         for (int i = 0; i < this.size; i++) {
             if(items[i] != null)
                 inventory.setItem(i, items[i]);
-            else if(backgroundItem != null)
-                inventory.setItem(i, backgroundItem);
         }
         return inventory;
     }

@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Managers;
 
+import jdk.jfr.internal.LogLevel;
 import me.gpmcplugins.reportssystem.objects.ReportDeath;
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class DatabaseManager {
     Connection conn;
@@ -18,7 +20,8 @@ public class DatabaseManager {
     int nextReportID;
     int nextMessageID;
     int nextDeathID;
-    public DatabaseManager(ReportsSystem plugin){
+
+    public DatabaseManager(ReportsSystem plugin) {
         this.plugin=plugin;
         this.connect();
         this.loadData();
@@ -27,7 +30,13 @@ public class DatabaseManager {
         plugin.getServer().getConsoleSender().sendMessage(error);
     }
     public void connect() {
-        assert this.plugin.getDataFolder().exists() || !plugin.getDataFolder().mkdir();
+        if(!this.plugin.getDataFolder().exists())
+        {
+            if(!plugin.getDataFolder().mkdir())
+            {
+                throw new RuntimeException("Couldnt create a directory in plugins");
+            }
+        }
         String dbPath = this.plugin.getDataFolder().getAbsolutePath()+"\\db.db";
         String connString = "jdbc:sqlite:"+dbPath;
         try{
