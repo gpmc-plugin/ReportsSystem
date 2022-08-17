@@ -21,7 +21,7 @@ public class ViewInventoryGui {
         this.deathID = deathID;
     }
     public void openInventory(Player player){
-        Inventory inventory = Bukkit.createInventory(null,54, Component.text("Aby wziąść itemy użyj shift"));
+        Inventory inventory = Bukkit.createInventory(null,54, Component.text("Aby wziąć itemy użyj shift"));
         Integer i=0;
         ReportObject report;
         try {
