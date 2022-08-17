@@ -9,7 +9,7 @@ description: Provides easy report system
 commands:
   report:
     description: Reportuje użytkownika wskazanego w komendzie.
-    usage: UZYWANIE:\n    /report User <nick>
+    usage: /report User <nick>
     permission:  reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   reportcontinue:
@@ -19,16 +19,16 @@ commands:
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   report-review:
     description: Pozwala przeglądać reporty
-    usage: UZYWANIE:\n    /report-review
+    usage: /report-review
     permission: reportsystem.reportreview
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   viewDeathInventory:
     description: Pozwala zobaczyć swoje inventory po śmierci
-    usage: UZYWANIE:\n    /viewDeathInventory
+    usage: /viewDeathInventory
     permission: reportsystem.report
   report-help:
     description: Wyświetla pomoc
-    usage: UZYWANIE:\n    /report-help
+    usage: /report-help
     permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował
 permissions:
