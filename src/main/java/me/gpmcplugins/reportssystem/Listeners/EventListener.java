@@ -1,8 +1,10 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -50,6 +52,19 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
+        if(player.hasPermission("reportsystem.notification")){
+            List<ReportObject> reports;
+            try {
+                reports = plugin.getDatabaseManager().getLastReports(100,0,true);
+                if(reports.size()!=0){
+                    new MessageManager(plugin).sendJoinMessage(reports.size());
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+        }
     }
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(PlayerQuitEvent e){
