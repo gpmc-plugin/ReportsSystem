@@ -33,7 +33,7 @@ public class ReportReviewInterface {
     }
 
     public static void ClaimNewReportMenu(Player p) {
-        ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>");
+        ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Przejmij report</gradient>");
         List<ReportObject> reportObjectList;
         try {
             reportObjectList = plugin.getDatabaseManager().getLastReports(4, 0,true);
@@ -98,5 +98,35 @@ public class ReportReviewInterface {
                 return speakingWrongIconItemStack;
         }
         return otherIconItemStack;
+    }
+
+    public static void ContinueClaimedReportMenu(Player p) {
+        ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
+        List<ReportObject> reportObjectList;
+        try {
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(p.getUniqueId().toString(), 4, 0, true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(reportObjectList.size() == 0)
+        {
+            gui.setItem(24, noReportsIconItemItemStack);
+        }
+        for (int i = 0; i < reportObjectList.size(); i++) {
+            ReportObject reportObject = reportObjectList.get(i);
+            int position = 10+i*9;
+            ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
+
+
+
+            p.sendMessage(reportObjectList.get(i).id.toString());
+            gui.setItem(position, reportIconItemStack)
+                    .setItem(position+1, GetItemReportByReportType(reportObject.type))
+                    .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
+                    /*.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)*/
+                    .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id)
+                    .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
+        }
+        gui.showGUI(p);
     }
 }

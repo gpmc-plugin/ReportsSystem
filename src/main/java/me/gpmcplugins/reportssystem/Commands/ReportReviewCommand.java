@@ -34,7 +34,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 ReportReviewInterface.ClaimNewReportMenu(p);
                 break;
             case "continueclaimedreportgui":
-                sendNotImplemented(sender);
+                ReportReviewInterface.ContinueClaimedReportMenu(p);
                 break;
             case "claim":
                 if (args[1] == null)
