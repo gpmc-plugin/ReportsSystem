@@ -23,7 +23,6 @@ public class ReportReviewCommand implements CommandExecutor {
         Player p = (Player) sender;
         if (args.length == 0)
         {
-            p.sendMessage("length err");
             ReportReviewInterface.MainReviewMenu(p);
             return true;
         }
@@ -31,11 +30,9 @@ public class ReportReviewCommand implements CommandExecutor {
         switch (args[0])
         {
             case "claimnewreportgui":
-                p.sendMessage("claimnewreportgui");
                 ReportReviewInterface.ClaimNewReportMenu(p);
                 break;
             case "continueclaimedreportgui":
-                p.sendMessage("continueclaimedreportgui");
                 sendNotImplemented(sender);
                 break;
             case "claim":
@@ -65,7 +62,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(acceptId);
                     reportObject.setReportStatus(ReportObject.ReportStatus.Accepted);
-                    p.sendMessage("Successfully accepted report with id " + reportObject.id + " " + acceptId);
+                    p.sendMessage("Successfully accepted report with id " + reportObject.id);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

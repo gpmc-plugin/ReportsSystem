@@ -33,9 +33,11 @@ public final class ReportCommand implements TabExecutor {
         Player p = (Player) sender;
         ReportType reportType;
 
-        if(args.length == 0)
+        if(args.length < 2)
         {
-            p.sendMessage("");
+            p.sendMessage("UZYWANIE:");
+            p.sendMessage("    /report User <nick>");
+            return false;
         }
 
         switch (args[0].toLowerCase())
@@ -98,14 +100,16 @@ public final class ReportCommand implements TabExecutor {
     }
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        List<String> enumArgs = new ArrayList<>();
         if (args.length == 1)
         {
-            List<String> enumArgs = new ArrayList<>();
+            enumArgs.add("User");
+            /*
             for (ReportType value : ReportType.values()) {
                 enumArgs.add(value.name());
             }
-            return enumArgs;
+            return enumArgs;*/
         }
-        return null;
+        return enumArgs;
     }
 }
