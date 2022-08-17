@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.objects;
 
+import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ public class ReportCreator {
         return plugin.getStorageManager().getUser(this.ReportingPlayer);
     }
     public Integer createReport(){
+        new MessageManager(plugin).sendReportMessage();
         try {
              return plugin.getDatabaseManager().createReport(getReportingPlayer(),getType().toString(),getReportShortDescription().toString(),getDescription(),getReportedElementID());
         } catch (SQLException e) {

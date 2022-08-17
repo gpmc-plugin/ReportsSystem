@@ -41,3 +41,6 @@ permissions:
   reportsystem.help:
     default: true
     description: Daje dostęp do /report-help
+  reportsystem.notification:
+    default: op
+    description: Wysyła powiadomienia o nowych reportach
