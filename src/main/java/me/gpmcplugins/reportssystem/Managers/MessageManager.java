@@ -12,7 +12,28 @@ public class MessageManager {
         this.plugin=plugin;
     }
     public void sendReportMessage(){
-        Component message = Component.text("Powstał nowy report sprawdź /report-review", NamedTextColor.GREEN).clickEvent(ClickEvent.suggestCommand("/report-review"));
+        Component message = Component.text("Powstały nowe reporty sprawdź /report-review", NamedTextColor.GREEN).clickEvent(ClickEvent.suggestCommand("/report-review"));
+        for (Player onlinePlayer : this.plugin.getServer().getOnlinePlayers()) {
+            if(onlinePlayer.hasPermission("reportsystem.notification"))
+                onlinePlayer.sendMessage(message);
+        }
+    }
+    public void sendJoinMessage(Integer count){
+        String reportOdmiana;
+        String czekaOdmiana;
+        if(count==1) {
+            reportOdmiana = "report";
+            czekaOdmiana="czeka";
+        }
+        else if(count<10) {
+            reportOdmiana = "reporty";
+            czekaOdmiana="czekają";
+        }
+        else {
+            reportOdmiana = "reportów";
+            czekaOdmiana="czeka";
+        }
+        Component message = Component.text("Do roboty! "+(count==100?"Co najmniej 100":count)+" "+reportOdmiana+" "+czekaOdmiana+". Sprawdź /report-review", NamedTextColor.GREEN).clickEvent(ClickEvent.suggestCommand("/report-review"));
         for (Player onlinePlayer : this.plugin.getServer().getOnlinePlayers()) {
             if(onlinePlayer.hasPermission("reportsystem.notification"))
                 onlinePlayer.sendMessage(message);

@@ -10,7 +10,7 @@ commands:
   report-info:
     description: Pokazuje ważną informację o pluginie
     usage: UZYWANIE:\n /report-info
-    permission: : reportsystem.help
+    permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   report:
     description: Reportuje użytkownika wskazanego w komendzie.
