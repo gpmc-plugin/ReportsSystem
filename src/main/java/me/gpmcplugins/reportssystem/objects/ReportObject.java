@@ -38,24 +38,6 @@ public class ReportObject {
             this.reportStatus=ReportStatus.valueOf(status);
 
     }
-    public ReportStatus getReportStatus(){
-        Connection conn = plugin.getDatabaseManager().getConn();
-        String sql = "Select status from reports where id=?";
-        try {
-            PreparedStatement prstm = conn.prepareStatement(sql);
-            prstm.setInt(1,this.id);
-            ResultSet rs=prstm.executeQuery();
-            if(rs.next()){
-                return ReportStatus.valueOf(rs.getString("status"));
-            }
-
-            else
-                return ReportStatus.In_Progress;
-        } catch (SQLException e) {
-            plugin.getDatabaseManager().throwError(e.getMessage());
-        }
-        return ReportStatus.In_Progress;
-    }
     public void setReportStatus(ReportStatus reportStatus){
         Connection conn = plugin.getDatabaseManager().getConn();
         String sql = "UPDATE \"main\".\"reports\" SET \"status\"=? WHERE \"id\"=?";
