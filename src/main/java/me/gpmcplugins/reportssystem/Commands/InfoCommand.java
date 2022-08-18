@@ -11,7 +11,7 @@ public class InfoCommand implements CommandExecutor {
         sender.sendMessage("Autorami tego pluginu są:");
         sender.sendMessage("    Backend - Pythontest");
         sender.sendMessage("    Frontend - Ssz256");
-        sender.sendMessage("    Ten od switchów - Idont");
+        sender.sendMessage("    Ten od switchów (ma nullpointer exeption) - Idont");
         return true;
     }
 }
