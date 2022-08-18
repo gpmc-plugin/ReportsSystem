@@ -1,11 +1,11 @@
 package me.gpmcplugins.reportssystem.objects;
 
+import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
@@ -53,6 +53,7 @@ public class ReportObject {
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
         }
+        new MessageManager(plugin).sendUpdateMessage(reportStatus,id,reportingUser);
 
     }
     public void setAdmin(String uid){
