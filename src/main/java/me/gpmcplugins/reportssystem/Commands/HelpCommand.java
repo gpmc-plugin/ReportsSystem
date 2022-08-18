@@ -30,7 +30,7 @@ public final class HelpCommand implements CommandExecutor {
                 .append(Component.text(" śmierć, by wysłać szybki report\n"));
         if (sender.hasPermission("reportsystem.reportreview")) {
             helpMsg = helpMsg.append(Component.text("DLA ADMINÓW:\n", NamedTextColor.RED))
-                    .append(Component.text("Aby przeglądać reporty graczy użyj /report-review\n").hoverEvent(HoverEvent.showText(Component.text("Kliknij, by użyć")))
+                    .append(Component.text("Aby przeglądać reporty graczy użyj /report-review").hoverEvent(HoverEvent.showText(Component.text("Kliknij, by użyć")))
                             .clickEvent(ClickEvent.suggestCommand("/report-review")));
         }
         sender.sendMessage(helpMsg.asComponent());
