@@ -93,9 +93,7 @@ public class ChestGUI implements Listener {
         if(backgroundItem == null && deafultBackgroundItem != null)
             backgroundItem = deafultBackgroundItem.clone();
         for (int i = 0; i < this.size; i++) {
-            if(items[i] != null)
-                continue;
-            else if(backgroundItem != null)
+            if(backgroundItem != null)
                 this.setItem(i, backgroundItem);
         }
         Inventory inventory = Bukkit.createInventory(null, this.size, title);
