@@ -219,6 +219,7 @@ public class DatabaseManager {
         }
         return reports;
     }
+    @SuppressWarnings("unused")
     public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, boolean open) throws SQLException {
         int reportsAfter = limit*site;
         String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " AND admin"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
