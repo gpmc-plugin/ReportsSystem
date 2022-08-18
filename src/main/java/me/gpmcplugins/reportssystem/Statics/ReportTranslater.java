@@ -6,7 +6,7 @@ public class ReportTranslater {
     public static String fromReportShortDescription(ReportCreator.ReportShortDescription shortDescription){
         switch (shortDescription){
             case Death_Bug:
-                return "Bład powodujący śmierć";
+                return "Błąd powodujący śmierć";
             case User_Scam:
                 return "Użytkownik mnie oszukał";
             case Message_Scam:
@@ -20,7 +20,7 @@ public class ReportTranslater {
             case Death_Other_Player:
                 return "Inny użytkownik mnie zabił";
             case Message_Hate_Speach:
-                return "Wiadomość zawiera mowe nienawiści";
+                return "Wiadomość zawiera mowę nienawiści";
             case Other:
                 return "Inne";
         }
