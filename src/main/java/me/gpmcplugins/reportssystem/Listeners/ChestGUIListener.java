@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
+import me.gpmcplugins.reportssystem.GUI.ChestGUI;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,9 +34,7 @@ public class ChestGUIListener implements Listener {
             NamespacedKey guiid = new NamespacedKey("chestgui", "guiid");
             String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
             Integer id = itemmeta.getPersistentDataContainer().get(guiid, PersistentDataType.INTEGER);
-            player.getServer().getLogger().log(Level.INFO, "test");
-            player.getServer().getConsoleSender().sendMessage("test");
-            player.sendMessage("test");
+            ChestGUI.getChestGUIById(id).showGUI(player);
             if(command!=null){
                 player.performCommand(command);
             }

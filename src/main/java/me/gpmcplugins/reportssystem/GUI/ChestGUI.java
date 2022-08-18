@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.HashMap;
+
 public class ChestGUI implements Listener {
     static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
     static final NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
@@ -23,6 +25,7 @@ public class ChestGUI implements Listener {
     static ItemStack deafultBackgroundItem;
     int size;
     int guiId;
+    static HashMap<Integer, ChestGUI> instances = new HashMap<Integer, ChestGUI>();
     public static void setDeafultBackgroundItem(ItemStack itemStack)
     {
         deafultBackgroundItem = itemStack;
@@ -33,6 +36,7 @@ public class ChestGUI implements Listener {
         this.items = new ItemStack[this.size];
         this.guiId = ChestGUI.nextGuiId;
         ChestGUI.nextGuiId+=1;
+        ChestGUI.instances.put(this.guiId, this);
     }
 
     public ChestGUI setTitle(TextComponent title)
@@ -113,5 +117,10 @@ public class ChestGUI implements Listener {
         itemMeta.displayName(displayName);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
+    }
+
+    public static ChestGUI getChestGUIById(int id)
+    {
+        return ChestGUI.instances.get(id);
     }
 }
