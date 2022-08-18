@@ -27,8 +27,8 @@ public class ReportReviewInterface {
     {
         (new ChestGUI(27))
                 .setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>")
-                .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui")
-                .setItem(15, continueReportIconItemStack, "report-review continueclaimedreportgui")
+                .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui", false)
+                .setItem(15, continueReportIconItemStack, "report-review continueclaimedreportgui", false)
                 .showGUI(p);
     }
 
@@ -54,11 +54,11 @@ public class ReportReviewInterface {
             gui.setItem(position, reportIconItemStack)
                 .setItem(position+1, GetItemReportByReportType(reportObject.type))
                 .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
-                .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)
-                .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id)
-                .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
+                .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
+                .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
+                .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
         }
-        gui.setItem(49, backArrowItemItemStack, "report-review");
+        gui.setItem(49, backArrowItemItemStack, "report-review", false);
         gui.showGUI(p);
     }
 
@@ -123,10 +123,10 @@ public class ReportReviewInterface {
                     .setItem(position+1, GetItemReportByReportType(reportObject.type))
                     .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
                     /*.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)*/
-                    .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id)
-                    .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
+                    .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
+                    .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
         }
-        gui.setItem(49, backArrowItemItemStack, "report-review");
+        gui.setItem(49, backArrowItemItemStack, "report-review", false);
         gui.showGUI(p);
     }
 }

@@ -23,7 +23,6 @@ public class ChestGUIListener implements Listener {
     public void itemClickevent(InventoryClickEvent e){
         ItemStack item = e.getCurrentItem();
         if(e.getWhoClicked() instanceof Player){
-            NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
             Player player = (Player) e.getWhoClicked();
 
             if(item==null)
@@ -31,18 +30,19 @@ public class ChestGUIListener implements Listener {
             ItemMeta itemmeta = item.getItemMeta();
             if(itemmeta==null)
                 return;
-            NamespacedKey guiid = new NamespacedKey("chestgui", "guiid");
-            String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
-            Integer id = itemmeta.getPersistentDataContainer().get(guiid, PersistentDataType.INTEGER);
+
+            Integer id = itemmeta.getPersistentDataContainer().get(ChestGUI.guiIdKey, PersistentDataType.INTEGER);
             if(id != null)
             {
-                ChestGUI.getChestGUIById(id).showGUI(player);
-            }
-            if(command!=null){
-                player.performCommand(command);
-            }
-            if(id != null)
-            {
+                String command = itemmeta.getPersistentDataContainer().get(ChestGUI.onClickCommandKey, PersistentDataType.STRING);
+                if(command!=null){
+                    player.performCommand(command);
+                }
+                Byte shouldReload = itemmeta.getPersistentDataContainer().get(ChestGUI.shouldReloadKey, PersistentDataType.BYTE);
+                if(shouldReload != null && shouldReload != 0)
+                {
+                    ChestGUI.getChestGUIById(id).showGUI(player);
+                }
                 e.setCancelled(true);
             }
         }

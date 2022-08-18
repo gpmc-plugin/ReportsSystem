@@ -9,14 +9,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 
 public class ChestGUI implements Listener {
-    static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
-    static final NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
+    public static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
+    public static final NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
+    public static final NamespacedKey shouldReloadKey = new NamespacedKey("chestgui", "shouldreload");
     static Integer nextGuiId = 0;
     TextComponent title = Component.text("Chest GUI");
     //HashMap<Integer, ItemStack> items = new HashMap<>();
@@ -31,6 +33,7 @@ public class ChestGUI implements Listener {
     {
         deafultBackgroundItem = itemStack;
     }
+
     @SuppressWarnings("unused")
     public ChestGUI(int size)
     {
@@ -72,7 +75,7 @@ public class ChestGUI implements Listener {
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI setItem(int position, ItemStack itemStack, String onClickCommand)
+    public ChestGUI setItem(int position, ItemStack itemStack, String onClickCommand, boolean shouldReload)
     {
         ItemStack stack = itemStack.clone();
         if(position >= this.size)
@@ -83,6 +86,10 @@ public class ChestGUI implements Listener {
         ItemMeta itemMeta = stack.getItemMeta();
         itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, guiId);
         itemMeta.getPersistentDataContainer().set(onClickCommandKey, PersistentDataType.STRING, onClickCommand);
+        byte shouldReloadByte = 0;
+        if(shouldReload)
+            shouldReloadByte = 1;
+        itemMeta.getPersistentDataContainer().set(shouldReloadKey, PersistentDataType.BYTE, shouldReloadByte);
         stack.setItemMeta(itemMeta);
         this.items[position] = stack;
         return this;
