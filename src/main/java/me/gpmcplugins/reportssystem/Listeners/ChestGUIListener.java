@@ -34,11 +34,12 @@ public class ChestGUIListener implements Listener {
             NamespacedKey guiid = new NamespacedKey("chestgui", "guiid");
             String command = itemmeta.getPersistentDataContainer().get(onClickCommandKey, PersistentDataType.STRING);
             Integer id = itemmeta.getPersistentDataContainer().get(guiid, PersistentDataType.INTEGER);
-            if(command!=null){
-                player.performCommand(command);
-            } else if(id != null)
+            if(id != null)
             {
                 ChestGUI.getChestGUIById(id).showGUI(player);
+            }
+            if(command!=null){
+                player.performCommand(command);
             }
             if(id != null)
             {

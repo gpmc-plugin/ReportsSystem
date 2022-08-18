@@ -31,9 +31,9 @@ public final class ReportsSystem extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
         Objects.requireNonNull(getCommand("report-review")).setExecutor(new ReportReviewCommand(this));
-        Objects.requireNonNull(getCommand("reportcontinue")).setExecutor(new ReportContinueCommand(this));
+        Objects.requireNonNull(getCommand("report-continue")).setExecutor(new ReportContinueCommand(this));
         Objects.requireNonNull(getCommand("report-help")).setExecutor(new HelpCommand(this));
-        Objects.requireNonNull(getCommand("viewDeathInventory")).setExecutor(new ViewDeathInventoryCommand(this));
+        Objects.requireNonNull(getCommand("report-view-death-inventory")).setExecutor(new ViewDeathInventoryCommand(this));
         Objects.requireNonNull(getCommand("report-info")).setExecutor(new InfoCommand());
     }
 

@@ -17,7 +17,7 @@ commands:
     usage: /report User <nick>
     permission:  reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
-  reportcontinue:
+  report-continue:
     description: report continue.
     usage: to jest komenda dla gui nie powinienes jej wpisywac w chat
     permission: reportsystem.report
@@ -29,7 +29,7 @@ commands:
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
   viewDeathInventory:
     description: Pozwala zobaczyć swoje inventory po śmierci
-    usage: /viewDeathInventory
+    usage: /report-view-death-inventory
     permission: reportsystem.report
   report-help:
     description: Wyświetla pomoc

@@ -56,7 +56,7 @@ public class PlayerReportCreationStatus {
                 .append(
                         Component.text("kliknij tutaj!")
                         .style(Style.style(TextDecoration.UNDERLINED))
-                        .clickEvent(ClickEvent.runCommand("/reportcontinue"))
+                        .clickEvent(ClickEvent.runCommand("/report-continue"))
                 );
         player.sendMessage(message);
     }
@@ -85,9 +85,9 @@ public class PlayerReportCreationStatus {
         player.sendMessage(Component.text(secoundLine,NamedTextColor.GREEN).append(secoundlineadd));
         player.sendMessage(Component.text(thirdLine,NamedTextColor.GREEN));
         Component delete = Component.text("[Usuń zgłoszenie]",NamedTextColor.RED)
-                .clickEvent(ClickEvent.runCommand("/reportcontinue delete"));
+                .clickEvent(ClickEvent.runCommand("/report-continue delete"));
         Component save = Component.text("  [Wyślij zgłoszenie]",NamedTextColor.GREEN)
-                .clickEvent(ClickEvent.runCommand("/reportcontinue"));
+                .clickEvent(ClickEvent.runCommand("/report-continue"));
         player.sendMessage(Component.empty().append(delete).append(save));
     }
     public void createReport(ReportCreator report){
