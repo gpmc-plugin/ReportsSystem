@@ -25,7 +25,7 @@ public class ChestGUI implements Listener {
     static ItemStack deafultBackgroundItem;
     int size;
     int guiId;
-    static HashMap<Integer, ChestGUI> instances = new HashMap<Integer, ChestGUI>();
+    static HashMap<Integer, ChestGUI> instances = new HashMap<>();
     public static void setDeafultBackgroundItem(ItemStack itemStack)
     {
         deafultBackgroundItem = itemStack;
