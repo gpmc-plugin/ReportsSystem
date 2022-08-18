@@ -36,10 +36,12 @@ public class ChestGUIListener implements Listener {
             Integer id = itemmeta.getPersistentDataContainer().get(guiid, PersistentDataType.INTEGER);
             if(command!=null){
                 player.performCommand(command);
+            } else if(id != null)
+            {
+                ChestGUI.getChestGUIById(id).showGUI(player);
             }
             if(id != null)
             {
-                ChestGUI.getChestGUIById(id).showGUI(player);
                 e.setCancelled(true);
             }
         }
