@@ -99,11 +99,18 @@ public final class ReportCommand implements TabExecutor {
     }
     @Override
     public @NotNull List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        List<String> enumArgs = new ArrayList<>();
+        List<String> tabArgs = new ArrayList<>();
         if (args.length == 1)
         {
-            enumArgs.add("User");
+            tabArgs.add("User");
+            return tabArgs;
         }
-        return enumArgs;
+        if (args.length == 2 && args[0].equalsIgnoreCase("user"))
+        {
+            for (Player player : plugin.getServer().getOnlinePlayers()) {
+                tabArgs.add(player.getName());
+            }
+        }
+        return tabArgs;
     }
 }
