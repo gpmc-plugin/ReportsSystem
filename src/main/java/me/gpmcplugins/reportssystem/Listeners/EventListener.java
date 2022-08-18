@@ -2,9 +2,9 @@ package me.gpmcplugins.reportssystem.Listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
-import me.gpmcplugins.reportssystem.Objects.PlayerReportCreationStatus;
-import me.gpmcplugins.reportssystem.Objects.ReportCreator;
-import me.gpmcplugins.reportssystem.Objects.ReportObject;
+import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;

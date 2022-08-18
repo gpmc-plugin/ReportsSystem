@@ -1,7 +1,7 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ChestReportTypeInterface;
-import me.gpmcplugins.reportssystem.Objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -11,7 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import me.gpmcplugins.reportssystem.Objects.ReportCreator.ReportType;
+import me.gpmcplugins.reportssystem.objects.ReportCreator.ReportType;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;

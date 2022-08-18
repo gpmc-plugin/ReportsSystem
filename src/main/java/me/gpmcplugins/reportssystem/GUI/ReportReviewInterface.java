@@ -1,7 +1,7 @@
 package me.gpmcplugins.reportssystem.GUI;
 
-import me.gpmcplugins.reportssystem.Objects.ReportCreator;
-import me.gpmcplugins.reportssystem.Objects.ReportObject;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;

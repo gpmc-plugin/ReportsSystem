@@ -1,6 +1,6 @@
 package me.gpmcplugins.reportssystem.Statics;
 
-import me.gpmcplugins.reportssystem.Objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 
 public class ReportTranslater {
     public static String fromReportShortDescription(ReportCreator.ReportShortDescription shortDescription){

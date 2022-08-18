@@ -1,7 +1,7 @@
 package me.gpmcplugins.reportssystem.GUI;
 
-import me.gpmcplugins.reportssystem.Objects.PlayerReportCreationStatus;
-import me.gpmcplugins.reportssystem.Objects.ReportObject;
+import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -33,7 +33,9 @@ public class ViewInventoryGui {
         PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(player.getUniqueId().toString());
         try {
             plugin.getConfig().load("item.yml");
-        } catch (IOException | InvalidConfigurationException e) {
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidConfigurationException e) {
             throw new RuntimeException(e);
         }
         while(i<54){

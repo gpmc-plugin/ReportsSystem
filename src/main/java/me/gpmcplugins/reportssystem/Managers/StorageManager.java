@@ -1,17 +1,17 @@
 package me.gpmcplugins.reportssystem.Managers;
 
-import me.gpmcplugins.reportssystem.Objects.PlayerReportCreationStatus;
-import me.gpmcplugins.reportssystem.Objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class StorageManager {
-    private final Map<Integer, ReportCreator> reportsInProgress= new HashMap<>();
-    private final Map<String, PlayerReportCreationStatus> playerReportCreationStatuses = new HashMap<>();
+    private Map<Integer, ReportCreator> reportsInProgress= new HashMap<>();
+    private Map<String, PlayerReportCreationStatus> playerReportCreationStatuses = new HashMap<>();
     private int reportInProgressID=0;
-    private final ReportsSystem plugin;
+    private ReportsSystem plugin;
     public StorageManager(ReportsSystem plugin){
         this.plugin=plugin;
     }
