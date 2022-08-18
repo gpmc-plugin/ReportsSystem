@@ -17,7 +17,7 @@ public final class HelpCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         StringBuilder msgBuilder = new StringBuilder();
-        msgBuilder.append(String.format("<aqua>Witaj w %s!\nUżyj /report, by zgłosić użytkownika</aqua>\n", plugin.getName()));
+        msgBuilder.append(String.format("<aqua>Witaj w %s %s!\nUżyj /report, by zgłosić użytkownika</aqua>\n", plugin.getName(), plugin.getDescription().getVersion()));
         msgBuilder.append("Kliknij na dowolną wiadomość napisaną przez gracza, bądź na dowolną <bold>swoją</bold> śmierć, by wysłać szybkie zgłoszenie");
         if (sender.hasPermission("reportsystem.reportreview"))
         {
