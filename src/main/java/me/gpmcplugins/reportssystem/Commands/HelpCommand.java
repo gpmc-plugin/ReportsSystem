@@ -21,7 +21,7 @@ public final class HelpCommand implements CommandExecutor {
         msgBuilder.append("Kliknij na dowolną wiadomość napisaną przez gracza, bądź na dowolną <bold>swoją</bold> śmierć, by wysłać szybkie zgłoszenie");
         if (sender.hasPermission("reportsystem.reportreview"))
         {
-            msgBuilder.append("<red>DLA ADMINÓW: </red>\nUżyj /report-review, by przeglądnąć zgłoszenie</dark_green>");
+            msgBuilder.append("\n<red>DLA ADMINÓW: </red>\nUżyj /report-review, by przeglądnąć zgłoszenie</dark_green>");
         }
         sender.sendMessage(MiniMessage.miniMessage().deserialize(msgBuilder.toString()));
         return true;

@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class ReportReviewCommand implements CommandExecutor {
 
@@ -28,7 +27,7 @@ public class ReportReviewCommand implements CommandExecutor {
             ReportReviewInterface.MainReviewMenu(p);
             return true;
         }
-        p.sendMessage(args[0]);
+
         switch (args[0])
         {
             case "claimnewreportgui":
@@ -85,9 +84,4 @@ public class ReportReviewCommand implements CommandExecutor {
         }
         return true;
     }
-    public void sendNotImplemented(CommandSender sender)
-    {
-        sender.sendMessage("Not implemented");
-    }
-
 }
