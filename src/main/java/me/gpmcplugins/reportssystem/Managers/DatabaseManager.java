@@ -105,6 +105,13 @@ public class DatabaseManager {
             stmt.execute(sql);
         }
         catch(SQLException ignored){
+
+        }
+        try{
+            sql="Alter table reports add column readed INTEGER";
+            stmt.execute(sql);
+        }
+        catch(SQLException ignored){
         }
 
 
@@ -272,5 +279,26 @@ public class DatabaseManager {
 
         }
         return null;
+    }
+    public List<Integer> getNonReadMessages(String uid) throws SQLException {
+        String sql = "Select * from reports Where \"reporting_player\"=? AND readed=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,uid);
+        pstmt.setInt(2,0);
+        ResultSet rs=pstmt.executeQuery();
+        List<Integer> reports = new ArrayList<>();
+        while(rs.next()){
+            Integer rid = rs.getInt("id");
+            reports.add(rid);
+        }
+        return reports;
+    }
+    public void setReadStatus(int rid,boolean status) throws SQLException {
+        int statusCode=status?1:0;
+        String sql = "update \"MAIN\".\"REPORTS\" set \"READED\"=? where \"id\"=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,statusCode);
+        pstmt.setInt(2,rid);
+        pstmt.execute();
     }
 }

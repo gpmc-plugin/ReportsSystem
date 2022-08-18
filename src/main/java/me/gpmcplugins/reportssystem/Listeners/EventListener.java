@@ -65,6 +65,15 @@ public class EventListener implements Listener {
 
 
         }
+        try {
+            List<Integer> unreadReports = plugin.getDatabaseManager().getNonReadMessages(player.getUniqueId().toString());
+            for (Integer unreadReport : unreadReports) {
+                ReportObject reportObject = plugin.getDatabaseManager().getReport(unreadReport);
+                new MessageManager(plugin).sendUpdateMessage(reportObject.reportStatus,unreadReport,player);
+            }
+        } catch (SQLException ex) {
+            plugin.getDatabaseManager().throwError(ex.getMessage());
+        }
     }
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(PlayerQuitEvent e){
