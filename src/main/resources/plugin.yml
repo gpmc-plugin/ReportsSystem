@@ -12,11 +12,14 @@ commands:
     usage: /report-info
     permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
+    aliases: [ r-info, ri]
   report:
     description: Reportuje użytkownika wskazanego w komendzie.
     usage: /report User <nick>
     permission:  reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
+    aliases:
+      - r
   report-continue:
     description: report continue.
     usage: to jest komenda dla gui nie powinienes jej wpisywac w chat
@@ -27,15 +30,18 @@ commands:
     usage: /report-review
     permission: reportsystem.reportreview
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
+    aliases: [r-review, rr]
   report-view-death-inventory:
     description: Pozwala zobaczyć swoje inventory po śmierci
     usage: /report-view-death-inventory
     permission: reportsystem.report
+    aliases: [ r-view-death-inventory, r-death-inventory, rdi]
   report-help:
     description: Wyświetla pomoc
     usage: /report-help
     permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował
+    aliases: [ r-help, rh]
 permissions:
   reportsystem.report:
     default: true

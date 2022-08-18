@@ -29,6 +29,8 @@ public final class ReportsSystem extends JavaPlugin {
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
 
+        //todo add report logs
+        //todo make player inventory visible in report-review
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
         Objects.requireNonNull(getCommand("report-review")).setExecutor(new ReportReviewCommand(this));
         Objects.requireNonNull(getCommand("report-continue")).setExecutor(new ReportContinueCommand(this));
