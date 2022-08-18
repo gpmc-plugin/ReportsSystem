@@ -193,12 +193,15 @@ public class DatabaseManager {
         prstm.setLong(4,timestamp);
         prstm.execute();
     }
-    public List<ReportObject> getLastReports(Integer limit, Integer site, boolean open) throws SQLException {
+    public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, boolean open) throws SQLException {
         int reportsAfter = limit*site;
-        String sql = "Select * from reports where status is "+(open?"NULL":"NOT NULL")+" order by timestamp ASC Limit ?,?";
+        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " AND admin"+(adminId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1,reportsAfter);
-        pstmt.setInt(2,limit);
+        int indexchanger=adminId!=null?0:1;
+        if(adminId!=null)
+            pstmt.setString(1,adminId);
+        pstmt.setInt(2-indexchanger,reportsAfter);
+        pstmt.setInt(3-indexchanger,limit);
         ResultSet rs = pstmt.executeQuery();
         List<ReportObject> reports = new ArrayList<>();
         while (rs.next()){
@@ -216,13 +219,15 @@ public class DatabaseManager {
         }
         return reports;
     }
-    public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, boolean open) throws SQLException {
+    public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, boolean open) throws SQLException {
         int reportsAfter = limit*site;
-        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " AND admin=? order by timestamp ASC Limit ?,?";
+        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " AND admin"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1,adminId);
-        pstmt.setInt(2,reportsAfter);
-        pstmt.setInt(3,limit);
+        int indexchanger=userId!=null?0:1;
+        if(userId!=null)
+            pstmt.setString(1,userId);
+        pstmt.setInt(2-indexchanger,reportsAfter);
+        pstmt.setInt(3-indexchanger,limit);
         ResultSet rs = pstmt.executeQuery();
         List<ReportObject> reports = new ArrayList<>();
         while (rs.next()){

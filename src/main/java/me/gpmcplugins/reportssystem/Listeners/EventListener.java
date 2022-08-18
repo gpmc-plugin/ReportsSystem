@@ -55,9 +55,13 @@ public class EventListener implements Listener {
         if(player.hasPermission("reportsystem.notification")){
             List<ReportObject> reports;
             try {
-                reports = plugin.getDatabaseManager().getLastReports(100,0,true);
-                if(reports.size()!=0){
-                    new MessageManager(plugin).sendJoinMessage(reports.size());
+                reports = plugin.getDatabaseManager().getAdminReports(null,100,0,true);
+                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(),100,0,true);
+                int reportslenght = reports.size()+userreports.size();
+                if(reportslenght>100)
+                    reportslenght=100;
+                if(reportslenght!=0){
+                    new MessageManager(plugin).sendJoinMessage(reportslenght);
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);

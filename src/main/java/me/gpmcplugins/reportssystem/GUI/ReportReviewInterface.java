@@ -36,7 +36,7 @@ public class ReportReviewInterface {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Przejmij report</gradient>");
         List<ReportObject> reportObjectList;
         try {
-            reportObjectList = plugin.getDatabaseManager().getLastReports(4, 0,true);
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0,true);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
