@@ -58,6 +58,7 @@ public class ReportReviewInterface {
                 .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id)
                 .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
         }
+        gui.setItem(49, backArrowItemItemStack, "report-review");
         gui.showGUI(p);
     }
 
@@ -125,6 +126,7 @@ public class ReportReviewInterface {
                     .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id)
                     .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id);
         }
+        gui.setItem(49, backArrowItemItemStack, "report-review");
         gui.showGUI(p);
     }
 }

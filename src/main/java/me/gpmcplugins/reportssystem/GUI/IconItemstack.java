@@ -28,4 +28,5 @@ public class IconItemstack {
     public static ItemStack denyReportIconItemStack = ChestGUI.setItemStackName(Component.text("ODRZUC REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.RED_CONCRETE));
     public static ItemStack deafultBackgroundIconItemItemStack =  ChestGUI.setItemStackName(Component.text("", itemColor, TextDecoration.BOLD), new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
     public static ItemStack noReportsIconItemItemStack =  ChestGUI.setItemStackName(Component.text("NIE MA JUZ OTWARTYCH REPORTOW", itemColor, TextDecoration.BOLD), new ItemStack(Material.REDSTONE_BLOCK));
+    public static ItemStack backArrowItemItemStack =  ChestGUI.setItemStackName(Component.text("WROC", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.ARROW));
 }
