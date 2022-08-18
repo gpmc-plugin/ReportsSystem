@@ -27,7 +27,7 @@ commands:
     usage: /report-review
     permission: reportsystem.reportreview
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
-  viewDeathInventory:
+  report-view-death-inventory:
     description: Pozwala zobaczyć swoje inventory po śmierci
     usage: /report-view-death-inventory
     permission: reportsystem.report
