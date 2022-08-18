@@ -26,10 +26,12 @@ public class ChestGUI implements Listener {
     int size;
     int guiId;
     static HashMap<Integer, ChestGUI> instances = new HashMap<>();
+    @SuppressWarnings("unused")
     public static void setDeafultBackgroundItem(ItemStack itemStack)
     {
         deafultBackgroundItem = itemStack;
     }
+    @SuppressWarnings("unused")
     public ChestGUI(int size)
     {
         this.size = size;
@@ -39,18 +41,21 @@ public class ChestGUI implements Listener {
         ChestGUI.instances.put(this.guiId, this);
     }
 
+    @SuppressWarnings("unused")
     public ChestGUI setTitle(TextComponent title)
     {
         this.title = title;
         return this;
     }
 
+    @SuppressWarnings("unused")
     public ChestGUI setTitle(String title)
     {
         this.title = (TextComponent) MiniMessage.miniMessage().deserialize(title);
         return this;
     }
 
+    @SuppressWarnings("unused")
     public ChestGUI setItem(int position, ItemStack itemStack)
     {
         ItemStack stack = itemStack.clone();
@@ -66,6 +71,7 @@ public class ChestGUI implements Listener {
         return this;
     }
 
+    @SuppressWarnings("unused")
     public ChestGUI setItem(int position, ItemStack itemStack, String onClickCommand)
     {
         ItemStack stack = itemStack.clone();
@@ -82,12 +88,14 @@ public class ChestGUI implements Listener {
         return this;
     }
 
+    @SuppressWarnings("unused")
     public ChestGUI setBackgroundItem(ItemStack itemStack)
     {
         backgroundItem = itemStack;
         return this;
     }
 
+    @SuppressWarnings("unused")
     public Inventory createInventory()
     {
         if(backgroundItem == null && deafultBackgroundItem != null)
@@ -104,11 +112,13 @@ public class ChestGUI implements Listener {
         return inventory;
     }
 
+    @SuppressWarnings("unused")
     public void showGUI(Player p)
     {
         p.openInventory(this.createInventory());
     }
 
+    @SuppressWarnings("unused")
     public static ItemStack setItemStackName(Component displayName, ItemStack itemStack)
     {
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -117,6 +127,7 @@ public class ChestGUI implements Listener {
         return itemStack;
     }
 
+    @SuppressWarnings("unused")
     public static ChestGUI getChestGUIById(int id)
     {
         return ChestGUI.instances.get(id);
