@@ -1,8 +1,8 @@
 package me.gpmcplugins.reportssystem.Managers;
 
-import me.gpmcplugins.reportssystem.objects.ReportDeath;
-import me.gpmcplugins.reportssystem.objects.ReportMessage;
-import me.gpmcplugins.reportssystem.objects.ReportObject;
+import me.gpmcplugins.reportssystem.Objects.ReportDeath;
+import me.gpmcplugins.reportssystem.Objects.ReportMessage;
+import me.gpmcplugins.reportssystem.Objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.entity.Player;
 

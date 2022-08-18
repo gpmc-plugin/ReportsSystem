@@ -1,9 +1,9 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ViewInventoryGui;
-import me.gpmcplugins.reportssystem.objects.ReportCreator;
-import me.gpmcplugins.reportssystem.objects.ReportDeath;
-import me.gpmcplugins.reportssystem.objects.ReportObject;
+import me.gpmcplugins.reportssystem.Objects.ReportCreator;
+import me.gpmcplugins.reportssystem.Objects.ReportDeath;
+import me.gpmcplugins.reportssystem.Objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

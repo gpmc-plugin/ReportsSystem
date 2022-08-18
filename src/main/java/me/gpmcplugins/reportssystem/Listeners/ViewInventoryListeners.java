@@ -1,7 +1,7 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
-import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
-import me.gpmcplugins.reportssystem.objects.ReportObject;
+import me.gpmcplugins.reportssystem.Objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.Objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;

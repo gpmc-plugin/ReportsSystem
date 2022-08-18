@@ -1,4 +1,4 @@
-package me.gpmcplugins.reportssystem.objects;
+package me.gpmcplugins.reportssystem.Objects;
 
 import org.bukkit.entity.Player;
 

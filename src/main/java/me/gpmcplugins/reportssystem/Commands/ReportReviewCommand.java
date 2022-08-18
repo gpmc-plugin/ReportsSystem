@@ -1,7 +1,7 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
-import me.gpmcplugins.reportssystem.objects.ReportObject;
+import me.gpmcplugins.reportssystem.Objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

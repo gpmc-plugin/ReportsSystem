@@ -1,6 +1,6 @@
 package me.gpmcplugins.reportssystem.Managers;
 
-import me.gpmcplugins.reportssystem.objects.ReportObject;
+import me.gpmcplugins.reportssystem.Objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;

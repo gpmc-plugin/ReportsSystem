@@ -1,7 +1,7 @@
 package me.gpmcplugins.reportssystem.Commands;
 
-import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
-import me.gpmcplugins.reportssystem.objects.ReportCreator;
+import me.gpmcplugins.reportssystem.Objects.PlayerReportCreationStatus;
+import me.gpmcplugins.reportssystem.Objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
