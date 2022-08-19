@@ -38,8 +38,8 @@ public class ReportReviewInterface {
         List<ReportObject> reportObjectList;
         boolean isLastPage;
         try {
-            Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null, DatabaseManager.openStatus.OPEN);
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4,page, DatabaseManager.openStatus.OPEN);
+            Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null, DatabaseManager.OpenStatus.OPEN);
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4,page, DatabaseManager.OpenStatus.OPEN);
             isLastPage = 4*(page+1)>=reports;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -117,8 +117,8 @@ public class ReportReviewInterface {
         List<ReportObject> reportObjectList;
         boolean isLastPage = false;
         try {
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0, DatabaseManager.openStatus.OPEN);
-            if(plugin.getDatabaseManager().getAdminReports(null,5, 0, DatabaseManager.openStatus.OPEN).size() != 5)
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0, DatabaseManager.OpenStatus.OPEN);
+            if(plugin.getDatabaseManager().getAdminReports(null,5, 0, DatabaseManager.OpenStatus.OPEN).size() != 5)
             {
                 isLastPage = true;
             }

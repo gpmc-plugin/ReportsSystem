@@ -56,8 +56,8 @@ public class EventListener implements Listener {
         if(player.hasPermission("reportsystem.notification")){
             List<ReportObject> reports;
             try {
-                reports = plugin.getDatabaseManager().getAdminReports(null,100,0, DatabaseManager.openStatus.OPEN);
-                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(),100,0, DatabaseManager.openStatus.OPEN);
+                reports = plugin.getDatabaseManager().getAdminReports(null,100,0, DatabaseManager.OpenStatus.OPEN);
+                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(),100,0, DatabaseManager.OpenStatus.OPEN);
                 int reportslenght = reports.size()+userreports.size();
                 if(reportslenght>100)
                     reportslenght=100;
