@@ -31,5 +31,5 @@ public class IconItemstack {
     public static ItemStack backItemItemStack =  ChestGUI.setItemStackName(Component.text("WROC", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.ARROW));
     public static ItemStack openIneventoryItemItemStack =  ChestGUI.setItemStackName(Component.text("OTWORZ EKWIPUNEK GRACZA PRZED SMIERCIA", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.CHEST));
     public static ItemStack pageBackItemItemStack =  ChestGUI.setItemStackName(Component.text("STRONA DO TYLU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
-    public static ItemStack pageNextItemItemStack =  ChestGUI.setItemStackName(Component.text("STRONA DO TYLU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
+    public static ItemStack pageNextItemItemStack =  ChestGUI.setItemStackName(Component.text("STRONA DO PRZODU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
 }
