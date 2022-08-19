@@ -1,6 +1,5 @@
 package me.gpmcplugins.reportssystem.GUI;
 
-import me.gpmcplugins.reportssystem.objects.ReportsWithIsLastPage;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -38,9 +37,9 @@ public class ReportReviewInterface {
         List<ReportObject> reportObjectList;
         boolean isLastPage;
         try {
-            ReportsWithIsLastPage temp = plugin.getDatabaseManager().getAdminReportsWithIsLastPage(null,4, page,true);
-            reportObjectList = temp.content;
-            isLastPage = temp.isLastPage;
+           Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null,true);
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4,page,true);
+            isLastPage = 4*(page+1)>=reports;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
