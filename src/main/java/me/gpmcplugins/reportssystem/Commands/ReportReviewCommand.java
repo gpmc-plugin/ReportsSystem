@@ -1,4 +1,5 @@
 package me.gpmcplugins.reportssystem.Commands;
+import me.gpmcplugins.reportssystem.Common.Math;
 
 import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
@@ -27,11 +28,18 @@ public class ReportReviewCommand implements CommandExecutor {
             ReportReviewInterface.MainReviewMenu(p);
             return true;
         }
-
+        p.sendMessage("test");
         switch (args[0])
         {
             case "claimnewreportgui":
-                ReportReviewInterface.ClaimNewReportMenu(p);
+                if(args.length == 2 && Math.isNumeric(args[1]))
+                {
+                    p.sendMessage(args[1]);
+                    ReportReviewInterface.ClaimNewReportMenu(p, Integer.parseInt(args[1]));
+
+                }
+                else
+                    ReportReviewInterface.ClaimNewReportMenu(p, 0);
                 break;
             case "continueclaimedreportgui":
                 ReportReviewInterface.ContinueClaimedReportMenu(p);

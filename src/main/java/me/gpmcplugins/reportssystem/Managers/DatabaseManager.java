@@ -219,6 +219,37 @@ public class DatabaseManager {
         }
         return reports;
     }
+    public ReportsWithIsLastPage getAdminReportsWithIsLastPage(String adminId, Integer limit, Integer site, boolean open) throws SQLException {
+        int reportsAfter = limit*site;
+        String sql = "Select * from reports where status is " + (open?"NULL":"NOT NULL") + " AND admin"+(adminId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        int indexchanger=adminId!=null?0:1;
+        if(adminId!=null)
+            pstmt.setString(1,adminId);
+        pstmt.setInt(2-indexchanger,reportsAfter);
+        pstmt.setInt(3-indexchanger,limit+1);
+        ResultSet rs = pstmt.executeQuery();
+        List<ReportObject> reports = new ArrayList<>();
+        while (rs.next()){
+            Integer reportid = rs.getInt("id");
+            String reportingPlayer=rs.getString("reporting_player");
+            String type = rs.getString("type");
+            String shortDescription=rs.getString("short_description");
+            String description = rs.getString("description");
+            Long timestamp = rs.getLong("timestamp");
+            String admin = rs.getString("admin");
+            String reportedId = rs.getString("reported_id");
+            String status = rs.getString("status");
+            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin,status));
+
+        }
+        boolean isLastPage = reports.size() != limit + 1;
+        List<ReportObject> reportss = new ArrayList<>();
+        for (int i = 0; i < reports.size()-1; i++) {
+            reportss.add(reports.get(i));
+        }
+        return new ReportsWithIsLastPage(reportss, isLastPage);
+    }
     @SuppressWarnings("unused")
     public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, boolean open) throws SQLException {
         int reportsAfter = limit*site;
