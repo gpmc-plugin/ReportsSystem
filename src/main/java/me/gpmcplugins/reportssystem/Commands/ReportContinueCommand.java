@@ -54,10 +54,7 @@ public class ReportContinueCommand implements CommandExecutor {
                     case 2:
                         playerCreationStatus.createReport(report);
                         return true;
-
-
                 }
-
             }
             else
                 sender.sendMessage("Nie tworzysz żadnego reportu");

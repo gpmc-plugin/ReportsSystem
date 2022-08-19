@@ -3,6 +3,7 @@ package me.gpmcplugins.reportssystem.GUI;
 import jdk.tools.jlink.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -147,8 +148,14 @@ public class ChestGUI implements Listener {
     {
         ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta playerheadmeta = (SkullMeta) playerhead.getItemMeta();
-        playerheadmeta.setOwningPlayer(p);
-        playerheadmeta.displayName(p.name());
+        if(p != null)
+        {
+            playerheadmeta.setOwningPlayer(p);
+            playerheadmeta.displayName(p.name());
+
+        } else{
+            playerheadmeta.displayName(Component.text("Cos poszlo nie tak", NamedTextColor.YELLOW));
+        }
         playerhead.setItemMeta(playerheadmeta);
         return playerhead;
     }

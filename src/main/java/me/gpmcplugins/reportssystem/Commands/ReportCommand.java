@@ -38,7 +38,6 @@ public final class ReportCommand implements TabExecutor {
             return true;
         }
 
-
         switch (args[0].toLowerCase())
         {
             case "death":
@@ -59,7 +58,7 @@ public final class ReportCommand implements TabExecutor {
                 int nextDeathId = plugin.getDatabaseManager().getNextDeathID();
                 if (Integer.parseInt(reportedId) >= nextDeathId)
                 {
-                    p.sendMessage("Death ID is incorrect");
+                    p.sendMessage("ID smierci jest niepoprawne");
                     return false;
                 }
                 //((Player) sender).openBook(BookReportTypeInterface.deathReportInterface());
@@ -69,7 +68,7 @@ public final class ReportCommand implements TabExecutor {
                 int nextMsgId = plugin.getDatabaseManager().getNextMessageID();
                 if (Integer.parseInt(reportedId) >= nextMsgId)
                 {
-                    p.sendMessage("Message ID is incorrect");
+                    p.sendMessage("ID wiadomosci jest niepoprawne");
                     return false;
                 }
                 //((Player) sender).openBook(BookReportTypeInterface.messageReportInterface());
@@ -79,10 +78,10 @@ public final class ReportCommand implements TabExecutor {
 
                 Player reportedPlayer = plugin.getServer().getPlayer(reportedId);
                 if (reportedPlayer == null){
-                    TextComponent txt = Component.text("Player with name ")
+                    TextComponent txt = Component.text("Gracz z nickiem ")
                             .color(NamedTextColor.RED)
                             .append(Component.text(reportedId, NamedTextColor.RED, TextDecoration.BOLD))
-                            .append(Component.text(" does not exist"));
+                            .append(Component.text(" nie istnieje"));
                     p.sendMessage(txt);
                     return true;
                 }

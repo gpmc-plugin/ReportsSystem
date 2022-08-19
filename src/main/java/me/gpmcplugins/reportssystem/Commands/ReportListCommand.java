@@ -2,7 +2,6 @@ package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.Common.Math;
 import me.gpmcplugins.reportssystem.GUI.ReportListInterface;
-import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
@@ -12,12 +11,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ReportListCommand implements CommandExecutor {
-    private ReportsSystem plugin;
-    private Integer[] positions = {11, 13, 15, 20, 22, 24, 29, 31, 33, 38, 40, 42};
-
-    public ReportListCommand(ReportsSystem plugin) {
-        this.plugin = plugin;
-    }
+    private final Integer[] positions = {11, 13, 15, 20, 22, 24, 29, 31, 33, 38, 40, 42};
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -43,7 +37,7 @@ public class ReportListCommand implements CommandExecutor {
         else if (args.length == 2)
         {
             if (!Math.isNumeric(args[1])) {
-                p.sendMessage(Component.text("Strona musi być liczbą!!!!", NamedTextColor.RED));
+                p.sendMessage(Component.text("Strona musi być liczbą!", NamedTextColor.RED));
                 return false;
             }
             else {

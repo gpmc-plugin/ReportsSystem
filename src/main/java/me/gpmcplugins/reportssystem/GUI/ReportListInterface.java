@@ -36,7 +36,7 @@ public class ReportListInterface {
             throw new RuntimeException(e);
         }
         ChestGUI gui = new ChestGUI(54);
-        gui.setTitle((TextComponent) MiniMessage.miniMessage().deserialize("<gradient:#f857a6:#ff5858>Twoje zgłoszenia</gradient>"));
+        gui.setTitle("<gradient:#f857a6:#ff5858>Twoje zgłoszenia</gradient>");
         for (int i = 0; i < reports.size(); i++) {
 
             ReportObject report = reports.get(i);
@@ -61,7 +61,7 @@ public class ReportListInterface {
 
     public static void OpenReportsMenu(Player p, Integer[] positions, int limit, int page) {
         ChestGUI gui = new ChestGUI(54);
-        gui.setTitle((TextComponent) MiniMessage.miniMessage().deserialize("<gradient:#f857a6:#ff5858>Twoje otwarte zgłoszenia</gradient>"));
+        gui.setTitle("<gradient:#f857a6:#ff5858>Twoje otwarte zgłoszenia</gradient>");
         ArrayList<ReportObject> reports;
         try {
             reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.openStatus.OPEN);
@@ -72,7 +72,7 @@ public class ReportListInterface {
 
     public static void ClosedReportsMenu(Player p, Integer[] positions, int limit, int page) {
         ChestGUI gui = new ChestGUI(54);
-        gui.setTitle((TextComponent) MiniMessage.miniMessage().deserialize("<gradient:#f857a6:#ff5858>Twoje otwarte zgłoszenia</gradient>"));
+        gui.setTitle("<gradient:#f857a6:#ff5858>Twoje otwarte zgłoszenia</gradient>");
         ArrayList<ReportObject> reports;
         try {
             reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.openStatus.NOT_OPEN);

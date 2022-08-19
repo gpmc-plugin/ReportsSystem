@@ -23,11 +23,7 @@ public class ReportReviewCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args)
     {
         Player p = (Player) sender;
-        StringBuilder text = new StringBuilder();
-        for (String arg: args) {
-            text.append(arg);
-        }
-        p.sendMessage(text.toString());
+
         if (args.length < 2)
         {
             ReportReviewInterface.MainReviewMenu(p);
@@ -38,29 +34,27 @@ public class ReportReviewCommand implements CommandExecutor {
         {
             case "claimnewreportgui":
                 if(args.length == 2 && Math.isNumeric(args[1]))
-                {
-                    p.sendMessage(args[1]);
-                    ReportReviewInterface.ClaimNewReportMenu(p, Integer.parseInt(args[1]));
-
-                }
+                    ReportReviewInterface.ClaimOrContinueReportMenu(p, Integer.parseInt(args[1]), null);
                 else
-                    ReportReviewInterface.ClaimNewReportMenu(p, 0);
+                    ReportReviewInterface.ClaimOrContinueReportMenu(p, 0, null);
                 break;
             case "continueclaimedreportgui":
-                p.sendMessage("NOT IMPLEMENTED");
-                //ReportReviewInterface.ContinueClaimedReportMenu(p, 0);
+                if(args.length == 2 && Math.isNumeric(args[1]))
+                    ReportReviewInterface.ClaimOrContinueReportMenu(p, Integer.parseInt(args[1]), p.getUniqueId().toString());
+                else
+                    ReportReviewInterface.ClaimOrContinueReportMenu(p, 0, p.getUniqueId().toString());
                 break;
             case "claim":
                 if (args[1] == null)
                 {
-                    sender.sendMessage("you forgot about report id");
+                    sender.sendMessage("Zapomniales o wpisaniu id lol");
                     return false;
                 }
                 Integer claimId = Integer.parseInt(args[1]);
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(claimId);
                     reportObject.setAdmin(p.getUniqueId().toString());
-                    p.sendMessage("Successfully claimed report with id " + reportObject.id);
+                    p.sendMessage("Pomyslnie przjeto report o id " + reportObject.id);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -68,14 +62,14 @@ public class ReportReviewCommand implements CommandExecutor {
             case "accept":
                 if (args[1] == null)
                 {
-                    sender.sendMessage("you forgot about report id");
+                    sender.sendMessage("Zapomniales o wpisaniu id lol");
                     return false;
                 }
                 Integer acceptId = Integer.parseInt(args[1]);
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(acceptId);
                     reportObject.setReportStatus(ReportObject.ReportStatus.Accepted);
-                    p.sendMessage("Successfully accepted report with id " + reportObject.id);
+                    p.sendMessage("Pomyslnie zaakceptowano report o id " + reportObject.id);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -83,14 +77,14 @@ public class ReportReviewCommand implements CommandExecutor {
             case "deny":
                 if (args[1] == null)
                 {
-                    sender.sendMessage("you forgot about report id");
+                    sender.sendMessage("Zapomniales o wpisaniu id lol");
                     return false;
                 }
                 Integer denyId = Integer.parseInt(args[1]);
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(denyId);
                     reportObject.setReportStatus(ReportObject.ReportStatus.Denided);
-                    p.sendMessage("Successfully denied report with id " + reportObject.id);
+                    p.sendMessage("Pomyslnie odrzucono report o id  " + reportObject.id);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
