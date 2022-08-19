@@ -25,13 +25,13 @@ public class ReportListInterface {
     public static void AllReportsMenu(Player p, Integer[] positions, Integer limit, Integer page) {
         Integer reportsCount;
         try {
-            reportsCount = plugin.getDatabaseManager().getUserReportsCount(p.getUniqueId().toString(), DatabaseManager.openStatus.ALL);
+            reportsCount = plugin.getDatabaseManager().getUserReportsCount(p.getUniqueId().toString(), DatabaseManager.OpenStatus.ALL);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         ArrayList<ReportObject> reports;
         try {
-            reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.openStatus.ALL);
+            reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.OpenStatus.ALL);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +64,7 @@ public class ReportListInterface {
         gui.setTitle("<gradient:#f857a6:#ff5858>Twoje otwarte zgłoszenia</gradient>");
         ArrayList<ReportObject> reports;
         try {
-            reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.openStatus.OPEN);
+            reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.OpenStatus.OPEN);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +75,7 @@ public class ReportListInterface {
         gui.setTitle("<gradient:#f857a6:#ff5858>Twoje otwarte zgłoszenia</gradient>");
         ArrayList<ReportObject> reports;
         try {
-            reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.openStatus.NOT_OPEN);
+            reports = (ArrayList<ReportObject>) plugin.getDatabaseManager().getUserReports(p.getUniqueId().toString(), limit, page, DatabaseManager.OpenStatus.NOT_OPEN);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

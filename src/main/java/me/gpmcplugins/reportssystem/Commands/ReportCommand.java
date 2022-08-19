@@ -1,8 +1,9 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ChestReportTypeInterface;
-import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportDeath;
+import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -61,7 +62,10 @@ public final class ReportCommand implements TabExecutor {
                     p.sendMessage("ID smierci jest niepoprawne");
                     return false;
                 }
-                //((Player) sender).openBook(BookReportTypeInterface.deathReportInterface());
+                ReportDeath reportDeath = plugin.getDatabaseManager().getDeath(Integer.valueOf(reportedId));
+                if(!reportDeath.noob.getUniqueId().toString().equals(p.getUniqueId().toString())){
+                    p.sendMessage(Component.text("Możesz reportować tylko swoje śmierci!",NamedTextColor.RED));
+                }
                 ChestReportTypeInterface.deathReportInterface((Player) sender);
                 break;
             case Message:
@@ -71,12 +75,17 @@ public final class ReportCommand implements TabExecutor {
                     p.sendMessage("ID wiadomosci jest niepoprawne");
                     return false;
                 }
-                //((Player) sender).openBook(BookReportTypeInterface.messageReportInterface());
+                ReportMessage reportMessage= plugin.getDatabaseManager().getMessage(Integer.valueOf(reportedId));
+                if(p.getUniqueId().toString().equals(reportMessage.player.getUniqueId().toString())){
+                    sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
+                    return true;
+                }
                 ChestReportTypeInterface.messageReportInterface((Player) sender);
                 break;
             case User:
 
                 Player reportedPlayer = plugin.getServer().getPlayer(reportedId);
+
                 if (reportedPlayer == null){
                     TextComponent txt = Component.text("Gracz z nickiem ")
                             .color(NamedTextColor.RED)
@@ -85,8 +94,14 @@ public final class ReportCommand implements TabExecutor {
                     p.sendMessage(txt);
                     return true;
                 }
-                else
+                else{
+                    if(reportedPlayer.getUniqueId().toString().equals(((Player) sender).getUniqueId().toString())) {
+                        sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
+                        return true;
+                    }
                     reportedId=reportedPlayer.getUniqueId().toString();
+                }
+
                 //((Player) sender).openBook(BookReportTypeInterface.userReportInterface());
                 ChestReportTypeInterface.userReportInterface((Player) sender);
                 break;

@@ -193,7 +193,7 @@ public class DatabaseManager {
         prstm.setLong(4,timestamp);
         prstm.execute();
     }
-    public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, openStatus openStatus) throws SQLException {
+    public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, OpenStatus openStatus) throws SQLException {
         int reportsAfter = limit*site;
         String sql = "Select * from reports where " + translateOpenStatusToSql(openStatus) + " AND admin"+(adminId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -220,9 +220,9 @@ public class DatabaseManager {
         return reports;
     }
     @SuppressWarnings("unused")
-    public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, openStatus openStatus) throws SQLException {
+    public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, OpenStatus openStatus) throws SQLException {
         int reportsAfter = limit*site;
-        String sql = "Select * from reports where "+ translateOpenStatusToSql(openStatus)+" AND admin"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
+        String sql = "Select * from reports where "+ translateOpenStatusToSql(openStatus)+(openStatus==OpenStatus.ALL?"":" AND")+" reporting_player"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         int indexchanger=userId!=null?0:1;
         if(userId!=null)
@@ -286,8 +286,8 @@ public class DatabaseManager {
         }
         return null;
     }
-    public Integer getAdminReportsCount(String aid,openStatus open) throws SQLException {
-        String sql="Select count(*) from reports where admin"+(aid==null?" is null":"=?")+" AND"+translateOpenStatusToSql(open);
+    public Integer getAdminReportsCount(String aid,OpenStatus open) throws SQLException {
+        String sql="Select count(*) from reports where admin"+(aid==null?" is null":"=?")+(open==OpenStatus.ALL?"":" AND")+translateOpenStatusToSql(open);
         PreparedStatement pstmt = conn.prepareStatement(sql);
         if(aid!=null)
             pstmt.setString(1,aid);
@@ -295,9 +295,8 @@ public class DatabaseManager {
         rs.next();
         return rs.getInt("count(*)");
     }
-    @SuppressWarnings("unused")
-    public Integer getUserReportsCount(String uid,openStatus open) throws SQLException {
-        String sql="Select count(*) from reports where reporting_player"+(uid==null?" is null":"=?")+" AND"+translateOpenStatusToSql(open);
+    public Integer getUserReportsCount(String uid,OpenStatus open) throws SQLException {
+        String sql="Select count(*) from reports where reporting_player"+(uid==null?" is null":"=?")+(open==OpenStatus.ALL?"":" AND")+translateOpenStatusToSql(open);
         PreparedStatement pstmt = conn.prepareStatement(sql);
         if(uid!=null)
             pstmt.setString(1,uid);
@@ -326,7 +325,7 @@ public class DatabaseManager {
         pstmt.setInt(2,rid);
         pstmt.execute();
     }
-    private String translateOpenStatusToSql(openStatus openStatus){
+    private String translateOpenStatusToSql(OpenStatus openStatus){
         switch (openStatus){
             case OPEN:
                 return " status IS NULL";
@@ -336,7 +335,7 @@ public class DatabaseManager {
         return " ";
     }
     @SuppressWarnings("unused")
-    public enum openStatus{
+    public enum OpenStatus{
         ALL,
         OPEN,
         NOT_OPEN
