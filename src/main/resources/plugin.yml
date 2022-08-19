@@ -25,6 +25,12 @@ commands:
     usage: to jest komenda dla gui nie powinienes jej wpisywac w chat
     permission: reportsystem.report
     permission-message: Nev nie lubi naszych pluginów i to zablokował.
+  report-list:
+    description: Pokazuje listę twoich zgłoszeń
+    usage: /report-list <wszystkie|otwarte|zamknięte> <strona>
+    permission: reportsystem.report
+    permission-message:  Nev nie lubi naszych pluginów i to zablokował.
+    aliases: [r-list, r-l, rl]
   report-review:
     description: Pozwala przeglądać reporty
     usage: /report-review
@@ -35,6 +41,7 @@ commands:
     description: Pozwala zobaczyć swoje inventory po śmierci
     usage: /report-view-death-inventory
     permission: reportsystem.report
+    permission-message: Nev nie lubi naszych pluginów i to zablokował.
     aliases: [ r-view-death-inventory, r-death-inventory, rdi]
   report-help:
     description: Wyświetla pomoc
