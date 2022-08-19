@@ -222,7 +222,7 @@ public class DatabaseManager {
     @SuppressWarnings("unused")
     public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, OpenStatus openStatus) throws SQLException {
         int reportsAfter = limit*site;
-        String sql = "Select * from reports where "+ translateOpenStatusToSql(openStatus)+(openStatus==OpenStatus.ALL?"":" AND")+" admin"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
+        String sql = "Select * from reports where "+ translateOpenStatusToSql(openStatus)+(openStatus==OpenStatus.ALL?"":" AND")+" reporting_player"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         int indexchanger=userId!=null?0:1;
         if(userId!=null)
