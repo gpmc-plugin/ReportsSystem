@@ -109,16 +109,14 @@ public class ReportReviewInterface {
         return otherIconItemStack;
     }
 
-    public static void ContinueClaimedReportMenu(Player p) {
+    public static void ContinueClaimedReportMenu(Player p, int page) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
         List<ReportObject> reportObjectList;
-        boolean isLastPage = false;
+        boolean isLastPage;
         try {
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0,true);
-            if(plugin.getDatabaseManager().getAdminReports(null,5, 0,true).size() != 5)
-            {
-                isLastPage = true;
-            }
+            Integer reports = plugin.getDatabaseManager().getAdminReportsCount(p.getUniqueId().toString(),true);
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(p.getUniqueId().toString(),4,page,true);
+            isLastPage = 4*(page+1)>=reports;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -131,17 +129,22 @@ public class ReportReviewInterface {
             int position = 10+i*9;
             ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
 
-
-
             gui.setItem(position, reportIconItemStack)
                     .setItem(position+1, GetItemReportByReportType(reportObject.type))
                     .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
-                    /*.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)*/
+                    .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
                     .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
                     .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
+            if(reportObject.type == ReportCreator.ReportType.Death)
+            {
+                gui.setItem(position+3, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
+            }
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
+        if(page != 0)
+            gui.setItem(48, pageBackItemItemStack, "report-review claimnewreportgui " + (page-1), false);
+        if(!isLastPage)
+            gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
         gui.showGUI(p);
-        p.sendMessage(String.valueOf(isLastPage));
     }
 }
