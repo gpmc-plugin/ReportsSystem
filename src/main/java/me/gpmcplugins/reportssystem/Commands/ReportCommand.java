@@ -32,13 +32,6 @@ public final class ReportCommand implements TabExecutor {
         Player p = (Player) sender;
         ReportType reportType;
 
-        if(args.length < 2)
-        {
-            p.sendMessage("UZYWANIE:");
-            p.sendMessage("    /report User <nick>");
-            return false;
-        }
-
         switch (args[0].toLowerCase())
         {
             case "death":

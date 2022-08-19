@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Commands;
 
+import me.gpmcplugins.reportssystem.Common.Math;
 import me.gpmcplugins.reportssystem.GUI.ViewInventoryGui;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportDeath;
@@ -20,7 +21,7 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(args.length>0){
+        if(args.length>0&& Math.isNumeric(args[0])){
             if(sender instanceof Player){
                 Player player = (Player) sender;
                 try {
@@ -34,7 +35,7 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
                         return true;
                     }
                     ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.reportedID));
-                    if(death.noob.getUniqueId().toString().equals(player.getUniqueId().toString())){
+                    if(death.noob.getUniqueId().toString().equals(player.getUniqueId().toString())||player.hasPermission("reportsystem.reportreview")){
                         new ViewInventoryGui(plugin,Integer.parseInt(args[0])).openInventory(player);
                     }
                     else
@@ -47,7 +48,7 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
             }
         }
         else
-            sender.sendMessage("za mało argumentów");
+            sender.sendMessage("za mało argumentów lub są błędne");
         return false;
     }
 }

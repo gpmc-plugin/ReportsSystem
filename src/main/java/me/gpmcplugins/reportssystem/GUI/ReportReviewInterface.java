@@ -37,8 +37,8 @@ public class ReportReviewInterface {
         List<ReportObject> reportObjectList;
         boolean isLastPage;
         try {
-           Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null,true);
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4,page,true);
+            Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null, DatabaseManager.openStatus.OPEN);
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4,page, DatabaseManager.openStatus.OPEN);
             isLastPage = 4*(page+1)>=reports;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -114,6 +114,11 @@ public class ReportReviewInterface {
         List<ReportObject> reportObjectList;
         boolean isLastPage;
         try {
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0, DatabaseManager.openStatus.OPEN);
+            if(plugin.getDatabaseManager().getAdminReports(null,5, 0, DatabaseManager.openStatus.OPEN).size() != 5)
+            {
+                isLastPage = true;
+            }
             Integer reports = plugin.getDatabaseManager().getAdminReportsCount(p.getUniqueId().toString(),true);
             reportObjectList = plugin.getDatabaseManager().getAdminReports(p.getUniqueId().toString(),4,page,true);
             isLastPage = 4*(page+1)>=reports;
@@ -132,7 +137,7 @@ public class ReportReviewInterface {
             gui.setItem(position, reportIconItemStack)
                     .setItem(position+1, GetItemReportByReportType(reportObject.type))
                     .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
-                    .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
+                    /*.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)*/
                     .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
                     .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
             if(reportObject.type == ReportCreator.ReportType.Death)
@@ -146,5 +151,6 @@ public class ReportReviewInterface {
         if(!isLastPage)
             gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
         gui.showGUI(p);
+        p.sendMessage(String.valueOf(isLastPage));
     }
 }
