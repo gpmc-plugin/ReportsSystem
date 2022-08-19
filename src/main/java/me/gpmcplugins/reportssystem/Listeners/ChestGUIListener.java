@@ -2,6 +2,7 @@ package me.gpmcplugins.reportssystem.Listeners;
 
 import me.gpmcplugins.reportssystem.GUI.ChestGUI;
 import org.bukkit.NamespacedKey;
+import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,7 +37,12 @@ public class ChestGUIListener implements Listener {
             {
                 String command = itemmeta.getPersistentDataContainer().get(ChestGUI.onClickCommandKey, PersistentDataType.STRING);
                 if(command!=null){
-                    player.performCommand(command);
+                   // try {
+                        player.performCommand(command);
+                    /*} catch (CommandException err)
+                    {
+                        player.sendMessage("Cos poszlo nie tak");
+                    }*/
                 }
                 Byte shouldReload = itemmeta.getPersistentDataContainer().get(ChestGUI.shouldReloadKey, PersistentDataType.BYTE);
                 if(shouldReload != null && shouldReload != 0)

@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.GUI;
 
+import me.gpmcplugins.reportssystem.Managers.ReportsWithIsLastPage;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -32,11 +33,14 @@ public class ReportReviewInterface {
                 .showGUI(p);
     }
 
-    public static void ClaimNewReportMenu(Player p) {
+    public static void ClaimNewReportMenu(Player p, int page) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Przejmij report</gradient>");
         List<ReportObject> reportObjectList;
+        boolean isLastPage;
         try {
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0,true);
+            ReportsWithIsLastPage temp = plugin.getDatabaseManager().getAdminReportsWithIsLastPage(null,4, page,true);
+            reportObjectList = temp.content;
+            isLastPage = temp.isLastPage;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -49,16 +53,22 @@ public class ReportReviewInterface {
             int position = 10+i*9;
             ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
 
-
-
             gui.setItem(position, reportIconItemStack)
                 .setItem(position+1, GetItemReportByReportType(reportObject.type))
                 .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
                 .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
                 .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
                 .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
+            if(reportObject.type == ReportCreator.ReportType.Death)
+            {
+                gui.setItem(position+3, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
+            }
         }
-        gui.setItem(49, backArrowItemItemStack, "report-review", false);
+        gui.setItem(49, backItemItemStack, "report-review", false);
+        if(page != 0)
+            gui.setItem(48, pageBackItemItemStack, "report-review claimnewreportgui " + (page-1), false);
+        if(!isLastPage)
+            gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
         gui.showGUI(p);
     }
 
@@ -103,8 +113,13 @@ public class ReportReviewInterface {
     public static void ContinueClaimedReportMenu(Player p) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
         List<ReportObject> reportObjectList;
+        boolean isLastPage = false;
         try {
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(p.getUniqueId().toString(), 4, 0, true);
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0,true);
+            if(plugin.getDatabaseManager().getAdminReports(null,5, 0,true).size() != 5)
+            {
+                isLastPage = true;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -126,7 +141,8 @@ public class ReportReviewInterface {
                     .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
                     .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
         }
-        gui.setItem(49, backArrowItemItemStack, "report-review", false);
+        gui.setItem(49, backItemItemStack, "report-review", false);
         gui.showGUI(p);
+        p.sendMessage(String.valueOf(isLastPage));
     }
 }
