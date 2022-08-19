@@ -1,12 +1,13 @@
 package me.gpmcplugins.reportssystem.GUI;
 
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
+import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.objects.ReportObject.ReportStatus;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -46,6 +47,19 @@ public class ReportListInterface {
             ArrayList<Component> reportLore = new ArrayList<>();
             reportLore.add(Component.text(String.format("Krótki opis: %s", report.shortDescription)));
             reportLore.add(Component.text(String.format("Opis: %s", report.description)));
+            switch (report.type) {
+                case Message:
+                    ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.parseInt(report.reportedID));
+                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.message)));
+                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.player)));
+                    break;
+                case Death:
+                    reportLore.add(Component.text("Kliknij by zobaczyć swój ekwipunek", NamedTextColor.WHITE, TextDecoration.ITALIC));
+                    break;
+                case User:
+                    reportLore.add(Component.text(String.format("Zgłoszony użytkownik: %s", plugin.getServer().getPlayer(report.reportedID))));
+                    break;
+            }
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
