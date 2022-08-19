@@ -1,16 +1,20 @@
 package me.gpmcplugins.reportssystem.GUI;
 
+import jdk.tools.jlink.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -138,5 +142,14 @@ public class ChestGUI implements Listener {
     public static ChestGUI getChestGUIById(int id)
     {
         return ChestGUI.instances.get(id);
+    }
+    public static ItemStack getPlayerSkull(Player p)
+    {
+        ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta playerheadmeta = (SkullMeta) playerhead.getItemMeta();
+        playerheadmeta.setOwningPlayer(p);
+        playerheadmeta.displayName(p.name());
+        playerhead.setItemMeta(playerheadmeta);
+        return playerhead;
     }
 }

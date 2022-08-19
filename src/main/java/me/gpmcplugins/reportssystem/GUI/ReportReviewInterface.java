@@ -28,8 +28,8 @@ public class ReportReviewInterface {
     {
         (new ChestGUI(27))
                 .setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>")
-                .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui", false)
-                .setItem(15, continueReportIconItemStack, "report-review continueclaimedreportgui", false)
+                .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui 0", false)
+                .setItem(15, continueReportIconItemStack, "report-review continueclaimedreportgui 0", false)
                 .showGUI(p);
     }
 
@@ -38,7 +38,7 @@ public class ReportReviewInterface {
         List<ReportObject> reportObjectList;
         boolean isLastPage;
         try {
-           Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null, DatabaseManager.openStatus.OPEN);
+            Integer reports = plugin.getDatabaseManager().getAdminReportsCount(null, DatabaseManager.openStatus.OPEN);
             reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4,page, DatabaseManager.openStatus.OPEN);
             isLastPage = 4*(page+1)>=reports;
         } catch (SQLException e) {
@@ -50,18 +50,19 @@ public class ReportReviewInterface {
         }
         for (int i = 0; i < reportObjectList.size(); i++) {
             ReportObject reportObject = reportObjectList.get(i);
-            int position = 10+i*9;
-            ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
+            int position = 9+i*9;
+            ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITABLE_BOOK));
 
-            gui.setItem(position, reportIconItemStack)
-                .setItem(position+1, GetItemReportByReportType(reportObject.type))
-                .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
-                .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
-                .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
-                .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
+            gui.setItem(position+1, reportIconItemStack)
+                .setItem(position+2, GetItemReportByReportType(reportObject.type))
+                .setItem(position+3, GetItemReportByType(reportObject.shortDescription))
+                .setItem(position+5, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
+                .setItem(position+6, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
+                .setItem(position+7, denyReportIconItemStack, "report-review deny " + reportObject.id, true)
+                .setItem(position, ChestGUI.getPlayerSkull(reportObject.reportingUser));
             if(reportObject.type == ReportCreator.ReportType.Death)
             {
-                gui.setItem(position+3, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
+                gui.setItem(position+4, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
             }
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
@@ -69,6 +70,7 @@ public class ReportReviewInterface {
             gui.setItem(48, pageBackItemItemStack, "report-review claimnewreportgui " + (page-1), false);
         if(!isLastPage)
             gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
+
         gui.showGUI(p);
     }
 
@@ -110,7 +112,7 @@ public class ReportReviewInterface {
         return otherIconItemStack;
     }
 
-    public static void ContinueClaimedReportMenu(Player p) {
+    public static void ContinueClaimedReportMenu(Player p, int page) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
         List<ReportObject> reportObjectList;
         boolean isLastPage = false;
@@ -132,16 +134,22 @@ public class ReportReviewInterface {
             int position = 10+i*9;
             ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
 
-
-
             gui.setItem(position, reportIconItemStack)
                     .setItem(position+1, GetItemReportByReportType(reportObject.type))
                     .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
                     /*.setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id)*/
                     .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
                     .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
+            if(reportObject.type == ReportCreator.ReportType.Death)
+            {
+                gui.setItem(position+3, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
+            }
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
+        if(page != 0)
+            gui.setItem(48, pageBackItemItemStack, "report-review claimnewreportgui " + (page-1), false);
+        if(!isLastPage)
+            gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
         gui.showGUI(p);
         p.sendMessage(String.valueOf(isLastPage));
     }

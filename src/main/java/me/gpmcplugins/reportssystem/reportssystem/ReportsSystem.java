@@ -2,6 +2,7 @@ package me.gpmcplugins.reportssystem.reportssystem;
 
 import me.gpmcplugins.reportssystem.Commands.*;
 import me.gpmcplugins.reportssystem.GUI.ChestGUI;
+import me.gpmcplugins.reportssystem.GUI.ReportListInterface;
 import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.Listeners.ChestGUIListener;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
@@ -26,6 +27,7 @@ public final class ReportsSystem extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage("valid");
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
+        ReportListInterface.setup(this);
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
 

@@ -23,12 +23,17 @@ public class ReportReviewCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args)
     {
         Player p = (Player) sender;
-        if (args.length == 0)
+        StringBuilder text = new StringBuilder();
+        for (String arg: args) {
+            text.append(arg);
+        }
+        p.sendMessage(text.toString());
+        if (args.length < 2)
         {
             ReportReviewInterface.MainReviewMenu(p);
             return true;
         }
-        p.sendMessage("test");
+
         switch (args[0])
         {
             case "claimnewreportgui":
@@ -42,7 +47,8 @@ public class ReportReviewCommand implements CommandExecutor {
                     ReportReviewInterface.ClaimNewReportMenu(p, 0);
                 break;
             case "continueclaimedreportgui":
-                ReportReviewInterface.ContinueClaimedReportMenu(p);
+                p.sendMessage("NOT IMPLEMENTED");
+                //ReportReviewInterface.ContinueClaimedReportMenu(p, 0);
                 break;
             case "claim":
                 if (args[1] == null)
