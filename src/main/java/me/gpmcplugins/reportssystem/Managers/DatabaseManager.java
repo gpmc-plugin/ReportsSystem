@@ -286,6 +286,24 @@ public class DatabaseManager {
         }
         return null;
     }
+    public Integer getAdminReportsCount(String aid,boolean open) throws SQLException {
+        String sql="Select count(*) from reports where admin="+(aid==null?" is null":"=?")+" AND open="+(open?"NULL":"NOT NULL");
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        if(aid!=null)
+            pstmt.setString(1,aid);
+        ResultSet rs = pstmt.executeQuery();
+        rs.next();
+        return rs.getInt("count(*)");
+    }
+    public Integer getUserReportsCount(String uid,boolean open) throws SQLException {
+        String sql="Select count(*) from reports where reporting_player="+(uid==null?" is null":"=?")+" AND open="+(open?"NULL":"NOT NULL");
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        if(uid!=null)
+            pstmt.setString(1,uid);
+        ResultSet rs = pstmt.executeQuery();
+        rs.next();
+        return rs.getInt("count(*)");
+    }
     public List<Integer> getNonReadMessages(String uid) throws SQLException {
         String sql = "Select * from reports Where \"reporting_player\"=? AND readed=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
