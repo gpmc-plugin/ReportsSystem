@@ -1,7 +1,6 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ChestReportTypeInterface;
-import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportDeath;
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
@@ -87,10 +86,7 @@ public final class ReportCommand implements TabExecutor {
             case User:
 
                 Player reportedPlayer = plugin.getServer().getPlayer(reportedId);
-                if(reportedPlayer.getUniqueId().toString().equals(((Player) sender).getUniqueId().toString())) {
-                    sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
-                    return true;
-                }
+
                 if (reportedPlayer == null){
                     TextComponent txt = Component.text("Player with name ")
                             .color(NamedTextColor.RED)
@@ -99,8 +95,14 @@ public final class ReportCommand implements TabExecutor {
                     p.sendMessage(txt);
                     return true;
                 }
-                else
+                else{
+                    if(reportedPlayer.getUniqueId().toString().equals(((Player) sender).getUniqueId().toString())) {
+                        sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
+                        return true;
+                    }
                     reportedId=reportedPlayer.getUniqueId().toString();
+                }
+
                 //((Player) sender).openBook(BookReportTypeInterface.userReportInterface());
                 ChestReportTypeInterface.userReportInterface((Player) sender);
                 break;
