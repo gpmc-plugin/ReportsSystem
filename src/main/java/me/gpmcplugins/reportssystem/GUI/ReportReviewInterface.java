@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.GUI;
 
+import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -27,8 +28,8 @@ public class ReportReviewInterface {
     {
         (new ChestGUI(27))
                 .setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>")
-                .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui", false)
-                .setItem(15, continueReportIconItemStack, "report-review continueclaimedreportgui", false)
+                .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui 0", false)
+                .setItem(15, continueReportIconItemStack, "report-review continueclaimedreportgui 0", false)
                 .showGUI(p);
     }
 
@@ -49,18 +50,19 @@ public class ReportReviewInterface {
         }
         for (int i = 0; i < reportObjectList.size(); i++) {
             ReportObject reportObject = reportObjectList.get(i);
-            int position = 10+i*9;
-            ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITTEN_BOOK));
+            int position = 9+i*9;
+            ItemStack reportIconItemStack = ChestGUI.setItemStackName(Component.text(reportObject.id, itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITABLE_BOOK));
 
-            gui.setItem(position, reportIconItemStack)
-                .setItem(position+1, GetItemReportByReportType(reportObject.type))
-                .setItem(position+2, GetItemReportByType(reportObject.shortDescription))
-                .setItem(position+4, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
-                .setItem(position+5, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
-                .setItem(position+6, denyReportIconItemStack, "report-review deny " + reportObject.id, true);
+            gui.setItem(position+1, reportIconItemStack)
+                .setItem(position+2, GetItemReportByReportType(reportObject.type))
+                .setItem(position+3, GetItemReportByType(reportObject.shortDescription))
+                .setItem(position+5, claimReportIconItemStack, "report-review claim " + reportObject.id, true)
+                .setItem(position+6, acceptReportIconItemStack, "report-review accept " + reportObject.id, true)
+                .setItem(position+7, denyReportIconItemStack, "report-review deny " + reportObject.id, true)
+                .setItem(position, ChestGUI.getPlayerSkull(reportObject.reportingUser));
             if(reportObject.type == ReportCreator.ReportType.Death)
             {
-                gui.setItem(position+3, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
+                gui.setItem(position+4, openIneventoryItemItemStack, "report-view-death-inventory " + reportObject.id, false);
             }
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
@@ -68,6 +70,7 @@ public class ReportReviewInterface {
             gui.setItem(48, pageBackItemItemStack, "report-review claimnewreportgui " + (page-1), false);
         if(!isLastPage)
             gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
+
         gui.showGUI(p);
     }
 
@@ -112,16 +115,13 @@ public class ReportReviewInterface {
     public static void ContinueClaimedReportMenu(Player p, int page) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
         List<ReportObject> reportObjectList;
-        boolean isLastPage;
+        boolean isLastPage = false;
         try {
             reportObjectList = plugin.getDatabaseManager().getAdminReports(null,4, 0, DatabaseManager.openStatus.OPEN);
             if(plugin.getDatabaseManager().getAdminReports(null,5, 0, DatabaseManager.openStatus.OPEN).size() != 5)
             {
                 isLastPage = true;
             }
-            Integer reports = plugin.getDatabaseManager().getAdminReportsCount(p.getUniqueId().toString(),true);
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(p.getUniqueId().toString(),4,page,true);
-            isLastPage = 4*(page+1)>=reports;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

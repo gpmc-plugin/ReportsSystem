@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.Commands;
 
 import me.gpmcplugins.reportssystem.GUI.ChestReportTypeInterface;
+import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
@@ -31,6 +32,12 @@ public final class ReportCommand implements TabExecutor {
 
         Player p = (Player) sender;
         ReportType reportType;
+
+        if (args.length < 2)
+        {
+            return true;
+        }
+
 
         switch (args[0].toLowerCase())
         {
