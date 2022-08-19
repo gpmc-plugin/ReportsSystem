@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
@@ -55,8 +56,8 @@ public class EventListener implements Listener {
         if(player.hasPermission("reportsystem.notification")){
             List<ReportObject> reports;
             try {
-                reports = plugin.getDatabaseManager().getAdminReports(null,100,0,true);
-                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(),100,0,true);
+                reports = plugin.getDatabaseManager().getAdminReports(null,100,0, DatabaseManager.openStatus.OPEN);
+                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(),100,0, DatabaseManager.openStatus.OPEN);
                 int reportslenght = reports.size()+userreports.size();
                 if(reportslenght>100)
                     reportslenght=100;
