@@ -1,6 +1,6 @@
 package me.gpmcplugins.reportssystem.GUI;
 
-import me.gpmcplugins.reportssystem.Managers.ReportsWithIsLastPage;
+import me.gpmcplugins.reportssystem.objects.ReportsWithIsLastPage;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;

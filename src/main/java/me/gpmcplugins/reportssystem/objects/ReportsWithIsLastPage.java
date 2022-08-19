@@ -1,4 +1,4 @@
-package me.gpmcplugins.reportssystem.Managers;
+package me.gpmcplugins.reportssystem.objects;
 
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 
