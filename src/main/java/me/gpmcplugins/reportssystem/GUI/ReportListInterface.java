@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.GUI;
 
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
+import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.objects.ReportObject.ReportStatus;
@@ -63,12 +64,9 @@ public class ReportListInterface {
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
-            if (report.reportStatus == ReportStatus.In_Progress) {
-                reportBook.setType(Material.WRITABLE_BOOK);
-                gui.setItem(positions[i], reportBook);
-            } else {
-                gui.setItem(positions[i], reportBook);
-            }
+            if (report.reportStatus == ReportStatus.In_Progress) {reportBook.setType(Material.WRITABLE_BOOK);}
+                if (report.type == ReportCreator.ReportType.Death) gui.setItem(positions[i], reportBook, String.format("rdi %s", report.id), false);
+                else gui.setItem(positions[i], reportBook);
         }
         gui.showGUI(p);
     }
