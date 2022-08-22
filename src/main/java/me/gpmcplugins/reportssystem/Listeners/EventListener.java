@@ -52,7 +52,6 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        player.sendMessage("AUTO UPDATE TEST");
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
         if(player.hasPermission("reportsystem.notification")){
             List<ReportObject> reports;
@@ -118,7 +117,6 @@ public class EventListener implements Listener {
         }
         List<ItemStack> drops = e.getDrops();
         for (int i = 0; i < drops.size(); i++) {
-            player.sendMessage("seted");
             plugin.getConfig().set(deathID+"."+i,drops.get(i));
         }
         try {

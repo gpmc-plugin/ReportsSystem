@@ -10,12 +10,10 @@ import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collection;
+import java.io.File;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 import static me.gpmcplugins.reportssystem.GUI.IconItemstack.deafultBackgroundIconItemItemStack;
 
@@ -29,7 +27,6 @@ public final class ReportsSystem extends JavaPlugin {
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
-        this.getServer().getConsoleSender().sendMessage("valid");
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
@@ -71,4 +68,7 @@ public final class ReportsSystem extends JavaPlugin {
         return storageManager;
     }
     public UpdateManager getUpdateManager() {return updateManager;}
+    public File getPluginFile(){
+        return this.getFile();
+    }
 }

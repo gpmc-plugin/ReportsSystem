@@ -44,7 +44,7 @@ public class UpdateManager {
         }
     }
 
-    public boolean update()
+    public void update()
     {
         Server server = plugin.getServer();
         String content = NetworkManager.get("https://api.github.com/repos/gpmc-plugin/ReportsSystem/releases");
@@ -63,22 +63,14 @@ public class UpdateManager {
         }
         assert properObject != null;
         server.getConsoleSender().sendMessage(properObject.getString("name"));
+        File pluginFile = plugin.getPluginFile();
 
         //Remove Old Plugin
-        String[] pluginList = server.getPluginsFolder().list();
         server.getPluginManager().disablePlugin(plugin);
-        assert pluginList != null;
-        for(String s : pluginList)
-        {
-            File file = new File(s);
-            if(!file.isFile())
-                continue;
-            if(file.getName().toLowerCase().contains("reportssystem"))
-            {
-                server.getConsoleSender().sendMessage(file.getName());
-                server.getConsoleSender().sendMessage(String.valueOf(file.delete()));
-            }
-        }
-        return false;
+        boolean success = pluginFile.delete();
+        if(success)
+            server.getConsoleSender().sendMessage("udało się");
+        else
+            server.getConsoleSender().sendMessage("nie udało się :(");
     }
 }
