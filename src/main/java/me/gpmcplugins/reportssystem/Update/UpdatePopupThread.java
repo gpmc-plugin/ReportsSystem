@@ -7,9 +7,10 @@ public class UpdatePopupThread extends Thread{
         while (true) {
             UpdateManager.UpdateUpdatedState();
             try {
+                //noinspection BusyWait
                 Thread.sleep(30000);
             } catch (InterruptedException ignored) {
-
+                break;
             }
         }
     }
