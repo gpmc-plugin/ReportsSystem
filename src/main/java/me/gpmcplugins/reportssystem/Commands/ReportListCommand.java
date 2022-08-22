@@ -5,12 +5,16 @@ import me.gpmcplugins.reportssystem.GUI.ReportListInterface;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class ReportListCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReportListCommand implements TabExecutor {
     private final Integer[] positions = {11, 13, 15, 20, 22, 24, 29, 31, 33, 38, 40, 42};
 
     @Override
@@ -56,5 +60,17 @@ public class ReportListCommand implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        List<String> tabArgs = new ArrayList<>();
+        if(args.length == 1)
+        {
+            tabArgs.add("wszystkie");
+            tabArgs.add("otwarte");
+            tabArgs.add("zamknięte");
+        }
+        return tabArgs;
     }
 }
