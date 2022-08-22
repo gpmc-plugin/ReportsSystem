@@ -49,6 +49,12 @@ commands:
     permission: reportsystem.help
     permission-message: Nev nie lubi naszych pluginów i to zablokował
     aliases: [ r-help, rh]
+  report-update:
+    description: Aktualizuje plugin
+    usage: /update
+    permission: reportsystem.reportreview
+    permission-message: Nie powinienes korzystac z tej komendy
+    aliases: [ ReportsSystem-update, rsupdate, rsu]
 permissions:
   reportsystem.report:
     default: true

@@ -9,6 +9,7 @@ import me.gpmcplugins.reportssystem.Listeners.EventListener;
 import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
+import me.gpmcplugins.reportssystem.Managers.UpdateManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -19,6 +20,7 @@ public final class ReportsSystem extends JavaPlugin {
     DatabaseManager databaseManager = new DatabaseManager(this);
     EventListener eventListener = new EventListener(this);
     StorageManager storageManager = new StorageManager(this);
+    UpdateManager updateManager = new UpdateManager(this);
 
     @Override
     public void onEnable() {
@@ -29,8 +31,6 @@ public final class ReportsSystem extends JavaPlugin {
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
 
-        ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
-
         //todo add report logs
         //todo make player inventory visible in report-review
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
@@ -40,6 +40,10 @@ public final class ReportsSystem extends JavaPlugin {
         Objects.requireNonNull(getCommand("report-view-death-inventory")).setExecutor(new ViewDeathInventoryCommand(this));
         Objects.requireNonNull(getCommand("report-info")).setExecutor(new InfoCommand());
         Objects.requireNonNull(getCommand("report-list")).setExecutor(new ReportListCommand());
+        Objects.requireNonNull(getCommand("report-list")).setExecutor(new ReportListCommand());
+        Objects.requireNonNull(getCommand("report-update")).setExecutor(new UpdateCommand(this));
+
+        ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
     }
 
     @Override
@@ -53,4 +57,5 @@ public final class ReportsSystem extends JavaPlugin {
     public StorageManager getStorageManager(){
         return storageManager;
     }
+    public UpdateManager getUpdateManager() {return updateManager;}
 }
