@@ -5,8 +5,7 @@ import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.*;
 
 public class UpdateManager {
     private static ReportsSystem plugin;
@@ -45,12 +44,7 @@ public class UpdateManager {
     public boolean update()
     {
         String content = NetworkManager.get("https://api.github.com/repos/gpmc-plugin/ReportsSystem/releases");
-        JSONParser jsonParser = new JSONParser();
-        try {
-            JsonObject json = (JsonObject) jsonParser.parse(content);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        JSONObject json = new JSONObject(content);
         return false;
     }
 }
