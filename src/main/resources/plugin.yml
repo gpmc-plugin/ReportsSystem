@@ -52,7 +52,7 @@ commands:
   report-update:
     description: Aktualizuje plugin
     usage: /update
-    permission: reportsystem.reportreview
+    permission: reportsystem.update
     permission-message: Nie powinienes korzystac z tej komendy
     aliases: [ ReportsSystem-update, rsupdate, rsu]
 permissions:
@@ -68,3 +68,6 @@ permissions:
   reportsystem.notification:
     default: op
     description: Wysyła powiadomienia o nowych reportach
+  reportsystem.update:
+    default: op
+    description: Dodaje dostęp do komendy /update
