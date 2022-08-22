@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Server;
+import org.bukkit.plugin.PluginLoader;
 import org.json.*;
 
 import java.io.File;
@@ -47,6 +48,7 @@ public class UpdateManager {
     public void update()
     {
         Server server = plugin.getServer();
+        PluginLoader pluginLoader = plugin.getPluginLoader();
         String content = NetworkManager.get("https://api.github.com/repos/gpmc-plugin/ReportsSystem/releases");
         JSONArray json = new JSONArray(content);
         JSONObject properObject;
@@ -67,6 +69,7 @@ public class UpdateManager {
 
         //Remove Old Plugin
         server.getPluginManager().disablePlugin(plugin);
+        //pluginLoader.loadPlugin();
         boolean success = pluginFile.delete();
         if(success)
             server.getConsoleSender().sendMessage("udało się");
