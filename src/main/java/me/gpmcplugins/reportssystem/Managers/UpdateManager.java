@@ -75,5 +75,7 @@ public class UpdateManager {
             server.getConsoleSender().sendMessage("udało się");
         else
             server.getConsoleSender().sendMessage("nie udało się :(");
+
+        //json.getA
     }
 }
