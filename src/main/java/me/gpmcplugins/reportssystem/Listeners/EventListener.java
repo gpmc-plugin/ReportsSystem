@@ -52,6 +52,7 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
+        player.sendMessage("AUTO UPDATE TEST");
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
         if(player.hasPermission("reportsystem.notification")){
             List<ReportObject> reports;

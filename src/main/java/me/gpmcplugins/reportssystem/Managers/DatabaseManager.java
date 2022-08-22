@@ -7,10 +7,8 @@ import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 public class DatabaseManager {
     Connection conn;
@@ -339,5 +337,21 @@ public class DatabaseManager {
         ALL,
         OPEN,
         NOT_OPEN
+    }
+
+    public void onDisable()
+    {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void reloadFix()
+    {
+        Collection<? extends Player> onlinePlayers = plugin.getServer().getOnlinePlayers();
+        for(Player p : onlinePlayers)
+            plugin.getStorageManager().addUser(p.getUniqueId().toString());
     }
 }

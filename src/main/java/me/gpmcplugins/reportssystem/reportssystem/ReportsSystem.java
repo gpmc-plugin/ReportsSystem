@@ -10,9 +10,12 @@ import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 import static me.gpmcplugins.reportssystem.GUI.IconItemstack.deafultBackgroundIconItemItemStack;
 
@@ -44,11 +47,21 @@ public final class ReportsSystem extends JavaPlugin {
         Objects.requireNonNull(getCommand("report-update")).setExecutor(new UpdateCommand(this));
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
+
+
+
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        //Plugin shutdown logic
+        databaseManager.onDisable();
+        try{
+            updateManager.managerThread.interrupt();
+        }catch(Exception ignored)
+        {
+            throw new RuntimeException();
+        }
     }
 
     public DatabaseManager getDatabaseManager() {

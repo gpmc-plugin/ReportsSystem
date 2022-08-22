@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Commands;
 
+import me.gpmcplugins.reportssystem.Update.UpdateThread;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -22,6 +23,8 @@ public final class UpdateCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return plugin.getUpdateManager().update();
+        UpdateThread thread = new UpdateThread(plugin);
+        thread.start();
+        return true;
     }
 }
