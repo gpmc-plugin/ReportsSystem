@@ -76,6 +76,6 @@ public class UpdateManager {
         else
             server.getConsoleSender().sendMessage("nie udało się :(");
 
-        //json.getA
+        properObject.getJSONArray("assets");
     }
 }
