@@ -69,7 +69,7 @@ public class UpdateManager {
 
         //Remove Old Plugin
         server.getPluginManager().disablePlugin(plugin);
-        ///pluginLoader.loadPlugin();
+        //pluginLoader.loadPlugin();
         boolean success = pluginFile.delete();
         if(success)
             server.getConsoleSender().sendMessage("udało się");
