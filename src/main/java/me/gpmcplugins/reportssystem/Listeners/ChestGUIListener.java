@@ -1,8 +1,6 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import me.gpmcplugins.reportssystem.GUI.ChestGUI;
-import org.bukkit.NamespacedKey;
-import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

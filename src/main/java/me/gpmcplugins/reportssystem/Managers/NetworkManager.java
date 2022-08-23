@@ -8,7 +8,7 @@ public class NetworkManager {
     public static String get(String url)
     {
         String content = null;
-        URLConnection connection = null;
+        URLConnection connection;
         try {
             connection =  new URL(url).openConnection();
             Scanner scanner = new Scanner(connection.getInputStream());

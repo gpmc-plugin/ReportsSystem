@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StorageManager {
-    private Map<Integer, ReportCreator> reportsInProgress= new HashMap<>();
-    private Map<String, PlayerReportCreationStatus> playerReportCreationStatuses = new HashMap<>();
+    private final Map<Integer, ReportCreator> reportsInProgress= new HashMap<>();
+    private final Map<String, PlayerReportCreationStatus> playerReportCreationStatuses = new HashMap<>();
     private int reportInProgressID=0;
-    private ReportsSystem plugin;
+    private final ReportsSystem plugin;
     public StorageManager(ReportsSystem plugin){
         this.plugin=plugin;
     }

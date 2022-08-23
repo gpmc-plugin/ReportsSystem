@@ -33,9 +33,7 @@ public class ViewInventoryGui {
         PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(player.getUniqueId().toString());
         try {
             plugin.getConfig().load("item.yml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidConfigurationException e) {
+        } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);
         }
         while(i<54){

@@ -48,6 +48,7 @@ public final class ReportsSystem extends JavaPlugin {
         Objects.requireNonNull(getCommand("report-update")).setExecutor(new UpdateCommand(this));
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
+        databaseManager.reloadFix();
     }
 
     @Override
