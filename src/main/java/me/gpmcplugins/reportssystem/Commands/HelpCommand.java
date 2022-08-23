@@ -22,7 +22,7 @@ public final class HelpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        TextComponent helpMsg = Component.text(String.format("Witaj w %s %s!\n", plugin.getName(), plugin.getDescription().getVersion()), NamedTextColor.AQUA)
+        TextComponent helpMsg = Component.text(String.format("Witaj w %s-%s!\n", plugin.getName(), plugin.getDescription().getVersion()), NamedTextColor.AQUA)
                 .append(Component.text("Użyj /report User, by zgłosić użytkownika\n")
                         .hoverEvent(HoverEvent.showText(Component.text("Kliknij, by użyć")))
                         .clickEvent(ClickEvent.suggestCommand("/report User ")))
