@@ -35,12 +35,7 @@ public class ChestGUIListener implements Listener {
             {
                 String command = itemmeta.getPersistentDataContainer().get(ChestGUI.onClickCommandKey, PersistentDataType.STRING);
                 if(command!=null){
-                   // try {
-                        player.performCommand(command);
-                    /*} catch (CommandException err)
-                    {
-                        player.sendMessage("Cos poszlo nie tak");
-                    }*/
+                    player.performCommand(command);
                 }
                 Byte shouldReload = itemmeta.getPersistentDataContainer().get(ChestGUI.shouldReloadKey, PersistentDataType.BYTE);
                 if(shouldReload != null && shouldReload != 0)

@@ -7,8 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Server;
-import org.bukkit.plugin.InvalidPluginException;
-import org.bukkit.plugin.PluginLoader;
 import org.json.*;
 
 import java.io.File;
@@ -55,7 +53,6 @@ public class UpdateManager {
 
     public void update() throws IOException {
         Server server = plugin.getServer();
-        PluginLoader pluginLoader = plugin.getPluginLoader();
         String content = NetworkManager.get("https://api.github.com/repos/gpmc-plugin/ReportsSystem/releases");
         JSONArray json = new JSONArray(content);
         JSONObject properObject;
@@ -71,23 +68,11 @@ public class UpdateManager {
             }
         }
         assert properObject != null;
-        server.getConsoleSender().sendMessage(properObject.getString("name"));
         File pluginFile = plugin.getPluginFile();
 
         //Remove Old Plugin
         PluginUtil.unload(ReportsSystem.getInstance());
-        boolean success = pluginFile.delete();
-        if(success)
-            server.getConsoleSender().sendMessage("udało się");
-        else {
-            server.getConsoleSender().sendMessage("nie udało się :(");
-            try {
-                pluginLoader.loadPlugin(pluginFile);
-            } catch (InvalidPluginException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
+        assert !pluginFile.delete();
 
         JSONObject obj = properObject.getJSONArray("assets").getJSONObject(0);
 
@@ -101,41 +86,8 @@ public class UpdateManager {
         rbc.close();
 
         String filename = file.getName().replace(".jar", "");
-        server.getConsoleSender().sendMessage(file.getName());
         PluginUtil.load(filename);
         PluginUtil.enable(PluginUtil.getPluginByName(filename));
         PluginUtil.reload(PluginUtil.getPluginByName(filename));
-        //try {
-        /*} catch (InvalidPluginException e) {
-            server.getConsoleSender().sendMessage(e.getMessage());
-            throw new RuntimeException(e);
-        }*/
-        /*for (int i = 0; i < array.length(); i++) {
-            JSONObject obj = json.getJSONObject(i);
-            if(obj == null)
-                continue;
-            //try {
-                server.getConsoleSender().sendMessage(String.valueOf(obj));
-                if(Objects.equals(obj.getString("content_type"), "application/java-archive"))
-                {
-                    File file = Paths.get(pluginFile.getParentFile().getAbsolutePath(), obj.getString("name")).toFile();
-                    //some stackoverflow code
-                    URL url = new URL(obj.getString("browser_download_url"));
-                    ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-                    FileOutputStream fos = new FileOutputStream(file);
-                    fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-                    fos.close();
-                    rbc.close();
-                    /*try {
-                        pluginLoader.loadPlugin(file);
-                    } catch (InvalidPluginException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            /*} catch (NullPointerException ignore)
-            {
-
-            }
-        }*/
     }
 }
