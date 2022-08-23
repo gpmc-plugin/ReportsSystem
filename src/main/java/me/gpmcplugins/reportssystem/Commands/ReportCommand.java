@@ -78,7 +78,7 @@ public final class ReportCommand implements TabExecutor {
                 ReportMessage reportMessage= plugin.getDatabaseManager().getMessage(Integer.valueOf(reportedId));
                 if(p.getUniqueId().toString().equals(reportMessage.player.getUniqueId().toString())){
                     sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
-                    //return true;
+                    return true;
                 }
                 ChestReportTypeInterface.messageReportInterface((Player) sender);
                 break;
