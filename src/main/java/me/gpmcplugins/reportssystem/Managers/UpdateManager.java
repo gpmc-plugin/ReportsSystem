@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Managers;
 
+import com.rylinaux.plugman.util.PluginUtil;
 import me.gpmcplugins.reportssystem.Update.UpdatePopupThread;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
@@ -50,7 +51,7 @@ public class UpdateManager {
                             "Updaty tego plugina maja w sobie poprawki zwiazane z bezpieczenstwem oraz bledami wiec zainstaluj je szybko!\n",
                             NamedTextColor.AQUA)
                         .append(Component.text("[Kliknij tutaj aby zupdatowac plugin]",
-                                NamedTextColor.YELLOW).clickEvent(ClickEvent.runCommand("/ReportsSystem-update"))), "reportsystem.report");
+                                NamedTextColor.YELLOW).clickEvent(ClickEvent.runCommand("/rsu"))), "reportsystem.report");
         }
     }
 
@@ -76,8 +77,7 @@ public class UpdateManager {
         File pluginFile = plugin.getPluginFile();
 
         //Remove Old Plugin
-        pluginLoader.disablePlugin(plugin);
-        server.getPluginManager().disablePlugin(plugin);
+        PluginUtil.unload(ReportsSystem.getInstance());
         boolean success = pluginFile.delete();
         if(success)
             server.getConsoleSender().sendMessage("udało się");
@@ -102,16 +102,16 @@ public class UpdateManager {
         fos.close();
         rbc.close();
 
-        try {
-            Bukkit.dispatchCommand(server.getConsoleSender(),"stop");
-            Plugin newPlugin = pluginLoader.loadPlugin(file);
-            server.getPluginManager().enablePlugin(newPlugin);
-            pluginLoader.enablePlugin(newPlugin);
-        } catch (InvalidPluginException e) {
+        String filename = file.getName().replace(".jar", "");
+        server.getConsoleSender().sendMessage(file.getName());
+        PluginUtil.load(filename);
+        PluginUtil.enable(PluginUtil.getPluginByName(filename));
+        PluginUtil.reload(PluginUtil.getPluginByName(filename));
+        //try {
+        /*} catch (InvalidPluginException e) {
             server.getConsoleSender().sendMessage(e.getMessage());
             throw new RuntimeException(e);
-        }
-
+        }*/
         /*for (int i = 0; i < array.length(); i++) {
             JSONObject obj = json.getJSONObject(i);
             if(obj == null)

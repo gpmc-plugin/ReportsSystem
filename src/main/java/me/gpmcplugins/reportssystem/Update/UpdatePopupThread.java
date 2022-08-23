@@ -8,7 +8,7 @@ public class UpdatePopupThread extends Thread{
             UpdateManager.UpdateUpdatedState();
             try {
                 //noinspection BusyWait
-                Thread.sleep(30000);
+                Thread.sleep(5*60*1000);
             } catch (InterruptedException ignored) {
                 break;
             }

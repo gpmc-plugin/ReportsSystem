@@ -18,6 +18,7 @@ import java.util.Objects;
 import static me.gpmcplugins.reportssystem.GUI.IconItemstack.deafultBackgroundIconItemItemStack;
 
 public final class ReportsSystem extends JavaPlugin {
+    private static ReportsSystem instance = null;
     DatabaseManager databaseManager = new DatabaseManager(this);
     EventListener eventListener = new EventListener(this);
     StorageManager storageManager = new StorageManager(this);
@@ -25,6 +26,8 @@ public final class ReportsSystem extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
         ReportReviewInterface.setup(this);
@@ -45,9 +48,6 @@ public final class ReportsSystem extends JavaPlugin {
         Objects.requireNonNull(getCommand("report-update")).setExecutor(new UpdateCommand(this));
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
-
-
-
     }
 
     @Override
@@ -81,4 +81,5 @@ public final class ReportsSystem extends JavaPlugin {
     public File getPluginFile(){
         return this.getFile();
     }
+    public static ReportsSystem getInstance() { return ReportsSystem.instance; }
 }

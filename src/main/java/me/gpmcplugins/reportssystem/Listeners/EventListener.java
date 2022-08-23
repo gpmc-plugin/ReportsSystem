@@ -52,6 +52,8 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
+        player.sendMessage("test update");
+        player.sendMessage("test update");
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
         if(player.hasPermission("reportsystem.notification")){
             List<ReportObject> reports;
