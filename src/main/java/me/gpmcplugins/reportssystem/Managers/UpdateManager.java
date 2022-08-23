@@ -77,21 +77,26 @@ public class UpdateManager {
         //Remove Old Plugin
         PluginUtil.unload(ReportsSystem.getInstance());
         assert !pluginFile.delete();
+        try {
+            JSONObject obj = properObject.getJSONArray("assets").getJSONObject(0);
 
-        JSONObject obj = properObject.getJSONArray("assets").getJSONObject(0);
+            File file = Paths.get(pluginFile.getParentFile().getAbsolutePath(), obj.getString("name")).toFile();
+            //some stackoverflow code
+            URL url = new URL(obj.getString("browser_download_url"));
+            ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
+            rbc.close();
 
-        File file = Paths.get(pluginFile.getParentFile().getAbsolutePath(), obj.getString("name")).toFile();
-        //some stackoverflow code
-        URL url = new URL(obj.getString("browser_download_url"));
-        ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        fos.close();
-        rbc.close();
-
-        String filename = file.getName().replace(".jar", "");
-        PluginUtil.load(filename);
-        PluginUtil.enable(PluginUtil.getPluginByName(filename));
-        PluginUtil.reload(PluginUtil.getPluginByName(filename));
+            String filename = file.getName().replace(".jar", "");
+            PluginUtil.load(filename);
+            PluginUtil.enable(PluginUtil.getPluginByName(filename));
+            PluginUtil.reload(PluginUtil.getPluginByName(filename));
+        }
+        catch(Exception ex){
+            PluginUtil.enable(plugin);
+            server.getConsoleSender().sendMessage("Coś przy updacie poszło nie tak!! Może posiadasz już najnoszą wersje?");
+        }
     }
 }
