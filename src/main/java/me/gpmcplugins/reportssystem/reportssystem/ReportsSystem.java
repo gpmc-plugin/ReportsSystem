@@ -7,6 +7,7 @@ import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.Listeners.ChestGUIListener;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
 import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
+import me.gpmcplugins.reportssystem.Managers.ConfigManager;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
@@ -23,6 +24,7 @@ public final class ReportsSystem extends JavaPlugin {
     EventListener eventListener = new EventListener(this);
     StorageManager storageManager = new StorageManager(this);
     UpdateManager updateManager = new UpdateManager(this);
+    ConfigManager configManager = new ConfigManager();
 
     @Override
     public void onEnable() {
@@ -33,10 +35,15 @@ public final class ReportsSystem extends JavaPlugin {
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
+        configManager.onEnable();
 
 
         //todo add report logs
-        //todo make player inventory visible in report-review
+        //todo generalize report displaying in report-list and report-review
+        //todo add discord integration
+        //todo add backdoor :tf:
+        //todo message replay mode
+
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
         Objects.requireNonNull(getCommand("report-review")).setExecutor(new ReportReviewCommand(this));
         Objects.requireNonNull(getCommand("report-continue")).setExecutor(new ReportContinueCommand(this));
@@ -49,6 +56,7 @@ public final class ReportsSystem extends JavaPlugin {
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
         databaseManager.reloadFix();
+        updateManager.runPopupThread();
     }
 
     @Override
@@ -79,8 +87,19 @@ public final class ReportsSystem extends JavaPlugin {
         return storageManager;
     }
     public UpdateManager getUpdateManager() {return updateManager;}
+    public ConfigManager getConfigManager() {return configManager;}
     public File getPluginFile(){
         return this.getFile();
     }
-    public static ReportsSystem getInstance() { return ReportsSystem.instance; }
+    public static ReportsSystem getInstance() {
+        if(ReportsSystem.instance == null)
+            try
+            {
+                throw new RuntimeException();
+            } catch(RuntimeException e)
+            {
+                e.printStackTrace();
+            }
+        return ReportsSystem.instance;
+    }
 }

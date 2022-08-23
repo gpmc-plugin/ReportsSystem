@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.Update;
 
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
+import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 
 public class UpdatePopupThread extends Thread{
     public void run() {
@@ -8,7 +9,7 @@ public class UpdatePopupThread extends Thread{
             UpdateManager.UpdateUpdatedState();
             try {
                 //noinspection BusyWait
-                Thread.sleep(5*60*1000);
+                Thread.sleep(ReportsSystem.getInstance().getConfigManager().getConfig().getInt("UpdateCheckInterval"));
             } catch (InterruptedException ignored) {
                 break;
             }

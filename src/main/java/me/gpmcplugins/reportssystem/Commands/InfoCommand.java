@@ -21,7 +21,7 @@ public class InfoCommand implements CommandExecutor {
         sender.sendMessage(Component.text("    Frontend - ")
                 .append(Component.text("Ssz256", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
                         .hoverEvent(HoverEvent.showText(Component.text(
-                                "ten od chest gui i blendow z nim zwiazanych",
+                                "ten od chest gui i blendow z nim zwiazanych\n(also auto update)",
                                 NamedTextColor.YELLOW, TextDecoration.ITALIC)))));
         sender.sendMessage(Component.text("    Ten od switchów - ")
                 .append(Component.text("Idont", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)

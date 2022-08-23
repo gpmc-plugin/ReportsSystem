@@ -3,6 +3,7 @@ package me.gpmcplugins.reportssystem.Listeners;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
+import me.gpmcplugins.reportssystem.Managers.UpdateManager;
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
@@ -67,8 +68,10 @@ public class EventListener implements Listener {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-
-
+        }
+        if(UpdateManager.isUpdated && player.hasPermission("reportsystem.update"))
+        {
+            player.sendMessage(UpdateManager.updateMessage);
         }
         try {
             List<Integer> unreadReports = plugin.getDatabaseManager().getNonReadMessages(player.getUniqueId().toString());

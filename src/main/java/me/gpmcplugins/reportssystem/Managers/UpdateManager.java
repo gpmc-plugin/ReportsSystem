@@ -21,10 +21,19 @@ public class UpdateManager {
     private static ReportsSystem plugin;
     public static boolean isUpdated;
     public UpdatePopupThread managerThread;
+    public static final Component updateMessage = Component.text("Wlasnie wyszedl nowy update do pluginu Reports System!\n" +
+                            "Updaty tego plugina maja w sobie poprawki zwiazane z bezpieczenstwem oraz bledami wiec zainstaluj je szybko!\n",
+                    NamedTextColor.AQUA)
+            .append(Component.text("[Kliknij tutaj aby zupdatowac plugin]",
+                    NamedTextColor.YELLOW).clickEvent(ClickEvent.runCommand("/rsu")));
 
     public UpdateManager(ReportsSystem plugin)
     {
         UpdateManager.plugin = plugin;
+    }
+
+    public void runPopupThread()
+    {
         managerThread = new UpdatePopupThread();
         managerThread.start();
     }
@@ -42,12 +51,7 @@ public class UpdateManager {
             plugin.getServer().getConsoleSender().sendMessage("Found Updates");
         if(!UpdateManager.isUpdated)
         {
-            UpdateManager.plugin.getServer().broadcast(
-                    Component.text("Wlasnie wyszedl nowy update do pluginu Reports System!\n" +
-                            "Updaty tego plugina maja w sobie poprawki zwiazane z bezpieczenstwem oraz bledami wiec zainstaluj je szybko!\n",
-                            NamedTextColor.AQUA)
-                        .append(Component.text("[Kliknij tutaj aby zupdatowac plugin]",
-                                NamedTextColor.YELLOW).clickEvent(ClickEvent.runCommand("/rsu"))), "reportsystem.report");
+            UpdateManager.plugin.getServer().broadcast(UpdateManager.updateMessage, "reportsystem.update");
         }
     }
 
