@@ -31,6 +31,7 @@ public final class ReportsSystem extends JavaPlugin {
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
 
+
         //todo add report logs
         //todo make player inventory visible in report-review
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
@@ -59,6 +60,15 @@ public final class ReportsSystem extends JavaPlugin {
         {
             throw new RuntimeException();
         }
+        Objects.requireNonNull(getCommand("report")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-review")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-continue")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-help")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-view-death-inventory")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-info")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-list")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-list")).unregister(getServer().getCommandMap());
+        Objects.requireNonNull(getCommand("report-update")).unregister(getServer().getCommandMap());
     }
 
     public DatabaseManager getDatabaseManager() {

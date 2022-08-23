@@ -5,6 +5,7 @@ import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.Plugin;
@@ -18,7 +19,6 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 public class UpdateManager {
     private static ReportsSystem plugin;
@@ -76,12 +76,20 @@ public class UpdateManager {
         File pluginFile = plugin.getPluginFile();
 
         //Remove Old Plugin
+        pluginLoader.disablePlugin(plugin);
         server.getPluginManager().disablePlugin(plugin);
         boolean success = pluginFile.delete();
         if(success)
             server.getConsoleSender().sendMessage("udało się");
-        else
+        else {
             server.getConsoleSender().sendMessage("nie udało się :(");
+            try {
+                pluginLoader.loadPlugin(pluginFile);
+            } catch (InvalidPluginException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
 
         JSONObject obj = properObject.getJSONArray("assets").getJSONObject(0);
 
@@ -95,9 +103,12 @@ public class UpdateManager {
         rbc.close();
 
         try {
+            Bukkit.dispatchCommand(server.getConsoleSender(),"stop");
             Plugin newPlugin = pluginLoader.loadPlugin(file);
             server.getPluginManager().enablePlugin(newPlugin);
+            pluginLoader.enablePlugin(newPlugin);
         } catch (InvalidPluginException e) {
+            server.getConsoleSender().sendMessage(e.getMessage());
             throw new RuntimeException(e);
         }
 
