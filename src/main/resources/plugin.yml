@@ -55,6 +55,11 @@ commands:
     permission: reportsystem.update
     permission-message: Nie powinienes korzystac z tej komendy
     aliases: [ ReportsSystem-update, rsupdate, rsu]
+  report-replay:
+    description: Aktualizuje plugin
+    usage: /update
+    permission: reportsystem.replay
+    permission-message: Nie powinienes korzystac z tej komendy
 permissions:
   reportsystem.report:
     default: true
@@ -71,3 +76,6 @@ permissions:
   reportsystem.update:
     default: op
     description: Dodaje dostęp do komendy /update
+  reportsystem.replay:
+    description: Umożliwia odtwrzanie powtórek chatu
+    default: op

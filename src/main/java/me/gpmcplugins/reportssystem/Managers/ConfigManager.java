@@ -3,7 +3,6 @@ package me.gpmcplugins.reportssystem.Managers;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
 
 public class ConfigManager {
     public void onEnable()
@@ -21,11 +20,6 @@ public class ConfigManager {
     public FileConfiguration getConfig()
     {
         return ReportsSystem.getInstance().getConfig();
-    }
-
-    public void reloadConfig()
-    {
-        ReportsSystem.getInstance().reloadConfig();
     }
     public void saveConfig()
     {

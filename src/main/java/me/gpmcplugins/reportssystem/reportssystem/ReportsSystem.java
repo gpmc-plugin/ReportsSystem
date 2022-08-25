@@ -11,6 +11,7 @@ import me.gpmcplugins.reportssystem.Managers.ConfigManager;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.StorageManager;
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
+import me.gpmcplugins.reportssystem.Replay.ReplayListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -32,6 +33,7 @@ public final class ReportsSystem extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
+        this.getServer().getPluginManager().registerEvents(new ReplayListener(this),this);
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
@@ -53,6 +55,7 @@ public final class ReportsSystem extends JavaPlugin {
         Objects.requireNonNull(getCommand("report-list")).setExecutor(new ReportListCommand());
         Objects.requireNonNull(getCommand("report-list")).setExecutor(new ReportListCommand());
         Objects.requireNonNull(getCommand("report-update")).setExecutor(new UpdateCommand(this));
+        Objects.requireNonNull(getCommand("report-replay")).setExecutor(new ReplayCommand(this));
 
         ChestGUI.setDeafultBackgroundItem(deafultBackgroundIconItemItemStack);
         databaseManager.reloadFix();
@@ -63,6 +66,7 @@ public final class ReportsSystem extends JavaPlugin {
     public void onDisable() {
         //Plugin shutdown logic
         databaseManager.onDisable();
+        storageManager.onDisable();
         try{
             updateManager.managerThread.interrupt();
         }catch(Exception ignored)
