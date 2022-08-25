@@ -65,6 +65,7 @@ public final class ReportsSystem extends JavaPlugin {
     @Override
     public void onDisable() {
         //Plugin shutdown logic
+        ChestGUI.onDisable();
         databaseManager.onDisable();
         storageManager.onDisable();
         try{

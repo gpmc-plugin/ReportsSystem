@@ -37,13 +37,13 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.*;
+import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 
 /**
  * Utilities for managing plugins.
