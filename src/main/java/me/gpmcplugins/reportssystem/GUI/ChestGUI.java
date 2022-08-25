@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.GUI;
 
+import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,6 +11,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -155,5 +157,14 @@ public class ChestGUI implements Listener {
         }
         playerhead.setItemMeta(playerheadmeta);
         return playerhead;
+    }
+
+    public static void onDisable()
+    {
+        for(Player p : ReportsSystem.getInstance().getServer().getOnlinePlayers())
+        {
+            InventoryView inv = p.getOpenInventory();
+            inv.close();
+        }
     }
 }
