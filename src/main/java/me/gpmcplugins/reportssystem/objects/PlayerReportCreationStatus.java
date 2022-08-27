@@ -77,7 +77,7 @@ public class PlayerReportCreationStatus {
             case Death:
                 ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.getReportedElementID()));
                 secoundLine+="swoją śmierć z powodu:\n";
-                secoundlineadd = Component.translatable(death.message_translate,player.displayName());
+                secoundlineadd = Component.translatable(death.messageTranslate,player.displayName());
 
         }
         String thirdLine = "Z powodu: "+ ReportTranslater.fromReportShortDescription(report.getReportShortDescription())+"\n"+report.getDescription();
