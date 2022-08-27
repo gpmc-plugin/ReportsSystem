@@ -91,11 +91,7 @@ public class PlayerReportCreationStatus {
         player.sendMessage(Component.empty().append(delete).append(save));
     }
     public void createReport(ReportCreator report){
-        Integer reportid = report.createReport();
-        if(reportid!=null)
-            this.sendReportCreated(reportid);
-        else
-            player.sendMessage(Component.text("Coś poszło nie tak spróbuj ponownie",NamedTextColor.DARK_RED));
+        report.createReport();
         this.clearReport();
     }
 

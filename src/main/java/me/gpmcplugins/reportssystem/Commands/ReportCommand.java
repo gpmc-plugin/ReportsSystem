@@ -24,6 +24,7 @@ public final class ReportCommand implements TabExecutor {
     public ReportCommand(ReportsSystem plugin){
         this.plugin=plugin;
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -75,11 +76,14 @@ public final class ReportCommand implements TabExecutor {
                     p.sendMessage("ID wiadomosci jest niepoprawne");
                     return false;
                 }
+                @SuppressWarnings("unused")
                 ReportMessage reportMessage= plugin.getDatabaseManager().getMessage(Integer.valueOf(reportedId));
+                /*
                 if(p.getUniqueId().toString().equals(reportMessage.getPlayer().getUniqueId().toString())){
                     sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
                     return true;
                 }
+                 */
                 ChestReportTypeInterface.messageReportInterface((Player) sender);
                 break;
             case User:
@@ -95,10 +99,12 @@ public final class ReportCommand implements TabExecutor {
                     return true;
                 }
                 else{
+                    /*
                     if(reportedPlayer.getUniqueId().toString().equals(((Player) sender).getUniqueId().toString())) {
                         sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
                         return true;
                     }
+                    */
                     reportedId=reportedPlayer.getUniqueId().toString();
                 }
 

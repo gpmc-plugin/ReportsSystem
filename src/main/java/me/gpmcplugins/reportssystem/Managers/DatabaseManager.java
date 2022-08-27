@@ -1,9 +1,11 @@
 package me.gpmcplugins.reportssystem.Managers;
 
+import me.gpmcplugins.reportssystem.Events.ReportCreateEvent;
 import me.gpmcplugins.reportssystem.objects.ReportDeath;
 import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -147,7 +149,7 @@ public class DatabaseManager {
         prstm.setLong(5,timestamp);
         prstm.execute();
     }
-    public Integer createReport(String Sender,String type,String shortDescription,String description,String reportedID) throws SQLException {
+    public void createReport(String Sender,String type,String shortDescription,String description,String reportedID) throws SQLException {
         long timestamp = new Date().getTime();
         String sql = "INSERT INTO \"main\".\"reports\"(\"id\",\"reporting_player\",\"type\",\"short_description\",\"description\",\"timestamp\",\"admin\",\"reported_id\") VALUES (?,?,?,?,?,?,NULL,?);\n";
         int reportID = getNextReportID();
@@ -161,7 +163,10 @@ public class DatabaseManager {
         prstm.setLong(6,timestamp);
         prstm.setString(7,reportedID);
         prstm.execute();
-        return reportID;
+        ReportObject reportObject= this.getReport(reportID);
+        ReportCreateEvent reportCreateEvent = new ReportCreateEvent(reportObject,reportObject.getReportingUser());
+        Bukkit.getPluginManager().callEvent(reportCreateEvent);
+        Bukkit.getPluginManager().callEvent(reportCreateEvent);
     }
     public ReportMessage getMessage(Integer id){
 

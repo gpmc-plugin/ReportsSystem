@@ -1,7 +1,6 @@
 package me.gpmcplugins.reportssystem.objects;
 
 import me.gpmcplugins.reportssystem.Events.ReportPreCreateEvent;
-import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.Bukkit;
 
@@ -50,17 +49,16 @@ public class ReportCreator {
     public PlayerReportCreationStatus getPlayer(){
         return plugin.getStorageManager().getUser(this.ReportingPlayer);
     }
-    public Integer createReport(){
+    public void createReport(){
         ReportPreCreateEvent reportPreCreateEvent = new ReportPreCreateEvent(this,this.getPlayer().getPlayer());
         Bukkit.getPluginManager().callEvent(reportPreCreateEvent);
-        MessageManager.sendReportMessage();
         try {
-            if(!reportPreCreateEvent.isCancelled())
-             return plugin.getDatabaseManager().createReport(getReportingPlayer(),getType().toString(),getReportShortDescription().toString(),getDescription(),getReportedElementID());
+            if(!reportPreCreateEvent.isCancelled()) {
+                plugin.getDatabaseManager().createReport(getReportingPlayer(), getType().toString(), getReportShortDescription().toString(), getDescription(), getReportedElementID());
+            }
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
         }
-        return null;
     }
 
     public enum ReportType{

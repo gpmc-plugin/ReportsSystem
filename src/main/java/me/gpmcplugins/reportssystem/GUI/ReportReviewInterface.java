@@ -2,6 +2,7 @@ package me.gpmcplugins.reportssystem.GUI;
 
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
+import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import static me.gpmcplugins.reportssystem.GUI.IconItemstack.*;
 
@@ -79,11 +81,11 @@ public class ReportReviewInterface {
             switch (reportObject.getType())
             {
                 case Message:
+                    ReportMessage message = ReportsSystem.getInstance().getDatabaseManager().getMessage(reportObject.getId());
                     reportLore.add(
-                            Component.text(String.format("Zgloszona Wiadomosc: %s",
-                                plugin.getServer().getPlayer(reportObject.getReportedID()))));
+                            Component.text(String.format("Zgloszona Wiadomosc: %s", message.getMessage())));
                     reportMessage = Component.text("Report Wiadomosci Gracza ")
-                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(reportObject.getReportedID())).name());
+                            .append(message.getPlayer().name());
                     break;
                 case Death:
                     reportMessage = Component.text("Report Smierci Gracza ")
@@ -91,7 +93,7 @@ public class ReportReviewInterface {
                     break;
                 case User:
                     reportMessage = Component.text("Report Gracza ")
-                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(reportObject.getReportedID())).name());
+                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(UUID.fromString(reportObject.getReportedID()))).name());
             }
             reportMeta.displayName(reportMessage);
             reportMeta.lore(reportLore);
