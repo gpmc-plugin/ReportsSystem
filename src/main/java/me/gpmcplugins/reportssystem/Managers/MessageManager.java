@@ -24,7 +24,7 @@ public class MessageManager {
             reportOdmiana = "report";
             czekaOdmiana="czeka";
         }
-        else if(count<10) {
+        else if(count<5) {
             reportOdmiana = "reporty";
             czekaOdmiana="czekają";
         }
