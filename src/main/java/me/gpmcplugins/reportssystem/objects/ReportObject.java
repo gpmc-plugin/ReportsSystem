@@ -53,7 +53,7 @@ public class ReportObject {
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
         }
-        new MessageManager(plugin).sendUpdateMessage(reportStatus,id,reportingUser);
+        MessageManager.sendUpdateMessage(reportStatus,id,reportingUser);
 
     }
     public void setAdmin(String uid){

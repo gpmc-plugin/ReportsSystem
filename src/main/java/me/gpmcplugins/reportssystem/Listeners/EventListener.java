@@ -63,7 +63,7 @@ public class EventListener implements Listener {
                 if(reportslenght>100)
                     reportslenght=100;
                 if(reportslenght!=0){
-                    new MessageManager(plugin).sendJoinMessage(reportslenght);
+                    MessageManager.sendJoinMessage(reportslenght);
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
@@ -77,7 +77,7 @@ public class EventListener implements Listener {
             List<Integer> unreadReports = plugin.getDatabaseManager().getNonReadMessages(player.getUniqueId().toString());
             for (Integer unreadReport : unreadReports) {
                 ReportObject reportObject = plugin.getDatabaseManager().getReport(unreadReport);
-                new MessageManager(plugin).sendUpdateMessage(reportObject.reportStatus,unreadReport,player);
+                MessageManager.sendUpdateMessage(reportObject.reportStatus,unreadReport,player);
             }
         } catch (SQLException ex) {
             plugin.getDatabaseManager().throwError(ex.getMessage());

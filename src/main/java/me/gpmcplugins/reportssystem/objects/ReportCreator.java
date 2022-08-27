@@ -1,7 +1,9 @@
 package me.gpmcplugins.reportssystem.objects;
 
+import me.gpmcplugins.reportssystem.Events.ReportPreCreateEvent;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 
@@ -49,8 +51,11 @@ public class ReportCreator {
         return plugin.getStorageManager().getUser(this.ReportingPlayer);
     }
     public Integer createReport(){
-        new MessageManager(plugin).sendReportMessage();
+        ReportPreCreateEvent reportPreCreateEvent = new ReportPreCreateEvent(this,this.getPlayer().getPlayer());
+        Bukkit.getPluginManager().callEvent(reportPreCreateEvent);
+        MessageManager.sendReportMessage();
         try {
+            if(!reportPreCreateEvent.isCancelled())
              return plugin.getDatabaseManager().createReport(getReportingPlayer(),getType().toString(),getReportShortDescription().toString(),getDescription(),getReportedElementID());
         } catch (SQLException e) {
             plugin.getDatabaseManager().throwError(e.getMessage());
