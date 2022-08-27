@@ -11,16 +11,16 @@ import java.util.Date;
 import java.util.UUID;
 
 public class ReportObject {
-    public Integer id;
-    public Player reportingUser;
-    public ReportsSystem plugin;
-    public ReportCreator.ReportType type;
-    public ReportCreator.ReportShortDescription shortDescription;
-    public String reportedID;
-    public String description;
-    public Player admin=null;
-    public Date timestamp;
-    public ReportStatus reportStatus;
+    private final Integer id;
+    private final Player reportingUser;
+    private final ReportsSystem plugin;
+    private final ReportCreator.ReportType type;
+    private final ReportCreator.ReportShortDescription shortDescription;
+    private final String reportedID;
+    private final String description;
+    private Player admin;
+    private final Date timestamp;
+    private final ReportStatus reportStatus;
     public ReportObject(Integer id, String reportingUser, String type, String shortDescription, String reportedID,String description, String admin, Long timestamp, ReportsSystem plugin, String status){
         this.id=id;
         this.plugin = plugin;
@@ -38,6 +38,47 @@ public class ReportObject {
             this.reportStatus=ReportStatus.valueOf(status);
 
     }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ReportCreator.ReportType getType() {
+        return type;
+    }
+
+    public ReportsSystem getPlugin() {
+        return plugin;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Player getReportingUser() {
+        return reportingUser;
+    }
+
+    public ReportStatus getReportStatus() {
+        return reportStatus;
+    }
+
+    public String getReportedID() {
+        return reportedID;
+    }
+    @SuppressWarnings("unused")
+    public Player getAdmin() {
+        return admin;
+    }
+
+    public ReportCreator.ReportShortDescription getShortDescription() {
+        return shortDescription;
+    }
+
     public void setReportStatus(ReportStatus reportStatus){
         Connection conn = plugin.getDatabaseManager().getConn();
         String sql = "UPDATE \"main\".\"reports\" SET \"status\"=? WHERE \"id\"=?";

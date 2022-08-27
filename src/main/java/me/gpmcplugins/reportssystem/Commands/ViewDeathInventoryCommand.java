@@ -30,11 +30,11 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
                         sender.sendMessage("Report nie istnieje");
                         return true;
                     }
-                    if(report.type!= ReportCreator.ReportType.Death){
+                    if(report.getType()!= ReportCreator.ReportType.Death){
                         sender.sendMessage("Report nie istnieje");
                         return true;
                     }
-                    ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.reportedID));
+                    ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.getReportedID()));
                     if(death.getNoob().getUniqueId().toString().equals(player.getUniqueId().toString())||player.hasPermission("reportsystem.reportreview")){
                         new ViewInventoryGui(plugin,Integer.parseInt(args[0])).openInventory(player);
                     }

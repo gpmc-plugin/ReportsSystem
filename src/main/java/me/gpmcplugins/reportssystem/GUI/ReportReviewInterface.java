@@ -65,54 +65,54 @@ public class ReportReviewInterface {
             ItemStack reportBook = new ItemStack(Material.WRITTEN_BOOK);
             ItemMeta reportMeta = reportBook.getItemMeta();
             ArrayList<Component> reportLore = new ArrayList<>();
-            reportLore.add(Component.text("Reportujacy Gracz: ").append(reportObject.reportingUser.name()));
-            reportLore.add(Component.text(String.format("Report o ID %s", reportObject.id)));
-            reportLore.add(Component.text(String.format("Krótki opis: %s", reportObject.shortDescription)));
-            reportLore.add(Component.text(String.format("Opis: %s", reportObject.description)));
+            reportLore.add(Component.text("Reportujacy Gracz: ").append(reportObject.getReportingUser().name()));
+            reportLore.add(Component.text(String.format("Report o ID %s", reportObject.getId())));
+            reportLore.add(Component.text(String.format("Krótki opis: %s", reportObject.getShortDescription())));
+            reportLore.add(Component.text(String.format("Opis: %s", reportObject.getDescription())));
 
             String pattern = "HH:mm.ss dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            String date = simpleDateFormat.format(reportObject.timestamp);
+            String date = simpleDateFormat.format(reportObject.getTimestamp());
             reportLore.add(Component.text(String.format("Data i Czas Reportu: %s", date)));
 
             Component reportMessage = Component.text("Cos poszlo nie tak!");
-            switch (reportObject.type)
+            switch (reportObject.getType())
             {
                 case Message:
                     reportLore.add(
                             Component.text(String.format("Zgloszona Wiadomosc: %s",
-                                plugin.getServer().getPlayer(reportObject.reportedID))));
+                                plugin.getServer().getPlayer(reportObject.getReportedID()))));
                     reportMessage = Component.text("Report Wiadomosci Gracza ")
-                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(reportObject.reportedID)).name());
+                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(reportObject.getReportedID())).name());
                     break;
                 case Death:
                     reportMessage = Component.text("Report Smierci Gracza ")
-                            .append(reportObject.reportingUser.name());
+                            .append(reportObject.getReportingUser().name());
                     break;
                 case User:
                     reportMessage = Component.text("Report Gracza ")
-                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(reportObject.reportedID)).name());
+                            .append(Objects.requireNonNull(plugin.getServer().getPlayer(reportObject.getReportedID())).name());
             }
             reportMeta.displayName(reportMessage);
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
             gui.setItem(position+1, reportBook)
-                .setItem(position+2, GetItemReportByReportType(reportObject.type))
-                .setItem(position+3, GetItemReportByType(reportObject.shortDescription))
+                .setItem(position+2, GetItemReportByReportType(reportObject.getType()))
+                .setItem(position+3, GetItemReportByType(reportObject.getShortDescription()))
                 .setItem(position+6, acceptReportIconItemStack,
-                        "report-review accept " + reportObject.id, true)
+                        "report-review accept " + reportObject.getId(), true)
                 .setItem(position+7, denyReportIconItemStack,
-                        "report-review deny " + reportObject.id, true)
-                .setItem(position, ChestGUI.getPlayerSkull(reportObject.reportingUser));
+                        "report-review deny " + reportObject.getId(), true)
+                .setItem(position, ChestGUI.getPlayerSkull(reportObject.getReportingUser()));
 
             if(adminid == null)
                 gui.setItem(position+5, claimReportIconItemStack,
-                        "report-review claim " + reportObject.id, true);
+                        "report-review claim " + reportObject.getId(), true);
 
-            if(reportObject.type == ReportCreator.ReportType.Death)
+            if(reportObject.getType() == ReportCreator.ReportType.Death)
                 gui.setItem(position+4, openIneventoryItemItemStack,
-                        "report-view-death-inventory " + reportObject.id, false);
+                        "report-view-death-inventory " + reportObject.getId(), false);
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
         if(page != 0)

@@ -30,7 +30,7 @@ public class ViewInventoryListeners  implements Listener {
             try {
                 report = plugin.getDatabaseManager().getReport(playerStatus.getLookingDeathId());
                 if(!player.hasPermission("reportsystem.reportreview"))
-                    e.setCancelled(report.reportStatus!= ReportObject.ReportStatus.Accepted);
+                    e.setCancelled(report.getReportStatus()!= ReportObject.ReportStatus.Accepted);
             } catch (SQLException ex) {
                 plugin.getDatabaseManager().throwError(ex.getMessage());
             }
@@ -46,7 +46,7 @@ public class ViewInventoryListeners  implements Listener {
                         throw new RuntimeException(ex);
                     }
                     assert report != null;
-                    plugin.getConfig().set(report.reportedID+"."+slot,null);
+                    plugin.getConfig().set(report.getReportedID()+"."+slot,null);
                     try {
                         plugin.getConfig().save("item.yml");
                     } catch (IOException ex) {

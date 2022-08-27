@@ -29,7 +29,7 @@ public class ViewInventoryGui {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        deathID= Integer.valueOf(report.reportedID);
+        deathID= Integer.valueOf(report.getReportedID());
         PlayerReportCreationStatus playerStatus = plugin.getStorageManager().getUser(player.getUniqueId().toString());
         try {
             plugin.getConfig().load("item.yml");
@@ -42,7 +42,7 @@ public class ViewInventoryGui {
             i++;
         }
         player.openInventory(inventory);
-        playerStatus.setLookingDeathId(report.id);
+        playerStatus.setLookingDeathId(report.getId());
 
     }
 }

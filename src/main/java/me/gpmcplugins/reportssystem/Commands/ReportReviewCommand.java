@@ -54,7 +54,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(claimId);
                     reportObject.setAdmin(p.getUniqueId().toString());
-                    p.sendMessage("Pomyslnie przjeto report o id " + reportObject.id);
+                    p.sendMessage("Pomyslnie przjeto report o id " + reportObject.getId());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -69,7 +69,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(acceptId);
                     reportObject.setReportStatus(ReportObject.ReportStatus.Accepted);
-                    p.sendMessage("Pomyslnie zaakceptowano report o id " + reportObject.id);
+                    p.sendMessage("Pomyslnie zaakceptowano report o id " + reportObject.getId());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -84,7 +84,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 try {
                     ReportObject reportObject = plugin.getDatabaseManager().getReport(denyId);
                     reportObject.setReportStatus(ReportObject.ReportStatus.Denided);
-                    p.sendMessage("Pomyslnie odrzucono report o id  " + reportObject.id);
+                    p.sendMessage("Pomyslnie odrzucono report o id  " + reportObject.getId());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
