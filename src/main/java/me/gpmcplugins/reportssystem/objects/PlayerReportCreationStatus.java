@@ -72,12 +72,12 @@ public class PlayerReportCreationStatus {
                 break;
             case Message:
                 ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.valueOf(report.getReportedElementID()));
-                secoundLine+="wiadomość użytkownika "+ reportMessage.player.getName()+" o treści: "+reportMessage.message;
+                secoundLine+="wiadomość użytkownika "+ reportMessage.getPlayer().getName()+" o treści: "+reportMessage.getMessage();
                 break;
             case Death:
                 ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.getReportedElementID()));
                 secoundLine+="swoją śmierć z powodu:\n";
-                secoundlineadd = Component.translatable(death.messageTranslate,player.displayName());
+                secoundlineadd = Component.translatable(death.getMessageTranslate(),player.displayName());
 
         }
         String thirdLine = "Z powodu: "+ ReportTranslater.fromReportShortDescription(report.getReportShortDescription())+"\n"+report.getDescription();

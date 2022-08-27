@@ -35,7 +35,7 @@ public class ViewDeathInventoryCommand implements CommandExecutor {
                         return true;
                     }
                     ReportDeath death = plugin.getDatabaseManager().getDeath(Integer.valueOf(report.reportedID));
-                    if(death.noob.getUniqueId().toString().equals(player.getUniqueId().toString())||player.hasPermission("reportsystem.reportreview")){
+                    if(death.getNoob().getUniqueId().toString().equals(player.getUniqueId().toString())||player.hasPermission("reportsystem.reportreview")){
                         new ViewInventoryGui(plugin,Integer.parseInt(args[0])).openInventory(player);
                     }
                     else

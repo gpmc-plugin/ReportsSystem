@@ -63,7 +63,7 @@ public final class ReportCommand implements TabExecutor {
                     return false;
                 }
                 ReportDeath reportDeath = plugin.getDatabaseManager().getDeath(Integer.valueOf(reportedId));
-                if(!reportDeath.noob.getUniqueId().toString().equals(p.getUniqueId().toString())){
+                if(!reportDeath.getNoob().getUniqueId().toString().equals(p.getUniqueId().toString())){
                     p.sendMessage(Component.text("Możesz reportować tylko swoje śmierci!",NamedTextColor.RED));
                 }
                 ChestReportTypeInterface.deathReportInterface((Player) sender);
@@ -76,7 +76,7 @@ public final class ReportCommand implements TabExecutor {
                     return false;
                 }
                 ReportMessage reportMessage= plugin.getDatabaseManager().getMessage(Integer.valueOf(reportedId));
-                if(p.getUniqueId().toString().equals(reportMessage.player.getUniqueId().toString())){
+                if(p.getUniqueId().toString().equals(reportMessage.getPlayer().getUniqueId().toString())){
                     sender.sendMessage(Component.text("Nie możesz zreportować samego siebie!!", NamedTextColor.RED));
                     return true;
                 }

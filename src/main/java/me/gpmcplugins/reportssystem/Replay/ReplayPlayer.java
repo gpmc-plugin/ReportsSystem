@@ -70,7 +70,7 @@ public class ReplayPlayer {
             replayObject.onEnd();
             return;
         }
-        replayObject.getPlayer().sendMessage(Component.text("["+reportMessage.player.getName()+"] ", NamedTextColor.GREEN).append(Component.text(reportMessage.message,NamedTextColor.WHITE)));
+        replayObject.getPlayer().sendMessage(Component.text("["+reportMessage.getPlayer().getName()+"] ", NamedTextColor.GREEN).append(Component.text(reportMessage.getMessage(),NamedTextColor.WHITE)));
         actualID++;
     }
 }

@@ -53,8 +53,8 @@ public class ReportListInterface {
             switch (report.type) {
                 case Message:
                     ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.parseInt(report.reportedID));
-                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.message)));
-                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.player)));
+                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.getMessage())));
+                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.getPlayer())));
                     break;
                 case Death:
                     reportLore.add(Component.text("Kliknij by zobaczyć swój ekwipunek", NamedTextColor.WHITE, TextDecoration.ITALIC));
@@ -109,8 +109,8 @@ public class ReportListInterface {
             switch (report.type) {
                 case Message:
                     ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.parseInt(report.reportedID));
-                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.message)));
-                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.player)));
+                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.getMessage())));
+                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.getPlayer())));
                     break;
                 case Death:
                     reportLore.add(Component.text("Kliknij by zobaczyć swój ekwipunek", NamedTextColor.WHITE, TextDecoration.ITALIC));
@@ -165,8 +165,8 @@ public class ReportListInterface {
             switch (report.type) {
                 case Message:
                     ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.parseInt(report.reportedID));
-                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.message)));
-                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.player)));
+                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.getMessage())));
+                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.getPlayer())));
                     break;
                 case Death:
                     reportLore.add(Component.text("Kliknij by zobaczyć swój ekwipunek", NamedTextColor.WHITE, TextDecoration.ITALIC));
