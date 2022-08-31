@@ -166,7 +166,6 @@ public class DatabaseManager {
         ReportObject reportObject= this.getReport(reportID);
         ReportCreateEvent reportCreateEvent = new ReportCreateEvent(reportObject,reportObject.getReportingUser());
         Bukkit.getPluginManager().callEvent(reportCreateEvent);
-        Bukkit.getPluginManager().callEvent(reportCreateEvent);
     }
     public ReportMessage getMessage(Integer id){
 
