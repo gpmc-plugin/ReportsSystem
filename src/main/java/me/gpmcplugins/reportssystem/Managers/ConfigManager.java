@@ -13,6 +13,7 @@ public class ConfigManager {
     private void addDeafults()
     {
         getConfig().addDefault("UpdateCheckInterval", 5*60*1000);
+        getConfig().addDefault("DiscordToken", "paste-token-here");
         getConfig().options().copyDefaults(true);
         saveConfig();
     }

@@ -76,6 +76,10 @@
             <artifactId>json</artifactId>
             <version>20220320</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-alpha.18</version>
+        </dependency>
     </dependencies>
 </project>

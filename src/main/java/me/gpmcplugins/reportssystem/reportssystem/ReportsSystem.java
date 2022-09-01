@@ -1,12 +1,12 @@
 package me.gpmcplugins.reportssystem.reportssystem;
 
 import me.gpmcplugins.reportssystem.Commands.*;
+import me.gpmcplugins.reportssystem.Discord.DiscordIntegration;
 import me.gpmcplugins.reportssystem.GUI.ChestGUI;
 import me.gpmcplugins.reportssystem.GUI.ReportListInterface;
 import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.Listeners.ChestGUIListener;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
-import me.gpmcplugins.reportssystem.Listeners.InternalListener;
 import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
 import me.gpmcplugins.reportssystem.Managers.ConfigManager;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
@@ -15,6 +15,7 @@ import me.gpmcplugins.reportssystem.Managers.UpdateManager;
 import me.gpmcplugins.reportssystem.Replay.ReplayListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ public final class ReportsSystem extends JavaPlugin {
     StorageManager storageManager = new StorageManager(this);
     UpdateManager updateManager = new UpdateManager(this);
     ConfigManager configManager = new ConfigManager();
+    DiscordIntegration discordIntegration;
 
     @Override
     public void onEnable() {
@@ -35,11 +37,17 @@ public final class ReportsSystem extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
         this.getServer().getPluginManager().registerEvents(new ReplayListener(this),this);
-        this.getServer().getPluginManager().registerEvents(new InternalListener(),this);
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
         configManager.onEnable();
+        try {
+            discordIntegration = new DiscordIntegration(configManager.getConfig().getString("DiscordToken"));
+        } catch (LoginException e) {
+            getServer().getConsoleSender().sendMessage("Error while initializing Discord Integration (reason: " + e.getCause() +
+                    "), running the plugin without it");
+
+        }
 
 
         //todo add report logs
