@@ -7,6 +7,7 @@ import me.gpmcplugins.reportssystem.GUI.ReportListInterface;
 import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.Listeners.ChestGUIListener;
 import me.gpmcplugins.reportssystem.Listeners.EventListener;
+import me.gpmcplugins.reportssystem.Listeners.InternalListener;
 import me.gpmcplugins.reportssystem.Listeners.ViewInventoryListeners;
 import me.gpmcplugins.reportssystem.Managers.ConfigManager;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
@@ -37,6 +38,7 @@ public final class ReportsSystem extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(eventListener,this);
         this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
         this.getServer().getPluginManager().registerEvents(new ReplayListener(this),this);
+        this.getServer().getPluginManager().registerEvents(new InternalListener(),this);
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);

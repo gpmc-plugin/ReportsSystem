@@ -16,7 +16,7 @@ public class ReportPreCreateEvent extends Event implements Cancellable {
         this.creatingPlayer = creatingPlayer;
     }
     private static final HandlerList HANDLERS = new HandlerList();
-    private boolean isCancelled;
+    private boolean isCancelled=false;
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return HANDLERS;
