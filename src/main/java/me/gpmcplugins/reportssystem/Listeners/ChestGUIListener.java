@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
 import me.gpmcplugins.reportssystem.GUI.ChestGUI;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,7 +41,8 @@ public class ChestGUIListener implements Listener {
                 Byte shouldReload = itemmeta.getPersistentDataContainer().get(ChestGUI.shouldReloadKey, PersistentDataType.BYTE);
                 if(shouldReload != null && shouldReload != 0)
                 {
-                    ChestGUI.getChestGUIById(id).showGUI(player);
+                    ChestGUI gui = ChestGUI.getChestGUIById(id);
+                    player.performCommand(gui.getReloadCommand());
                 }
                 e.setCancelled(true);
             }

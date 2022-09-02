@@ -23,6 +23,7 @@ public class ChestGUI implements Listener {
     public static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
     public static final NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
     public static final NamespacedKey shouldReloadKey = new NamespacedKey("chestgui", "shouldreload");
+    private String reloadCommand=null;
     static Integer nextGuiId = 0;
     TextComponent title = Component.text("Chest GUI");
     //HashMap<Integer, ItemStack> items = new HashMap<>();
@@ -76,6 +77,12 @@ public class ChestGUI implements Listener {
         stack.setItemMeta(itemMeta);
         this.items[position] = stack;
         return this;
+    }
+    public String getReloadCommand(){
+        return this.reloadCommand;
+    }
+    public void setReloadCommand(String command){
+        this.reloadCommand=command;
     }
 
     @SuppressWarnings("unused")

@@ -40,8 +40,15 @@ public class ReportReviewInterface {
 
     public static void ClaimOrContinueReportMenu(Player p, int page, String adminid) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Przejmij report</gradient>");
+        String reportReviewArgument;
+        if(adminid==null)
+            reportReviewArgument="claimnewreportgui";
+        else
+            reportReviewArgument="continueclaimedreportgui";
         if(adminid != null)
             gui.setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
+
+        gui.setReloadCommand(String.format("report-review %s %s",reportReviewArgument,page));
 
         List<ReportObject> reportObjectList;
         boolean isLastPage;
@@ -117,9 +124,9 @@ public class ReportReviewInterface {
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
         if(page != 0)
-            gui.setItem(48, pageBackItemItemStack, "report-review claimnewreportgui " + (page-1), false);
+            gui.setItem(48, pageBackItemItemStack, "report-review "+reportReviewArgument+" " + (page-1), false);
         if(!isLastPage)
-            gui.setItem(50, pageNextItemItemStack, "report-review claimnewreportgui " + (page+1), false);
+            gui.setItem(50, pageNextItemItemStack, "report-review  "+reportReviewArgument+" " + (page+1), false);
 
         gui.showGUI(p);
     }
