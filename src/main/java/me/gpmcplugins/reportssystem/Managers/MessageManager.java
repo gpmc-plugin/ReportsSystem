@@ -38,7 +38,7 @@ public class MessageManager {
                 onlinePlayer.sendMessage(message);
         }
     }
-    public static void sendUpdateMessage(ReportObject.ReportStatus status, Integer id, Player player){
+    public static void sendStateUpdateMessage(ReportObject.ReportStatus status, Integer id, Player player){
         if(player.isOnline()){
             Component message = Component.text("Twój report o id: "+id+" został zaaktualizowany. Status został ustawiony na: "+status.toString(),NamedTextColor.GREEN);
             player.sendMessage(message);
@@ -54,6 +54,12 @@ public class MessageManager {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+    public static void sendAdminUpdateMessage(String adminName,Integer id,Player player){
+        if(player.isOnline()){
+            Component message = Component.text("Twój report o id: "+id+" został zaaktualizowany. Tym zgłoszeniem zajumje sie teraz: "+adminName,NamedTextColor.GREEN);
+            player.sendMessage(message);
         }
     }
 }
