@@ -7,7 +7,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Server;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,35 +27,31 @@ public class UpdateManager {
             .append(Component.text("[Kliknij tutaj aby zupdatowac plugin]",
                     NamedTextColor.YELLOW).clickEvent(ClickEvent.runCommand("/rsu")));
 
-    public UpdateManager(ReportsSystem plugin)
-    {
+    public UpdateManager(ReportsSystem plugin) {
         UpdateManager.plugin = plugin;
     }
 
-    public void runPopupThread()
-    {
+    public void runPopupThread() {
         managerThread = new UpdatePopupThread();
         managerThread.start();
     }
 
-    public static void UpdateUpdatedState()
-    {
+    public static void UpdateUpdatedState() {
         plugin.getServer().getConsoleSender().sendMessage("----------");
         plugin.getServer().getConsoleSender().sendMessage("Checking for updates for ReportsSystem...");
         String content = NetworkManager.get("https://raw.githubusercontent.com/gpmc-plugin/ReportsSystem/main/VERSION");
         assert content != null;
         UpdateManager.isUpdated = UpdateManager.plugin.getDescription().getVersion().equals(content);
-        if(UpdateManager.isUpdated)
+        if (UpdateManager.isUpdated)
             plugin.getServer().getConsoleSender().sendMessage("Not Found Any Updates");
         else
             plugin.getServer().getConsoleSender().sendMessage("Found Updates");
-        if(!UpdateManager.isUpdated)
-        {
+        if (!UpdateManager.isUpdated) {
             UpdateManager.plugin.getServer().broadcast(UpdateManager.updateMessage, "reportsystem.update");
         }
     }
 
-    public void update()  {
+    public void update() {
         Server server = plugin.getServer();
         String content = NetworkManager.get("https://api.github.com/repos/gpmc-plugin/ReportsSystem/releases");
         JSONArray json = new JSONArray(content);
@@ -64,8 +61,7 @@ public class UpdateManager {
         for (int i = 0; i < json.length(); i++) {
             JSONObject obj = json.getJSONObject(i);
             int id = obj.getInt("id");
-            if(id > properObjectId)
-            {
+            if (id > properObjectId) {
                 properObjectId = id;
                 properObject = obj;
             }
@@ -92,8 +88,7 @@ public class UpdateManager {
             PluginUtil.load(filename);
             PluginUtil.enable(PluginUtil.getPluginByName(filename));
             PluginUtil.reload(PluginUtil.getPluginByName(filename));
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             PluginUtil.enable(plugin);
             server.getConsoleSender().sendMessage("Coś przy updacie poszło nie tak!! Może posiadasz już najnoszą wersje?");
         }

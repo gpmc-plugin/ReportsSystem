@@ -9,12 +9,15 @@ import org.jetbrains.annotations.NotNull;
 public class ReportCreateEvent extends Event {
     private final ReportObject report;
     private final Player creatingPlayer;
-    public ReportCreateEvent(ReportObject report, Player creatingPlayer){
+
+    public ReportCreateEvent(ReportObject report, Player creatingPlayer) {
 
         this.report = report;
         this.creatingPlayer = creatingPlayer;
     }
+
     private static final HandlerList HANDLERS = new HandlerList();
+
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return HANDLERS;
@@ -26,9 +29,10 @@ public class ReportCreateEvent extends Event {
     }
 
     @SuppressWarnings("unused")
-    public Player getPlayer(){
+    public Player getPlayer() {
         return this.creatingPlayer;
     }
+
     @SuppressWarnings("unused")
     public ReportObject getReport() {
         return report;

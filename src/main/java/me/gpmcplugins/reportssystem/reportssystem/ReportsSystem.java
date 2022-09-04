@@ -35,10 +35,10 @@ public final class ReportsSystem extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        this.getServer().getPluginManager().registerEvents(eventListener,this);
-        this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this),this);
-        this.getServer().getPluginManager().registerEvents(new ReplayListener(this),this);
-        this.getServer().getPluginManager().registerEvents(new InternalListener(),this);
+        this.getServer().getPluginManager().registerEvents(eventListener, this);
+        this.getServer().getPluginManager().registerEvents(new ViewInventoryListeners(this), this);
+        this.getServer().getPluginManager().registerEvents(new ReplayListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new InternalListener(), this);
         ReportReviewInterface.setup(this);
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
@@ -80,10 +80,9 @@ public final class ReportsSystem extends JavaPlugin {
         ChestGUI.onDisable();
         databaseManager.onDisable();
         storageManager.onDisable();
-        try{
+        try {
             updateManager.managerThread.interrupt();
-        }catch(Exception ignored)
-        {
+        } catch (Exception ignored) {
             throw new RuntimeException();
         }
         Objects.requireNonNull(getCommand("report")).unregister(getServer().getCommandMap());
@@ -100,21 +99,28 @@ public final class ReportsSystem extends JavaPlugin {
     public DatabaseManager getDatabaseManager() {
         return databaseManager;
     }
-    public StorageManager getStorageManager(){
+
+    public StorageManager getStorageManager() {
         return storageManager;
     }
-    public UpdateManager getUpdateManager() {return updateManager;}
-    public ConfigManager getConfigManager() {return configManager;}
-    public File getPluginFile(){
+
+    public UpdateManager getUpdateManager() {
+        return updateManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public File getPluginFile() {
         return this.getFile();
     }
+
     public static ReportsSystem getInstance() {
-        if(ReportsSystem.instance == null)
-            try
-            {
+        if (ReportsSystem.instance == null)
+            try {
                 throw new RuntimeException();
-            } catch(RuntimeException e)
-            {
+            } catch (RuntimeException e) {
                 e.printStackTrace();
             }
         return ReportsSystem.instance;

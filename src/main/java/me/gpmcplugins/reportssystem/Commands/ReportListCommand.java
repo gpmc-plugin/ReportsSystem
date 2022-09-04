@@ -24,8 +24,7 @@ public class ReportListCommand implements TabExecutor {
 
         if (args.length == 0) {
             return false;
-        }
-        else if (args.length == 1) {
+        } else if (args.length == 1) {
             switch (args[0]) {
                 case "wszystkie":
                     ReportListInterface.AllReportsMenu(p, positions, positions.length, 0);
@@ -37,14 +36,11 @@ public class ReportListCommand implements TabExecutor {
                     ReportListInterface.ClosedReportsMenu(p, positions, positions.length, 0);
                     return true;
             }
-        }
-        else if (args.length == 2)
-        {
+        } else if (args.length == 2) {
             if (!Math.isNumeric(args[1])) {
                 p.sendMessage(Component.text("Strona musi być liczbą!", NamedTextColor.RED));
                 return false;
-            }
-            else {
+            } else {
                 int page = Integer.parseInt(args[1]);
                 switch (args[0]) {
                     case "wszystkie":
@@ -54,7 +50,7 @@ public class ReportListCommand implements TabExecutor {
                         ReportListInterface.OpenReportsMenu(p, positions, positions.length, page);
                         return true;
                     case "zamknięte":
-                        ReportListInterface.ClosedReportsMenu(p, positions, positions.length, page-1);
+                        ReportListInterface.ClosedReportsMenu(p, positions, positions.length, page - 1);
                         return true;
                 }
             }
@@ -65,8 +61,7 @@ public class ReportListCommand implements TabExecutor {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> tabArgs = new ArrayList<>();
-        if(args.length == 1)
-        {
+        if (args.length == 1) {
             tabArgs.add("wszystkie");
             tabArgs.add("otwarte");
             tabArgs.add("zamknięte");

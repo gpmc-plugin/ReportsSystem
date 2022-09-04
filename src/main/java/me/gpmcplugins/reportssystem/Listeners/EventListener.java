@@ -31,46 +31,48 @@ import java.util.List;
 
 public class EventListener implements Listener {
     private final ReportsSystem plugin;
-    public EventListener(ReportsSystem plugin){
-        this.plugin=plugin;
+
+    public EventListener(ReportsSystem plugin) {
+        this.plugin = plugin;
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onChatMessage(AsyncChatEvent e){
-        int messageID=plugin.getDatabaseManager().getNextMessageID();
+    public void onChatMessage(AsyncChatEvent e) {
+        int messageID = plugin.getDatabaseManager().getNextMessageID();
         plugin.getDatabaseManager().incrementNextMessageID();
         String sender = e.getPlayer().getUniqueId().toString();
         String message = ((TextComponent) e.message()).content();
         try {
-            plugin.getDatabaseManager().logMessage(messageID,sender,"*",message);
+            plugin.getDatabaseManager().logMessage(messageID, sender, "*", message);
         } catch (SQLException ex) {
             plugin.getDatabaseManager().throwError(ex.getMessage());
         }
         TextComponent messageComponent = (TextComponent) e.message();
-        messageComponent = messageComponent.clickEvent(ClickEvent.runCommand("/report message "+messageID));
+        messageComponent = messageComponent.clickEvent(ClickEvent.runCommand("/report message " + messageID));
         messageComponent = messageComponent.hoverEvent(HoverEvent.showText(Component.text("Aby zgłosić tą wiadomość kliknij ją", NamedTextColor.YELLOW, TextDecoration.ITALIC)));
         e.message(messageComponent);
     }
+
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerJoin(PlayerJoinEvent e){
+    public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
-        if(player.hasPermission("reportsystem.notification")){
+        if (player.hasPermission("reportsystem.notification")) {
             List<ReportObject> reports;
             try {
-                reports = plugin.getDatabaseManager().getAdminReports(null,100,0, DatabaseManager.OpenStatus.OPEN);
-                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(),100,0, DatabaseManager.OpenStatus.OPEN);
-                int reportslenght = reports.size()+userreports.size();
-                if(reportslenght>100)
-                    reportslenght=100;
-                if(reportslenght!=0){
+                reports = plugin.getDatabaseManager().getAdminReports(null, 100, 0, DatabaseManager.OpenStatus.OPEN);
+                List<ReportObject> userreports = plugin.getDatabaseManager().getAdminReports(player.getUniqueId().toString(), 100, 0, DatabaseManager.OpenStatus.OPEN);
+                int reportslenght = reports.size() + userreports.size();
+                if (reportslenght > 100)
+                    reportslenght = 100;
+                if (reportslenght != 0) {
                     MessageManager.sendJoinMessage(reportslenght);
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
         }
-        if(UpdateManager.isUpdated && player.hasPermission("reportsystem.update"))
-        {
+        if (UpdateManager.isUpdated && player.hasPermission("reportsystem.update")) {
             player.sendMessage(UpdateManager.updateMessage);
         }
         try {
@@ -83,18 +85,20 @@ public class EventListener implements Listener {
             plugin.getDatabaseManager().throwError(ex.getMessage());
         }
     }
+
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerQuit(PlayerQuitEvent e){
+    public void onPlayerQuit(PlayerQuitEvent e) {
         plugin.getStorageManager().removeUser(e.getPlayer().getUniqueId().toString());
     }
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
-    public void detectingDescriptionSave(AsyncChatEvent e){
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void detectingDescriptionSave(AsyncChatEvent e) {
         Player player = e.getPlayer();
         PlayerReportCreationStatus playerReport = plugin.getStorageManager().getUser(player.getUniqueId().toString());
-        if(playerReport.getReportID()!=null){
-            if(playerReport.getState()==1){
+        if (playerReport.getReportID() != null) {
+            if (playerReport.getState() == 1) {
                 ReportCreator report = plugin.getStorageManager().getReport(playerReport.getReportID());
-                report.setDescription(((TextComponent)e.message()).content());
+                report.setDescription(((TextComponent) e.message()).content());
                 playerReport.sendSavedMessage();
                 playerReport.setState(2);
                 playerReport.sendSummary(report);
@@ -104,15 +108,14 @@ public class EventListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerDeath(PlayerDeathEvent e)
-    {
-        Integer deathID=plugin.getDatabaseManager().getNextDeathID();
+    public void onPlayerDeath(PlayerDeathEvent e) {
+        Integer deathID = plugin.getDatabaseManager().getNextDeathID();
         Player player = e.getPlayer();
         plugin.getDatabaseManager().incrementNextDeathID();
         TranslatableComponent deathMessage = (TranslatableComponent) e.deathMessage();
         try {
             assert deathMessage != null;
-            plugin.getDatabaseManager().logDeath(deathID,player.getUniqueId().toString(),deathMessage.key());
+            plugin.getDatabaseManager().logDeath(deathID, player.getUniqueId().toString(), deathMessage.key());
         } catch (SQLException ex) {
             plugin.getDatabaseManager().throwError(ex.getMessage());
             player.sendMessage("Coś poszło nie tak nie możesz zgłosić swojej śmierci");
@@ -120,7 +123,7 @@ public class EventListener implements Listener {
         }
         List<ItemStack> drops = e.getDrops();
         for (int i = 0; i < drops.size(); i++) {
-            plugin.getConfig().set(deathID+"."+i,drops.get(i));
+            plugin.getConfig().set(deathID + "." + i, drops.get(i));
         }
         try {
             plugin.getConfig().save("item.yml");
@@ -128,11 +131,11 @@ public class EventListener implements Listener {
             throw new RuntimeException(ex);
         }
         TextComponent messageTextComponent = Component.empty()
-            .content("[Kliknij tutaj aby zglosic ze smierc jest niesluzna]")
-            .color(NamedTextColor.AQUA)
-            .hoverEvent(HoverEvent.showText(Component.text("Smierc jest niesluszna gdy zginales w wyniku zlamania regulaminu przez osobe ktora cie zabila, lub gdy zginales przez blad gry lub pluginu",
-                    NamedTextColor.YELLOW, TextDecoration.ITALIC)))
-            .clickEvent(ClickEvent.runCommand("/report death "+deathID));
+                .content("[Kliknij tutaj aby zglosic ze smierc jest niesluzna]")
+                .color(NamedTextColor.AQUA)
+                .hoverEvent(HoverEvent.showText(Component.text("Smierc jest niesluszna gdy zginales w wyniku zlamania regulaminu przez osobe ktora cie zabila, lub gdy zginales przez blad gry lub pluginu",
+                        NamedTextColor.YELLOW, TextDecoration.ITALIC)))
+                .clickEvent(ClickEvent.runCommand("/report death " + deathID));
         player.sendMessage(messageTextComponent);
 
     }

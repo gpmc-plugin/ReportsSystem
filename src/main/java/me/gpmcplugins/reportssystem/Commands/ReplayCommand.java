@@ -11,20 +11,21 @@ import org.jetbrains.annotations.NotNull;
 
 public class ReplayCommand implements CommandExecutor {
     private final ReportsSystem plugin;
-    public ReplayCommand(ReportsSystem plugin){
-        this.plugin=plugin;
+
+    public ReplayCommand(ReportsSystem plugin) {
+        this.plugin = plugin;
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(sender instanceof Player){
-            if(ReplayListener.isInReplay((Player) sender)){
+        if (sender instanceof Player) {
+            if (ReplayListener.isInReplay((Player) sender)) {
                 ((Player) sender).getPersistentDataContainer().remove(ReplayObject.reportIDstatic);
                 plugin.getStorageManager().getReplay(((Player) sender).getUniqueId().toString()).closeReply();
                 plugin.getStorageManager().removeReplay(((Player) sender).getUniqueId().toString());
-            }
-            else{
+            } else {
                 Player player = (Player) sender;
-                plugin.getStorageManager().createReplay(player,0,0).openReplay();
+                plugin.getStorageManager().createReplay(player, 0, 0).openReplay();
             }
         }
         return true;

@@ -1,15 +1,12 @@
 package me.gpmcplugins.reportssystem.Discord;
 
-import me.gpmcplugins.reportssystem.Listeners.EventListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.bukkit.block.data.type.Gate;
 
 import javax.security.auth.login.LoginException;
 
@@ -18,8 +15,9 @@ public class DiscordIntegration {
     public boolean isBuilt;
     JDABuilder builder;
     JDA jda;
-    public DiscordIntegration(String token) throws LoginException{
-        if(instance != null)
+
+    public DiscordIntegration(String token) throws LoginException {
+        if (instance != null)
             throw new RuntimeException();
 
         instance = this;
@@ -32,16 +30,17 @@ public class DiscordIntegration {
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT);
         builder.setLargeThreshold(50);
+        builder.addEventListeners(new Ping());
         this.build();
+        jda.upsertCommand("ping", "Calculate ping of the bot").queue();
     }
 
     public void build() throws LoginException {
         jda = builder.build();
-        isBuilt=true;
+        isBuilt = true;
     }
 
-    public static DiscordIntegration getInstance()
-    {
+    public static DiscordIntegration getInstance() {
         return instance;
     }
 }
