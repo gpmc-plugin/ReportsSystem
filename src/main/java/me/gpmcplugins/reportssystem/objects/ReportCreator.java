@@ -10,20 +10,23 @@ public class ReportCreator {
     private final ReportType type;
     private final String ReportingPlayer;
     private final String ReportedElementID;
-    private String Description="Nie podano dokładnego powodu";
+    private String Description = "Nie podano dokładnego powodu";
     private ReportShortDescription reportShortDescription;
     private final ReportsSystem plugin;
-    public ReportCreator(ReportType type, String reportingPlayer, String reportedElementID, ReportsSystem plugin){
-        this.plugin=plugin;
-        this.type=type;
-        this.ReportingPlayer=reportingPlayer;
-        this.ReportedElementID=reportedElementID;
+
+    public ReportCreator(ReportType type, String reportingPlayer, String reportedElementID, ReportsSystem plugin) {
+        this.plugin = plugin;
+        this.type = type;
+        this.ReportingPlayer = reportingPlayer;
+        this.ReportedElementID = reportedElementID;
 
     }
-    public void setShortDescription(ReportShortDescription rsd){
+
+    public void setShortDescription(ReportShortDescription rsd) {
         this.reportShortDescription = rsd;
     }
-    public void setDescription(String description){
+
+    public void setDescription(String description) {
         this.Description = description;
     }
 
@@ -46,14 +49,16 @@ public class ReportCreator {
     public String getReportedElementID() {
         return ReportedElementID;
     }
-    public PlayerReportCreationStatus getPlayer(){
+
+    public PlayerReportCreationStatus getPlayer() {
         return plugin.getStorageManager().getUser(this.ReportingPlayer);
     }
-    public void createReport(){
-        ReportPreCreateEvent reportPreCreateEvent = new ReportPreCreateEvent(this,this.getPlayer().getPlayer());
+
+    public void createReport() {
+        ReportPreCreateEvent reportPreCreateEvent = new ReportPreCreateEvent(this, this.getPlayer().getPlayer());
         Bukkit.getPluginManager().callEvent(reportPreCreateEvent);
         try {
-            if(!reportPreCreateEvent.isCancelled()) {
+            if (!reportPreCreateEvent.isCancelled()) {
                 plugin.getDatabaseManager().createReport(getReportingPlayer(), getType().toString(), getReportShortDescription().toString(), getDescription(), getReportedElementID());
             }
         } catch (SQLException e) {
@@ -61,12 +66,13 @@ public class ReportCreator {
         }
     }
 
-    public enum ReportType{
+    public enum ReportType {
         User,
         Message,
         Death
     }
-    public enum ReportShortDescription{
+
+    public enum ReportShortDescription {
         Death_Bug,
         Death_Other_Player,
         User_Cheating,

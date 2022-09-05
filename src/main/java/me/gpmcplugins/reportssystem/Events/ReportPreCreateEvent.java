@@ -10,13 +10,16 @@ import org.jetbrains.annotations.NotNull;
 public class ReportPreCreateEvent extends Event implements Cancellable {
     private final ReportCreator reportCreator;
     private final Player creatingPlayer;
-    public ReportPreCreateEvent(ReportCreator reportCreator, Player creatingPlayer){
+
+    public ReportPreCreateEvent(ReportCreator reportCreator, Player creatingPlayer) {
 
         this.reportCreator = reportCreator;
         this.creatingPlayer = creatingPlayer;
     }
+
     private static final HandlerList HANDLERS = new HandlerList();
-    private boolean isCancelled=false;
+    private boolean isCancelled = false;
+
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return HANDLERS;
@@ -34,12 +37,14 @@ public class ReportPreCreateEvent extends Event implements Cancellable {
 
     @Override
     public void setCancelled(boolean cancel) {
-        isCancelled=cancel;
+        isCancelled = cancel;
     }
+
     @SuppressWarnings("unused")
-    public Player getPlayer(){
+    public Player getPlayer() {
         return this.creatingPlayer;
     }
+
     @SuppressWarnings("unused")
     public ReportCreator getReportCreator() {
         return reportCreator;

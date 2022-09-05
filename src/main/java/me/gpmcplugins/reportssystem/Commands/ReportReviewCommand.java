@@ -1,6 +1,6 @@
 package me.gpmcplugins.reportssystem.Commands;
-import me.gpmcplugins.reportssystem.Common.Math;
 
+import me.gpmcplugins.reportssystem.Common.Math;
 import me.gpmcplugins.reportssystem.GUI.ReportReviewInterface;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
@@ -15,38 +15,35 @@ import java.sql.SQLException;
 public class ReportReviewCommand implements CommandExecutor {
 
     private final ReportsSystem plugin;
-    public ReportReviewCommand(ReportsSystem plugin){
-        this.plugin=plugin;
+
+    public ReportReviewCommand(ReportsSystem plugin) {
+        this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args)
-    {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         Player p = (Player) sender;
 
-        if (args.length < 2)
-        {
+        if (args.length < 2) {
             ReportReviewInterface.MainReviewMenu(p);
             return true;
         }
 
-        switch (args[0])
-        {
+        switch (args[0]) {
             case "claimnewreportgui":
-                if(args.length == 2 && Math.isNumeric(args[1]))
+                if (args.length == 2 && Math.isNumeric(args[1]))
                     ReportReviewInterface.ClaimOrContinueReportMenu(p, Integer.parseInt(args[1]), null);
                 else
                     ReportReviewInterface.ClaimOrContinueReportMenu(p, 0, null);
                 break;
             case "continueclaimedreportgui":
-                if(args.length == 2 && Math.isNumeric(args[1]))
+                if (args.length == 2 && Math.isNumeric(args[1]))
                     ReportReviewInterface.ClaimOrContinueReportMenu(p, Integer.parseInt(args[1]), p.getUniqueId().toString());
                 else
                     ReportReviewInterface.ClaimOrContinueReportMenu(p, 0, p.getUniqueId().toString());
                 break;
             case "claim":
-                if (args[1] == null)
-                {
+                if (args[1] == null) {
                     sender.sendMessage("Zapomniales o wpisaniu id lol");
                     return false;
                 }
@@ -60,8 +57,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 }
                 break;
             case "accept":
-                if (args[1] == null)
-                {
+                if (args[1] == null) {
                     sender.sendMessage("Zapomniales o wpisaniu id lol");
                     return false;
                 }
@@ -75,8 +71,7 @@ public class ReportReviewCommand implements CommandExecutor {
                 }
                 break;
             case "deny":
-                if (args[1] == null)
-                {
+                if (args[1] == null) {
                     sender.sendMessage("Zapomniales o wpisaniu id lol");
                     return false;
                 }

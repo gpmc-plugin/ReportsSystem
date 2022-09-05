@@ -3,8 +3,8 @@ package me.gpmcplugins.reportssystem.Statics;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 
 public class ReportTranslater {
-    public static String fromReportShortDescription(ReportCreator.ReportShortDescription shortDescription){
-        switch (shortDescription){
+    public static String fromReportShortDescription(ReportCreator.ReportShortDescription shortDescription) {
+        switch (shortDescription) {
             case Death_Bug:
                 return "Błąd powodujący śmierć";
             case User_Scam:

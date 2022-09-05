@@ -9,8 +9,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 public class InternalListener implements Listener {
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
-    public void onCreateReport(ReportCreateEvent e){
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onCreateReport(ReportCreateEvent e) {
         MessageManager.sendReportMessage();
         String uuid = e.getPlayer().getUniqueId().toString();
         ReportsSystem.getInstance().getStorageManager().getUser(uuid).sendReportCreated(e.getReport().getId());

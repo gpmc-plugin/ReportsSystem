@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class IconItemstack {
     public static TextColor itemColor = NamedTextColor.RED;
 
-    public static ItemStack bugIconItemStack = ChestGUI.setItemStackName(Component.text("BUG",itemColor,TextDecoration.BOLD),new ItemStack(Material.CREEPER_SPAWN_EGG));
+    public static ItemStack bugIconItemStack = ChestGUI.setItemStackName(Component.text("BUG", itemColor, TextDecoration.BOLD), new ItemStack(Material.CREEPER_SPAWN_EGG));
     public static ItemStack anotherPlayerIconItemStack = ChestGUI.setItemStackName(Component.text("INNY GRACZ", itemColor, TextDecoration.BOLD), new ItemStack(Material.PLAYER_HEAD));
     public static ItemStack otherIconItemStack = ChestGUI.setItemStackName(Component.text("INNE", itemColor, TextDecoration.BOLD), new ItemStack(Material.WRITABLE_BOOK));
     public static ItemStack cheatingOrExploiningIconItemStack = ChestGUI.setItemStackName(Component.text("UŻYWANIE CHEATÓW LUB EXPLOITÓW", itemColor, TextDecoration.BOLD), new ItemStack(Material.DIAMOND_SWORD));
@@ -26,10 +26,10 @@ public class IconItemstack {
     public static ItemStack claimReportIconItemStack = ChestGUI.setItemStackName(Component.text("PRZEJMIJ REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.YELLOW_CONCRETE));
     public static ItemStack acceptReportIconItemStack = ChestGUI.setItemStackName(Component.text("ZAAKCEPTUJ REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.GREEN_CONCRETE));
     public static ItemStack denyReportIconItemStack = ChestGUI.setItemStackName(Component.text("ODRZUC REPORT", itemColor, TextDecoration.BOLD), new ItemStack(Material.RED_CONCRETE));
-    public static ItemStack deafultBackgroundIconItemItemStack =  ChestGUI.setItemStackName(Component.text("", itemColor, TextDecoration.BOLD), new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
-    public static ItemStack noReportsIconItemItemStack =  ChestGUI.setItemStackName(Component.text("NIE MA JUZ OTWARTYCH REPORTOW", itemColor, TextDecoration.BOLD), new ItemStack(Material.REDSTONE_BLOCK));
-    public static ItemStack backItemItemStack =  ChestGUI.setItemStackName(Component.text("WROC", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.ARROW));
-    public static ItemStack openIneventoryItemItemStack =  ChestGUI.setItemStackName(Component.text("OTWORZ EKWIPUNEK GRACZA PRZED SMIERCIA", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.CHEST));
-    public static ItemStack pageBackItemItemStack =  ChestGUI.setItemStackName(Component.text("STRONA DO TYLU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
-    public static ItemStack pageNextItemItemStack =  ChestGUI.setItemStackName(Component.text("STRONA DO PRZODU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
+    public static ItemStack deafultBackgroundIconItemItemStack = ChestGUI.setItemStackName(Component.text("", itemColor, TextDecoration.BOLD), new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
+    public static ItemStack noReportsIconItemItemStack = ChestGUI.setItemStackName(Component.text("NIE MA JUZ OTWARTYCH REPORTOW", itemColor, TextDecoration.BOLD), new ItemStack(Material.REDSTONE_BLOCK));
+    public static ItemStack backItemItemStack = ChestGUI.setItemStackName(Component.text("WROC", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.ARROW));
+    public static ItemStack openIneventoryItemItemStack = ChestGUI.setItemStackName(Component.text("OTWORZ EKWIPUNEK GRACZA PRZED SMIERCIA", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.CHEST));
+    public static ItemStack pageBackItemItemStack = ChestGUI.setItemStackName(Component.text("STRONA DO TYLU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
+    public static ItemStack pageNextItemItemStack = ChestGUI.setItemStackName(Component.text("STRONA DO PRZODU", NamedTextColor.WHITE, TextDecoration.BOLD), new ItemStack(Material.SPECTRAL_ARROW));
 }

@@ -13,34 +13,34 @@ import org.jetbrains.annotations.NotNull;
 
 public class ReportContinueCommand implements CommandExecutor {
     private final ReportsSystem plugin;
-    public ReportContinueCommand(ReportsSystem plugin){
-        this.plugin=plugin;
+
+    public ReportContinueCommand(ReportsSystem plugin) {
+        this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(sender instanceof Player){
+        if (sender instanceof Player) {
             PlayerReportCreationStatus playerCreationStatus = plugin.getStorageManager().getUser(((Player) sender).getUniqueId().toString());
-            if(playerCreationStatus.getReportID()!=null){
+            if (playerCreationStatus.getReportID() != null) {
                 Integer reportState = playerCreationStatus.getState();
                 ReportCreator report = plugin.getStorageManager().getReport(playerCreationStatus.getReportID());
-                if(args.length>0) {
+                if (args.length > 0) {
                     if (args[0].equals("delete")) {
                         playerCreationStatus.sendReportDeleted();
                         playerCreationStatus.clearReport();
                         return true;
                     }
                 }
-                switch (reportState){
+                switch (reportState) {
                     case 0:
-                        try{
-                        report.setShortDescription(ReportCreator.ReportShortDescription.values()[Integer.parseInt(args[0])]);
-                        }
-                        catch(Exception e){
+                        try {
+                            report.setShortDescription(ReportCreator.ReportShortDescription.values()[Integer.parseInt(args[0])]);
+                        } catch (Exception e) {
                             sender.sendMessage("Coś poszło nie tak");
                             return false;
                         }
-                        playerCreationStatus.setState(reportState+1);
+                        playerCreationStatus.setState(reportState + 1);
                         playerCreationStatus.getPlayer().openInventory(Bukkit.createInventory(null, InventoryType.CHEST));
                         playerCreationStatus.getPlayer().closeInventory();
                         playerCreationStatus.sendSavedMessage();
@@ -55,11 +55,9 @@ public class ReportContinueCommand implements CommandExecutor {
                         playerCreationStatus.createReport(report);
                         return true;
                 }
-            }
-            else
+            } else
                 sender.sendMessage("Nie tworzysz żadnego reportu");
-        }
-        else
+        } else
             sender.sendMessage("Musisz być graczem żeby użyć tej komendy");
         return false;
     }

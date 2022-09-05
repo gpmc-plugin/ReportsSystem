@@ -24,13 +24,11 @@ import static me.gpmcplugins.reportssystem.GUI.IconItemstack.*;
 public class ReportReviewInterface {
     public static ReportsSystem plugin;
 
-    public static void setup(ReportsSystem plugin)
-    {
+    public static void setup(ReportsSystem plugin) {
         ReportReviewInterface.plugin = plugin;
     }
 
-    public static void MainReviewMenu(Player p)
-    {
+    public static void MainReviewMenu(Player p) {
         (new ChestGUI(27))
                 .setTitle("<gradient:#f857a6:#ff5858>Wybierz rodzaj akcji ktora chcesz wykonac</gradient>")
                 .setItem(11, claimNewReportIconItemStack, "report-review claimnewreportgui 0", false)
@@ -41,34 +39,33 @@ public class ReportReviewInterface {
     public static void ClaimOrContinueReportMenu(Player p, int page, String adminid) {
         ChestGUI gui = new ChestGUI(54).setTitle("<gradient:#f857a6:#ff5858>Przejmij report</gradient>");
         String reportReviewArgument;
-        if(adminid==null)
-            reportReviewArgument="claimnewreportgui";
+        if (adminid == null)
+            reportReviewArgument = "claimnewreportgui";
         else
-            reportReviewArgument="continueclaimedreportgui";
-        if(adminid != null)
+            reportReviewArgument = "continueclaimedreportgui";
+        if (adminid != null)
             gui.setTitle("<gradient:#f857a6:#ff5858>Kontynuuj report</gradient>");
 
-        gui.setReloadCommand(String.format("report-review %s %s",reportReviewArgument,page));
+        gui.setReloadCommand(String.format("report-review %s %s", reportReviewArgument, page));
 
         List<ReportObject> reportObjectList;
         boolean isLastPage;
 
         try {
             Integer reports = plugin.getDatabaseManager().getAdminReportsCount(adminid, DatabaseManager.OpenStatus.OPEN);
-            reportObjectList = plugin.getDatabaseManager().getAdminReports(adminid,4,page, DatabaseManager.OpenStatus.OPEN);
-            isLastPage = 4*(page+1)>=reports;
+            reportObjectList = plugin.getDatabaseManager().getAdminReports(adminid, 4, page, DatabaseManager.OpenStatus.OPEN);
+            isLastPage = 4 * (page + 1) >= reports;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        if(reportObjectList.size() == 0)
-        {
+        if (reportObjectList.size() == 0) {
             gui.setItem(22, noReportsIconItemItemStack);
         }
 
         for (int i = 0; i < reportObjectList.size(); i++) {
             ReportObject reportObject = reportObjectList.get(i);
-            int position = 9+i*9;
+            int position = 9 + i * 9;
 
             ItemStack reportBook = new ItemStack(Material.WRITTEN_BOOK);
             ItemMeta reportMeta = reportBook.getItemMeta();
@@ -84,8 +81,7 @@ public class ReportReviewInterface {
             reportLore.add(Component.text(String.format("Data i Czas Reportu: %s", date)));
 
             Component reportMessage = Component.text("Cos poszlo nie tak!");
-            switch (reportObject.getType())
-            {
+            switch (reportObject.getType()) {
                 case Message:
                     ReportMessage message = ReportsSystem.getInstance().getDatabaseManager().getMessage(reportObject.getId());
                     reportLore.add(
@@ -105,50 +101,46 @@ public class ReportReviewInterface {
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
-            gui.setItem(position+1, reportBook)
-                .setItem(position+2, GetItemReportByReportType(reportObject.getType()))
-                .setItem(position+3, GetItemReportByType(reportObject.getShortDescription()))
-                .setItem(position+6, acceptReportIconItemStack,
-                        "report-review accept " + reportObject.getId(), true)
-                .setItem(position+7, denyReportIconItemStack,
-                        "report-review deny " + reportObject.getId(), true)
-                .setItem(position, ChestGUI.getPlayerSkull(reportObject.getReportingUser()));
+            gui.setItem(position + 1, reportBook)
+                    .setItem(position + 2, GetItemReportByReportType(reportObject.getType()))
+                    .setItem(position + 3, GetItemReportByType(reportObject.getShortDescription()))
+                    .setItem(position + 6, acceptReportIconItemStack,
+                            "report-review accept " + reportObject.getId(), true)
+                    .setItem(position + 7, denyReportIconItemStack,
+                            "report-review deny " + reportObject.getId(), true)
+                    .setItem(position, ChestGUI.getPlayerSkull(reportObject.getReportingUser()));
 
-            if(adminid == null)
-                gui.setItem(position+5, claimReportIconItemStack,
+            if (adminid == null)
+                gui.setItem(position + 5, claimReportIconItemStack,
                         "report-review claim " + reportObject.getId(), true);
 
-            if(reportObject.getType() == ReportCreator.ReportType.Death)
-                gui.setItem(position+4, openIneventoryItemItemStack,
+            if (reportObject.getType() == ReportCreator.ReportType.Death)
+                gui.setItem(position + 4, openIneventoryItemItemStack,
                         "report-view-death-inventory " + reportObject.getId(), false);
         }
         gui.setItem(49, backItemItemStack, "report-review", false);
-        if(page != 0)
-            gui.setItem(48, pageBackItemItemStack, "report-review "+reportReviewArgument+" " + (page-1), false);
-        if(!isLastPage)
-            gui.setItem(50, pageNextItemItemStack, "report-review  "+reportReviewArgument+" " + (page+1), false);
+        if (page != 0)
+            gui.setItem(48, pageBackItemItemStack, "report-review " + reportReviewArgument + " " + (page - 1), false);
+        if (!isLastPage)
+            gui.setItem(50, pageNextItemItemStack, "report-review  " + reportReviewArgument + " " + (page + 1), false);
 
         gui.showGUI(p);
     }
 
-    public static @NotNull ItemStack GetItemReportByReportType(ReportCreator.ReportType reportType)
-    {
-        switch (reportType)
-        {
+    public static @NotNull ItemStack GetItemReportByReportType(ReportCreator.ReportType reportType) {
+        switch (reportType) {
             case User:
                 return userReportIconItemStack;
             case Message:
-                return  messageReportIconItemStack;
+                return messageReportIconItemStack;
             case Death:
-                return  deathReportIconItemStack;
+                return deathReportIconItemStack;
         }
         return otherIconItemStack;
     }
 
-    public static @NotNull ItemStack GetItemReportByType(ReportCreator.ReportShortDescription shortDescription)
-    {
-        switch (shortDescription)
-        {
+    public static @NotNull ItemStack GetItemReportByType(ReportCreator.ReportShortDescription shortDescription) {
+        switch (shortDescription) {
             case Other:
             case Death_Other_Player:
                 return otherIconItemStack;

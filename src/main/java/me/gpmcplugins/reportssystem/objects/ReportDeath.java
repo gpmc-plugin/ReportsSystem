@@ -12,16 +12,18 @@ public class ReportDeath {
     private final String messageTranslate;
     private final Date timestamp;
 
-    public ReportDeath(Integer deathID, String noob, String messageTranslate, Long timestamp, ReportsSystem plugin){
+    public ReportDeath(Integer deathID, String noob, String messageTranslate, Long timestamp, ReportsSystem plugin) {
         this.timestamp = new Date(timestamp);
         this.messageTranslate = messageTranslate;
         this.noob = plugin.getServer().getPlayer(UUID.fromString(noob));
-        this.deathID=deathID;
+        this.deathID = deathID;
     }
+
     @SuppressWarnings("unused")
     public Date getTimestamp() {
         return timestamp;
     }
+
     @SuppressWarnings("unused")
     public Integer getDeathID() {
         return deathID;

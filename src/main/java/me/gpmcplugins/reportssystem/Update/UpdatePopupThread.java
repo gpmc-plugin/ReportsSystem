@@ -3,7 +3,7 @@ package me.gpmcplugins.reportssystem.Update;
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 
-public class UpdatePopupThread extends Thread{
+public class UpdatePopupThread extends Thread {
     public void run() {
         while (true) {
             UpdateManager.UpdateUpdatedState();

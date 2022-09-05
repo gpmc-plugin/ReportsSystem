@@ -23,7 +23,7 @@ public class ChestGUI implements Listener {
     public static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
     public static final NamespacedKey onClickCommandKey = new NamespacedKey("chestgui", "onclickcommand");
     public static final NamespacedKey shouldReloadKey = new NamespacedKey("chestgui", "shouldreload");
-    private String reloadCommand=null;
+    private String reloadCommand = null;
     static Integer nextGuiId = 0;
     TextComponent title = Component.text("Chest GUI");
     //HashMap<Integer, ItemStack> items = new HashMap<>();
@@ -33,42 +33,37 @@ public class ChestGUI implements Listener {
     int size;
     int guiId;
     static HashMap<Integer, ChestGUI> instances = new HashMap<>();
+
     @SuppressWarnings("unused")
-    public static void setDeafultBackgroundItem(ItemStack itemStack)
-    {
+    public static void setDeafultBackgroundItem(ItemStack itemStack) {
         deafultBackgroundItem = itemStack;
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI(int size)
-    {
+    public ChestGUI(int size) {
         this.size = size;
         this.items = new ItemStack[this.size];
         this.guiId = ChestGUI.nextGuiId;
-        ChestGUI.nextGuiId+=1;
+        ChestGUI.nextGuiId += 1;
         ChestGUI.instances.put(this.guiId, this);
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI setTitle(TextComponent title)
-    {
+    public ChestGUI setTitle(TextComponent title) {
         this.title = title;
         return this;
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI setTitle(String title)
-    {
+    public ChestGUI setTitle(String title) {
         this.title = (TextComponent) MiniMessage.miniMessage().deserialize(title);
         return this;
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI setItem(int position, ItemStack itemStack)
-    {
+    public ChestGUI setItem(int position, ItemStack itemStack) {
         ItemStack stack = itemStack.clone();
-        if(position >= this.size)
-        {
+        if (position >= this.size) {
             position = this.size;
         }
 
@@ -78,19 +73,19 @@ public class ChestGUI implements Listener {
         this.items[position] = stack;
         return this;
     }
-    public String getReloadCommand(){
+
+    public String getReloadCommand() {
         return this.reloadCommand;
     }
-    public void setReloadCommand(String command){
-        this.reloadCommand=command;
+
+    public void setReloadCommand(String command) {
+        this.reloadCommand = command;
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI setItem(int position, ItemStack itemStack, String onClickCommand, boolean shouldReload)
-    {
+    public ChestGUI setItem(int position, ItemStack itemStack, String onClickCommand, boolean shouldReload) {
         ItemStack stack = itemStack.clone();
-        if(position >= this.size)
-        {
+        if (position >= this.size) {
             position = this.size;
         }
 
@@ -98,7 +93,7 @@ public class ChestGUI implements Listener {
         itemMeta.getPersistentDataContainer().set(guiIdKey, PersistentDataType.INTEGER, guiId);
         itemMeta.getPersistentDataContainer().set(onClickCommandKey, PersistentDataType.STRING, onClickCommand);
         byte shouldReloadByte = 0;
-        if(shouldReload)
+        if (shouldReload)
             shouldReloadByte = 1;
         itemMeta.getPersistentDataContainer().set(shouldReloadKey, PersistentDataType.BYTE, shouldReloadByte);
         stack.setItemMeta(itemMeta);
@@ -107,38 +102,34 @@ public class ChestGUI implements Listener {
     }
 
     @SuppressWarnings("unused")
-    public ChestGUI setBackgroundItem(ItemStack itemStack)
-    {
+    public ChestGUI setBackgroundItem(ItemStack itemStack) {
         backgroundItem = itemStack;
         return this;
     }
 
     @SuppressWarnings("unused")
-    public Inventory createInventory()
-    {
-        if(backgroundItem == null && deafultBackgroundItem != null)
+    public Inventory createInventory() {
+        if (backgroundItem == null && deafultBackgroundItem != null)
             backgroundItem = deafultBackgroundItem.clone();
         for (int i = 0; i < this.size; i++) {
-            if(backgroundItem != null && items[i] == null)
+            if (backgroundItem != null && items[i] == null)
                 this.setItem(i, backgroundItem);
         }
         Inventory inventory = Bukkit.createInventory(null, this.size, title);
         for (int i = 0; i < this.size; i++) {
-            if(items[i] != null)
+            if (items[i] != null)
                 inventory.setItem(i, items[i]);
         }
         return inventory;
     }
 
     @SuppressWarnings("unused")
-    public void showGUI(Player p)
-    {
+    public void showGUI(Player p) {
         p.openInventory(this.createInventory());
     }
 
     @SuppressWarnings("unused")
-    public static ItemStack setItemStackName(Component displayName, ItemStack itemStack)
-    {
+    public static ItemStack setItemStackName(Component displayName, ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.displayName(displayName);
         itemStack.setItemMeta(itemMeta);
@@ -146,30 +137,26 @@ public class ChestGUI implements Listener {
     }
 
     @SuppressWarnings("unused")
-    public static ChestGUI getChestGUIById(int id)
-    {
+    public static ChestGUI getChestGUIById(int id) {
         return ChestGUI.instances.get(id);
     }
-    public static ItemStack getPlayerSkull(Player p)
-    {
+
+    public static ItemStack getPlayerSkull(Player p) {
         ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta playerheadmeta = (SkullMeta) playerhead.getItemMeta();
-        if(p != null)
-        {
+        if (p != null) {
             playerheadmeta.setOwningPlayer(p);
             playerheadmeta.displayName(p.name());
 
-        } else{
+        } else {
             playerheadmeta.displayName(Component.text("Cos poszlo nie tak", NamedTextColor.YELLOW));
         }
         playerhead.setItemMeta(playerheadmeta);
         return playerhead;
     }
 
-    public static void onDisable()
-    {
-        for(Player p : ReportsSystem.getInstance().getServer().getOnlinePlayers())
-        {
+    public static void onDisable() {
+        for (Player p : ReportsSystem.getInstance().getServer().getOnlinePlayers()) {
             InventoryView inv = p.getOpenInventory();
             inv.close();
         }

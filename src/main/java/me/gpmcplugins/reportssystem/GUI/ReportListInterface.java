@@ -67,17 +67,18 @@ public class ReportListInterface {
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
-            if (report.getReportStatus() == ReportStatus.In_Progress) {reportBook.setType(Material.WRITABLE_BOOK);}
-                if (report.getType() == ReportCreator.ReportType.Death) gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
-                else gui.setItem(positions[i], reportBook);
+            if (report.getReportStatus() == ReportStatus.In_Progress) {
+                reportBook.setType(Material.WRITABLE_BOOK);
+            }
+            if (report.getType() == ReportCreator.ReportType.Death)
+                gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
+            else gui.setItem(positions[i], reportBook);
         }
-        if (page != 0)
-        {
-            gui.setItem(48, IconItemstack.pageBackItemItemStack, "/r-l wszystkie" + (page-1), false);
+        if (page != 0) {
+            gui.setItem(48, IconItemstack.pageBackItemItemStack, "/r-l wszystkie" + (page - 1), false);
         }
-        if (limit*(page+1)<reportsCount)
-        {
-            gui.setItem(50, IconItemstack.pageNextItemItemStack, "/r-l wszystkie" + (page+1), false);
+        if (limit * (page + 1) < reportsCount) {
+            gui.setItem(50, IconItemstack.pageNextItemItemStack, "/r-l wszystkie" + (page + 1), false);
         }
         gui.showGUI(p);
     }
@@ -123,17 +124,18 @@ public class ReportListInterface {
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
-            if (report.getReportStatus() == ReportStatus.In_Progress) {reportBook.setType(Material.WRITABLE_BOOK);}
-            if (report.getType() == ReportCreator.ReportType.Death) gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
+            if (report.getReportStatus() == ReportStatus.In_Progress) {
+                reportBook.setType(Material.WRITABLE_BOOK);
+            }
+            if (report.getType() == ReportCreator.ReportType.Death)
+                gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
             else gui.setItem(positions[i], reportBook);
         }
-        if (page != 0)
-        {
-            gui.setItem(48, IconItemstack.pageBackItemItemStack, "/r-l otwarte" + (page-1), false);
+        if (page != 0) {
+            gui.setItem(48, IconItemstack.pageBackItemItemStack, "/r-l otwarte" + (page - 1), false);
         }
-        if (limit*(page+1)<reportsCount)
-        {
-            gui.setItem(50, IconItemstack.pageNextItemItemStack, "/r-l otwarte" + (page+1), false);
+        if (limit * (page + 1) < reportsCount) {
+            gui.setItem(50, IconItemstack.pageNextItemItemStack, "/r-l otwarte" + (page + 1), false);
         }
         gui.showGUI(p);
     }
@@ -179,17 +181,18 @@ public class ReportListInterface {
             reportMeta.lore(reportLore);
             reportBook.setItemMeta(reportMeta);
 
-            if (report.getReportStatus() == ReportStatus.In_Progress) {reportBook.setType(Material.WRITABLE_BOOK);}
-            if (report.getType() == ReportCreator.ReportType.Death) gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
+            if (report.getReportStatus() == ReportStatus.In_Progress) {
+                reportBook.setType(Material.WRITABLE_BOOK);
+            }
+            if (report.getType() == ReportCreator.ReportType.Death)
+                gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
             else gui.setItem(positions[i], reportBook);
         }
-        if (page != 0)
-        {
-            gui.setItem(48, IconItemstack.pageBackItemItemStack, "/r-l zamknięte" + (page-1), false);
+        if (page != 0) {
+            gui.setItem(48, IconItemstack.pageBackItemItemStack, "/r-l zamknięte" + (page - 1), false);
         }
-        if (limit*(page+1)<reportsCount)
-        {
-            gui.setItem(50, IconItemstack.pageNextItemItemStack, "/r-l zamknięte" + (page+1), false);
+        if (limit * (page + 1) < reportsCount) {
+            gui.setItem(50, IconItemstack.pageNextItemItemStack, "/r-l zamknięte" + (page + 1), false);
         }
         gui.showGUI(p);
     }
