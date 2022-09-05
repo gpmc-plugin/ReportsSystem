@@ -1,6 +1,7 @@
 package me.gpmcplugins.reportssystem.reportssystem;
 
 import me.gpmcplugins.reportssystem.Commands.*;
+import me.gpmcplugins.reportssystem.Configs.NotificationConfig;
 import me.gpmcplugins.reportssystem.Discord.DiscordIntegration;
 import me.gpmcplugins.reportssystem.GUI.ChestGUI;
 import me.gpmcplugins.reportssystem.GUI.ReportListInterface;
@@ -43,6 +44,7 @@ public final class ReportsSystem extends JavaPlugin {
         ChestGUIListener.setup(this);
         ReportListInterface.setup(this);
         configManager.onEnable();
+        new NotificationConfig();
         try {
             discordIntegration = new DiscordIntegration(configManager.getConfig().getString("DiscordToken"));
         } catch (LoginException e) {

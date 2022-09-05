@@ -7,6 +7,7 @@ import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.*;
@@ -98,6 +99,15 @@ public class DatabaseManager {
                 "\t\"message_translate\"\tTEXT,\n" +
                 "\t\"timestamp\"\tINTEGER,\n" +
                 "\t\"message_key\"\tINTEGER\n" +
+                ");";
+        stmt.execute(sql);
+        sql="create table IF NOT EXISTS notification\n" +
+                "(\n" +
+                "    userid          TEXT,\n" +
+                "    notificationKey TEXT,\n" +
+                "    args            TEXT,\n" +
+                "    readed          INTEGER,\n" +
+                "    timestamp       numeric\n" +
                 ");";
         stmt.execute(sql);
         try{
@@ -198,6 +208,11 @@ public class DatabaseManager {
     public List<ReportObject> getAdminReports(String adminId, Integer limit, Integer site, OpenStatus openStatus) throws SQLException {
         int reportsAfter = limit*site;
         String sql = "Select * from reports where " + translateOpenStatusToSql(openStatus) + " AND admin"+(adminId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
+        return getReportObjects(adminId, limit, reportsAfter, sql);
+    }
+
+    @NotNull
+    private List<ReportObject> getReportObjects(String adminId, Integer limit, int reportsAfter, String sql) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         int indexchanger=adminId!=null?0:1;
         if(adminId!=null)
@@ -221,32 +236,12 @@ public class DatabaseManager {
         }
         return reports;
     }
+
     @SuppressWarnings("unused")
     public List<ReportObject> getUserReports(String userId, Integer limit, Integer site, OpenStatus openStatus) throws SQLException {
         int reportsAfter = limit*site;
         String sql = "Select * from reports where "+ translateOpenStatusToSql(openStatus)+(openStatus==OpenStatus.ALL?"":" AND")+" reporting_player"+(userId==null?" is null":"=?")+" order by timestamp ASC Limit ?,?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        int indexchanger=userId!=null?0:1;
-        if(userId!=null)
-            pstmt.setString(1,userId);
-        pstmt.setInt(2-indexchanger,reportsAfter);
-        pstmt.setInt(3-indexchanger,limit);
-        ResultSet rs = pstmt.executeQuery();
-        List<ReportObject> reports = new ArrayList<>();
-        while (rs.next()){
-            Integer reportid = rs.getInt("id");
-            String reportingPlayer=rs.getString("reporting_player");
-            String type = rs.getString("type");
-            String shortDescription=rs.getString("short_description");
-            String description = rs.getString("description");
-            Long timestamp = rs.getLong("timestamp");
-            String admin = rs.getString("admin");
-            String reportedId = rs.getString("reported_id");
-            String status = rs.getString("status");
-            reports.add(new ReportObject(reportid,reportingPlayer,type,shortDescription,reportedId,description,admin,timestamp,plugin,status));
-
-        }
-        return reports;
+        return getReportObjects(userId, limit, reportsAfter, sql);
     }
     public Connection getConn(){
         return this.conn;
