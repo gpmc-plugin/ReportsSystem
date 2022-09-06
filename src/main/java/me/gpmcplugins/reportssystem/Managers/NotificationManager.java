@@ -5,6 +5,7 @@ import me.gpmcplugins.reportssystem.objects.NotificationConfigObject;
 import me.gpmcplugins.reportssystem.objects.NotificationObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -20,9 +21,11 @@ public class NotificationManager {
     @SuppressWarnings("unused")
     public static NotificationSendStatus sendNotification(NotificationObject notificationObject){
         NotificationConfigObject config = NotificationConfig.getInstance().getTypeConfig(notificationObject.getNotificationType());
-        Player player = notificationObject.getNotificationSend();
+        OfflinePlayer player = notificationObject.getNotificationSend();
         if(player.isOnline()) {
-            player.sendMessage(Component.text(String.format(config.getTranslatableString(), (Object[]) notificationObject.getArgs())));
+            Player ofplayer = player.getPlayer();
+            assert ofplayer != null;
+            ofplayer.sendMessage(Component.text(String.format(config.getTranslatableString(), (Object[]) notificationObject.getArgs())));
             queueNotification(notificationObject,true);
             return NotificationSendStatus.Sended;
         } else if (config.getCanBeDelayed()) {
@@ -35,7 +38,7 @@ public class NotificationManager {
     }
     public static void queueNotification(NotificationObject notificationObject,boolean readed)  {
         Connection connection = ReportsSystem.getInstance().getDatabaseManager().getConn();
-        String sql = "insert into notification (userid, notificationKey, args, readed,timetamp) values (?,?,?,?);";
+        String sql = "insert into notification (userid, notificationKey, args, readed, timestamp) values (?,?,?,?,?);";
         String[] args =notificationObject.getArgs();
         for (int i = 0; i < args.length; i++) {
             args[i]=args[i].replaceAll(";","");

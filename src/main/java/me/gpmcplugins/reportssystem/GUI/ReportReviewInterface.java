@@ -70,7 +70,8 @@ public class ReportReviewInterface {
             ItemStack reportBook = new ItemStack(Material.WRITTEN_BOOK);
             ItemMeta reportMeta = reportBook.getItemMeta();
             ArrayList<Component> reportLore = new ArrayList<>();
-            reportLore.add(Component.text("Reportujacy Gracz: ").append(reportObject.getReportingUser().name()));
+            Component name = Component.text(Objects.requireNonNull(reportObject.getReportingUser().getName()));
+            reportLore.add(Component.text("Reportujacy Gracz: ").append(name));
             reportLore.add(Component.text(String.format("Report o ID %s", reportObject.getId())));
             reportLore.add(Component.text(String.format("Krótki opis: %s", reportObject.getShortDescription())));
             reportLore.add(Component.text(String.format("Opis: %s", reportObject.getDescription())));
@@ -91,7 +92,7 @@ public class ReportReviewInterface {
                     break;
                 case Death:
                     reportMessage = Component.text("Report Smierci Gracza ")
-                            .append(reportObject.getReportingUser().name());
+                            .append(name);
                     break;
                 case User:
                     reportMessage = Component.text("Report Gracza ")

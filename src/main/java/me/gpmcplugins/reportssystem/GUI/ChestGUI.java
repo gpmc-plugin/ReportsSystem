@@ -8,6 +8,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ChestGUI implements Listener {
     public static final NamespacedKey guiIdKey = new NamespacedKey("chestgui", "guiid");
@@ -141,12 +143,12 @@ public class ChestGUI implements Listener {
         return ChestGUI.instances.get(id);
     }
 
-    public static ItemStack getPlayerSkull(Player p) {
+    public static ItemStack getPlayerSkull(OfflinePlayer p) {
         ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta playerheadmeta = (SkullMeta) playerhead.getItemMeta();
         if (p != null) {
             playerheadmeta.setOwningPlayer(p);
-            playerheadmeta.displayName(p.name());
+            playerheadmeta.displayName(Component.text(Objects.requireNonNull(p.getName())));
 
         } else {
             playerheadmeta.displayName(Component.text("Cos poszlo nie tak", NamedTextColor.YELLOW));

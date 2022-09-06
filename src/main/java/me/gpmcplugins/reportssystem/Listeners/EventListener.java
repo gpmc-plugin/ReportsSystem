@@ -3,7 +3,9 @@ package me.gpmcplugins.reportssystem.Listeners;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.gpmcplugins.reportssystem.Managers.DatabaseManager;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
+import me.gpmcplugins.reportssystem.Managers.NotificationManager;
 import me.gpmcplugins.reportssystem.Managers.UpdateManager;
+import me.gpmcplugins.reportssystem.objects.NotificationObject;
 import me.gpmcplugins.reportssystem.objects.PlayerReportCreationStatus;
 import me.gpmcplugins.reportssystem.objects.ReportCreator;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
@@ -56,6 +58,9 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        for (NotificationObject unreadedNotification : NotificationManager.getUnreadedNotifications(player.getUniqueId().toString())) {
+            NotificationManager.sendNotification(unreadedNotification);
+        }
         plugin.getStorageManager().addUser(player.getUniqueId().toString());
         if (player.hasPermission("reportsystem.notification")) {
             List<ReportObject> reports;
@@ -74,15 +79,6 @@ public class EventListener implements Listener {
         }
         if (UpdateManager.isUpdated && player.hasPermission("reportsystem.update")) {
             player.sendMessage(UpdateManager.updateMessage);
-        }
-        try {
-            List<Integer> unreadReports = plugin.getDatabaseManager().getNonReadMessages(player.getUniqueId().toString());
-            for (Integer unreadReport : unreadReports) {
-                ReportObject reportObject = plugin.getDatabaseManager().getReport(unreadReport);
-                MessageManager.sendStateUpdateMessage(reportObject.getReportStatus(),unreadReport,player);
-            }
-        } catch (SQLException ex) {
-            plugin.getDatabaseManager().throwError(ex.getMessage());
         }
     }
 

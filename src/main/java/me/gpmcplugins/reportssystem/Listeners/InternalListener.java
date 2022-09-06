@@ -3,6 +3,8 @@ package me.gpmcplugins.reportssystem.Listeners;
 import me.gpmcplugins.reportssystem.Events.ReportCreateEvent;
 import me.gpmcplugins.reportssystem.Events.ReportUpdateEvent;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
+import me.gpmcplugins.reportssystem.Managers.NotificationManager;
+import me.gpmcplugins.reportssystem.objects.NotificationObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,15 +18,15 @@ public class InternalListener implements Listener {
         ReportsSystem.getInstance().getStorageManager().getUser(uuid).sendReportCreated(e.getReport().getId());
     }
     @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
-    public void onRepotUpdate(ReportUpdateEvent e){
+    public void onReportUpdate(ReportUpdateEvent e){
         switch (e.getChangeType()){
             case AdminChange:
                 if(e.getNewState().getAdmin()!=null){
-                    MessageManager.sendAdminUpdateMessage(e.getNewState().getAdmin().getName(), e.getNewState().getId(),e.getNewState().getReportingUser());
+                    NotificationManager.sendNotification(new NotificationObject(e.getNewState().getReportingUser(), NotificationManager.NotificationType.ReportAdminChange,e.getNewState().getId().toString(),e.getNewState().getAdmin().getName()));
                 }
                 break;
             case StateChange:
-                MessageManager.sendStateUpdateMessage(e.getNewState().getReportStatus(),e.getNewState().getId(),e.getNewState().getReportingUser());
+                NotificationManager.sendNotification(new NotificationObject(e.getNewState().getReportingUser(), NotificationManager.NotificationType.ReportStateChange,e.getNewState().getId().toString(),e.getNewState().getReportStatus().toString()));
         }
     }
 }

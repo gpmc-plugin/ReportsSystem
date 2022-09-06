@@ -174,7 +174,7 @@ public class DatabaseManager {
         prstm.setString(7,reportedID);
         prstm.execute();
         ReportObject reportObject= this.getReport(reportID);
-        ReportCreateEvent reportCreateEvent = new ReportCreateEvent(reportObject,reportObject.getReportingUser());
+        ReportCreateEvent reportCreateEvent = new ReportCreateEvent(reportObject,reportObject.getReportingUser().getPlayer());
         Bukkit.getPluginManager().callEvent(reportCreateEvent);
     }
     public ReportMessage getMessage(Integer id){
@@ -301,6 +301,7 @@ public class DatabaseManager {
         rs.next();
         return rs.getInt("count(*)");
     }
+    @SuppressWarnings("unused")
     public List<Integer> getNonReadMessages(String uid) throws SQLException {
         String sql = "Select * from reports Where \"reporting_player\"=? AND readed=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);

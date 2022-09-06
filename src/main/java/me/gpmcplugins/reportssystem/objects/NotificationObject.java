@@ -1,13 +1,13 @@
 package me.gpmcplugins.reportssystem.objects;
 
 import me.gpmcplugins.reportssystem.Managers.NotificationManager.NotificationType;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 public class NotificationObject {
-    private final Player notificationSend;
+    private final OfflinePlayer notificationSend;
     private final NotificationType notificationType;
     private final String[] args;
-    public NotificationObject(Player notificationSend, NotificationType notificationType, String ... args){
+    public NotificationObject(OfflinePlayer notificationSend, NotificationType notificationType, String ... args){
         this.notificationSend = notificationSend;
         this.notificationType = notificationType;
 
@@ -22,7 +22,7 @@ public class NotificationObject {
         return notificationType;
     }
 
-    public Player getNotificationSend() {
+    public OfflinePlayer getNotificationSend() {
         return notificationSend;
     }
 }

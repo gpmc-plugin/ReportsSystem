@@ -1,8 +1,9 @@
 package me.gpmcplugins.reportssystem.objects;
 
 import me.gpmcplugins.reportssystem.Events.ReportUpdateEvent;
-import me.gpmcplugins.reportssystem.Managers.MessageManager;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -13,26 +14,26 @@ import java.util.UUID;
 
 public class ReportObject {
     private final Integer id;
-    private final Player reportingUser;
+    private final OfflinePlayer reportingUser;
     private final ReportsSystem plugin;
     private final ReportCreator.ReportType type;
     private final ReportCreator.ReportShortDescription shortDescription;
     private final String reportedID;
     private final String description;
-    private Player admin;
+    private OfflinePlayer admin;
     private final Date timestamp;
     private final ReportStatus reportStatus;
 
     public ReportObject(Integer id, String reportingUser, String type, String shortDescription, String reportedID, String description, String admin, Long timestamp, ReportsSystem plugin, String status) {
         this.id = id;
         this.plugin = plugin;
-        this.reportingUser = plugin.getServer().getPlayer(UUID.fromString(reportingUser));
+        this.reportingUser = Bukkit.getOfflinePlayer(UUID.fromString(reportingUser));
         this.type = ReportCreator.ReportType.valueOf(type);
         this.shortDescription = ReportCreator.ReportShortDescription.valueOf(shortDescription);
         this.reportedID = reportedID;
         this.description = description;
         if (admin != null)
-            this.admin = plugin.getServer().getPlayer(UUID.fromString(admin));
+            this.admin = Bukkit.getOfflinePlayer(UUID.fromString(admin));
         this.timestamp = new Date(timestamp);
         if (status == null)
             this.reportStatus = ReportStatus.In_Progress;
@@ -61,7 +62,7 @@ public class ReportObject {
         return id;
     }
 
-    public Player getReportingUser() {
+    public OfflinePlayer getReportingUser() {
         return reportingUser;
     }
 
@@ -74,7 +75,7 @@ public class ReportObject {
     }
 
     @SuppressWarnings("unused")
-    public Player getAdmin() {
+    public OfflinePlayer getAdmin() {
         return admin;
     }
 
@@ -105,7 +106,6 @@ public class ReportObject {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        MessageManager.sendStateUpdateMessage(reportStatus, id, reportingUser);
     }
 
     public void setAdmin(String uid,Player updatingPlayer){
