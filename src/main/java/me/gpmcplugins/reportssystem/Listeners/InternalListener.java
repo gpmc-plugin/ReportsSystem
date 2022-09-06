@@ -1,5 +1,6 @@
 package me.gpmcplugins.reportssystem.Listeners;
 
+import me.gpmcplugins.reportssystem.Discord.SendCreatedCommit;
 import me.gpmcplugins.reportssystem.Events.ReportCreateEvent;
 import me.gpmcplugins.reportssystem.Events.ReportUpdateEvent;
 import me.gpmcplugins.reportssystem.Managers.MessageManager;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 public class InternalListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCreateReport(ReportCreateEvent e) {
+        SendCreatedCommit.sendReportToDiscord(e.getReport());
         MessageManager.sendReportMessage();
         String uuid = e.getPlayer().getUniqueId().toString();
         ReportsSystem.getInstance().getStorageManager().getUser(uuid).sendReportCreated(e.getReport().getId());
