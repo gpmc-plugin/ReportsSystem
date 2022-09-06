@@ -109,7 +109,7 @@ public class ReportObject {
     }
 
     public void setAdmin(String uid,Player updatingPlayer){
-        this.admin=plugin.getServer().getPlayer(UUID.fromString(uid));
+        this.admin=Bukkit.getOfflinePlayer(UUID.fromString(uid));
         Connection conn = plugin.getDatabaseManager().getConn();
         String sql = "UPDATE \"main\".\"reports\" SET \"admin\"=? WHERE \"id\"=?";
         try {

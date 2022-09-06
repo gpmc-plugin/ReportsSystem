@@ -1,17 +1,17 @@
 package me.gpmcplugins.reportssystem.objects;
 
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 public class ReportMessage {
-    private final Player player;
+    private final OfflinePlayer player;
     private final String message;
 
-    public ReportMessage(Player sender, String message) {
+    public ReportMessage(OfflinePlayer sender, String message) {
         this.player = sender;
         this.message = message;
     }
 
-    public Player getPlayer() {
+    public OfflinePlayer getPlayer() {
         return player;
     }
 

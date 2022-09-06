@@ -6,6 +6,7 @@ import me.gpmcplugins.reportssystem.objects.ReportMessage;
 import me.gpmcplugins.reportssystem.objects.ReportObject;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -186,7 +187,7 @@ public class DatabaseManager {
             pstmt.setInt(1,id);
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
-                Player sender = plugin.getServer().getPlayer(UUID.fromString(rs.getString("sender")));
+                OfflinePlayer sender = plugin.getServer().getOfflinePlayer(UUID.fromString(rs.getString("sender")));
                 return new ReportMessage(sender,rs.getString("message"));
             }
         } catch (SQLException e) {
