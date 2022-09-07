@@ -1,7 +1,4 @@
 package me.gpmcplugins.reportssystem.MojangApi;
-
-
-import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -36,10 +33,8 @@ public class SkinRestorer {
             }
             JSONObject json = new JSONObject(content.toString());
             JSONObject textures = json.getJSONArray("properties").getJSONObject(0);
-            ReportsSystem.getInstance().getServer().getConsoleSender().sendMessage(textures.getString("value"));
             String textureJsonString = textures.getString("value");
             String texturesProperties = new String( Base64.getDecoder().decode(textureJsonString));
-            ReportsSystem.getInstance().getServer().getConsoleSender().sendMessage(texturesProperties);
             JSONObject texturesJsonObject = new JSONObject(texturesProperties);
             String textureUrl = texturesJsonObject.getJSONObject("textures").getJSONObject("SKIN").getString("url");
             String textureHash = textureUrl.split("/")[4];
