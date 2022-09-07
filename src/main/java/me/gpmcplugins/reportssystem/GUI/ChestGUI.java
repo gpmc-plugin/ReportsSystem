@@ -1,9 +1,11 @@
 package me.gpmcplugins.reportssystem.GUI;
 
+import me.gpmcplugins.reportssystem.MojangApi.BasicMojangAPI;
+import me.gpmcplugins.reportssystem.MojangApi.SkinRestorer;
+import me.gpmcplugins.reportssystem.Replay.ReplayHeadStatic;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -146,14 +149,16 @@ public class ChestGUI implements Listener {
     public static ItemStack getPlayerSkull(OfflinePlayer p) {
         ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta playerheadmeta = (SkullMeta) playerhead.getItemMeta();
-        if (p != null) {
+        String playerName = Objects.requireNonNull(p.getName());
             playerheadmeta.setOwningPlayer(p);
-            playerheadmeta.displayName(Component.text(Objects.requireNonNull(p.getName())));
-
-        } else {
-            playerheadmeta.displayName(Component.text("Cos poszlo nie tak", NamedTextColor.YELLOW));
-        }
+            playerheadmeta.displayName(Component.text(playerName));
         playerhead.setItemMeta(playerheadmeta);
+        String userPremiumUUID = BasicMojangAPI.getUUIDFromName(p.getName());
+        if(userPremiumUUID!=null) {
+            String textureHash = SkinRestorer.getTextureHash(userPremiumUUID);
+            if(textureHash!=null)
+                return ReplayHeadStatic.createCustomSkull(1,Component.text(playerName),new ArrayList<>(),textureHash);
+        }
         return playerhead;
     }
 

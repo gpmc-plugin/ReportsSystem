@@ -85,10 +85,11 @@ public class ReportReviewInterface {
             switch (reportObject.getType()) {
                 case Message:
                     ReportMessage message = ReportsSystem.getInstance().getDatabaseManager().getMessage(reportObject.getId());
+                    Component messageAuthor = Component.text(Objects.requireNonNull(message.getPlayer().getName()));
                     reportLore.add(
                             Component.text(String.format("Zgloszona Wiadomosc: %s", message.getMessage())));
                     reportMessage = Component.text("Report Wiadomosci Gracza ")
-                            .append(message.getPlayer().name());
+                            .append(messageAuthor);
                     break;
                 case Death:
                     reportMessage = Component.text("Report Smierci Gracza ")
