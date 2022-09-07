@@ -44,32 +44,8 @@ public class ReportListInterface {
         for (int i = 0; i < reports.size(); i++) {
 
             ReportObject report = reports.get(i);
-            ItemStack reportBook = new ItemStack(Material.WRITTEN_BOOK);
-            ItemMeta reportMeta = reportBook.getItemMeta();
-            reportMeta.displayName(Component.text(String.format("Report o ID %s", report.getId())));
-            ArrayList<Component> reportLore = new ArrayList<>();
-            reportLore.add(Component.text(String.format("Krótki opis: %s", report.getShortDescription())));
-            reportLore.add(Component.text(String.format("Opis: %s", report.getDescription())));
-            switch (report.getType()) {
-                case Message:
-                    ReportMessage reportMessage = plugin.getDatabaseManager().getMessage(Integer.parseInt(report.getReportedID()));
-                    reportLore.add(Component.text(String.format("Zgłoszona wiadomość: %s", reportMessage.getMessage())));
-                    reportLore.add(Component.text(String.format("Autor zgłoszonej wiadomości: %s", reportMessage.getPlayer())));
-                    break;
-                case Death:
-                    reportLore.add(Component.text("Kliknij by zobaczyć swój ekwipunek", NamedTextColor.WHITE, TextDecoration.ITALIC));
-                    break;
-                case User:
-                    String reportedUser = Objects.requireNonNull(plugin.getServer().getPlayer(UUID.fromString(report.getReportedID()))).getName();
-                    reportLore.add(Component.text(String.format("Zgłoszony użytkownik: %s", reportedUser)));
-                    break;
-            }
-            reportMeta.lore(reportLore);
-            reportBook.setItemMeta(reportMeta);
+            ItemStack reportBook = report.getItemStack();
 
-            if (report.getReportStatus() == ReportStatus.In_Progress) {
-                reportBook.setType(Material.WRITABLE_BOOK);
-            }
             if (report.getType() == ReportCreator.ReportType.Death)
                 gui.setItem(positions[i], reportBook, String.format("rdi %s", report.getId()), false);
             else gui.setItem(positions[i], reportBook);

@@ -73,41 +73,7 @@ public class ReportReviewInterface {
                     ReportObject reportObject = reportObjectList.get(i);
                     int position = 9 + i * 9;
 
-                    ItemStack reportBook = new ItemStack(Material.WRITTEN_BOOK);
-                    ItemMeta reportMeta = reportBook.getItemMeta();
-                    ArrayList<Component> reportLore = new ArrayList<>();
-                    Component name = Component.text(Objects.requireNonNull(reportObject.getReportingUser().getName()));
-                    reportLore.add(Component.text("Reportujacy Gracz: ").append(name));
-                    reportLore.add(Component.text(String.format("Report o ID %s", reportObject.getId())));
-                    reportLore.add(Component.text(String.format("Krótki opis: %s", reportObject.getShortDescription())));
-                    reportLore.add(Component.text(String.format("Opis: %s", reportObject.getDescription())));
-
-                    String pattern = "HH:mm.ss dd/MM/yyyy";
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                    String date = simpleDateFormat.format(reportObject.getTimestamp());
-                    reportLore.add(Component.text(String.format("Data i Czas Reportu: %s", date)));
-
-                    Component reportMessage = Component.text("Cos poszlo nie tak!");
-                    switch (reportObject.getType()) {
-                        case Message:
-                            ReportMessage message = ReportsSystem.getInstance().getDatabaseManager().getMessage(reportObject.getId());
-                            Component messageAuthor = Component.text(Objects.requireNonNull(message.getPlayer().getName()));
-                            reportLore.add(
-                                    Component.text(String.format("Zgloszona Wiadomosc: %s", message.getMessage())));
-                            reportMessage = Component.text("Report Wiadomosci Gracza ")
-                                    .append(messageAuthor);
-                            break;
-                        case Death:
-                            reportMessage = Component.text("Report Smierci Gracza ")
-                                    .append(name);
-                            break;
-                        case User:
-                            reportMessage = Component.text("Report Gracza ")
-                                    .append(Objects.requireNonNull(plugin.getServer().getPlayer(UUID.fromString(reportObject.getReportedID()))).name());
-                    }
-                    reportMeta.displayName(reportMessage);
-                    reportMeta.lore(reportLore);
-                    reportBook.setItemMeta(reportMeta);
+                    ItemStack reportBook = reportObject.getItemStack();
 
                     gui.setItem(position + 1, reportBook)
                             .setItem(position + 2, GetItemReportByReportType(reportObject.getType()))

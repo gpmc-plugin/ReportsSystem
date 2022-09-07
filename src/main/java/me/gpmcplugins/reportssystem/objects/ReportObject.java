@@ -2,14 +2,21 @@ package me.gpmcplugins.reportssystem.objects;
 
 import me.gpmcplugins.reportssystem.Events.ReportUpdateEvent;
 import me.gpmcplugins.reportssystem.reportssystem.ReportsSystem;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ReportObject {
@@ -142,5 +149,50 @@ public class ReportObject {
         In_Progress,
         Accepted,
         Denided,
+    }
+
+    public ItemStack getItemStack()
+    {
+        ItemStack reportBook = new ItemStack(Material.WRITTEN_BOOK);
+        ItemMeta reportMeta = reportBook.getItemMeta();
+        ArrayList<Component> reportLore = new ArrayList<>();
+        Component name = Component.text(Objects.requireNonNull(this.getReportingUser().getName()));
+        reportLore.add(Component.text("Reportujacy Gracz: ").append(name));
+        reportLore.add(Component.text(String.format("Report o ID %s", this.getId())));
+        reportLore.add(Component.text(String.format("Krótki opis: %s", this.getShortDescription())));
+        reportLore.add(Component.text(String.format("Opis: %s", this.getDescription())));
+
+        String pattern = "HH:mm.ss dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(this.getTimestamp());
+        reportLore.add(Component.text(String.format("Data i Czas Reportu: %s", date)));
+
+        Component reportMessage = Component.text("Cos poszlo nie tak!");
+        switch (this.getType()) {
+            case Message:
+                ReportMessage message = ReportsSystem.getInstance().getDatabaseManager().getMessage(this.getId());
+                Component messageAuthor = Component.text(Objects.requireNonNull(message.getPlayer().getName()));
+                reportLore.add(
+                        Component.text(String.format("Zgloszona Wiadomosc: %s", message.getMessage())));
+                reportMessage = Component.text("Report Wiadomosci Gracza ")
+                        .append(messageAuthor);
+                break;
+            case Death:
+                reportMessage = Component.text("Report Smierci Gracza ")
+                        .append(name);
+                break;
+            case User:
+                reportMessage = Component.text("Report Gracza ")
+                        .append(Objects.requireNonNull(plugin.getServer().getPlayer(UUID.fromString(this.getReportedID()))).name());
+        }
+        reportMeta.displayName(reportMessage);
+        reportMeta.lore(reportLore);
+        reportBook.setItemMeta(reportMeta);
+
+        if (this.getReportStatus() == ReportStatus.In_Progress) {
+            reportBook.setType(Material.WRITABLE_BOOK);
+        }
+
+        return reportBook;
     }
 }

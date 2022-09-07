@@ -55,10 +55,7 @@ public final class ReportsSystem extends JavaPlugin {
 
 
         //todo add report logs
-        //todo generalize report displaying in report-list and report-review
         //todo add discord integration
-        //todo add backdoor :tf:
-        //todo message replay mode
 
         Objects.requireNonNull(getCommand("report")).setExecutor(new ReportCommand(this));
         Objects.requireNonNull(getCommand("report-review")).setExecutor(new ReportReviewCommand(this));
